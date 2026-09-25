@@ -29,4 +29,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-29ba6db1-0832-47db-86b9-4c709b7f38e8
+  - id: crit-7d440b6e-8afc-40f7-8988-cf1a162eadcc
+    text: A fresh session names the checks it ran, the checks it did not run, and does not treat a declaration as observed implementation.
+    status: met
+    evidence_refs:
+    - evidence-1264a1a7-bf6c-45d6-b03b-adc5fe25282a
 transitions: []

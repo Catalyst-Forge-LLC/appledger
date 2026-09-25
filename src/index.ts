@@ -11,3 +11,5 @@ export {
 export type { PlannedFile, TransactionPlan, TransactionResult, TransactionStatus } from "./transaction.js";
 export { orientLedger, renderView, writeView } from "./views.js";
 export type { ViewName } from "./views.js";
+export { commandCatalog, demonstrateFreshSession, readCommandCatalog } from "./fresh-session.js";
+export type { CatalogEntry, CommandStatus } from "./fresh-session.js";

@@ -6,21 +6,20 @@ Use TypeScript/Node for portable CLI and shared libraries. Schema and text reade
 
 Proposed modules: format reader/writer, record/reference validator, dependency index, transaction manager, migration engine, ForgeTrail profile, xFacts adapter interface, individual adapters, and view renderers. Keep one shared source of curation rules for the standalone skill and ForgeTrail integration.
 
-## Proposed CLI
+## CLI
 
-These names are design targets, not commands currently available:
+The status column is the command list for the standalone skill. Do not keep a second list that can drift. A skill session states which of these checks it did not run.
 
-| Command | Behavior |
-| --- | --- |
-| `appledger init --root PATH` | Create minimal files without overwriting existing records |
-| `appledger orient --task TEXT` | Produce bounded source-linked orientation |
-| `appledger check --format json` | Read-only validation with stable finding codes |
-| `appledger reconcile --plan` | Calculate changes and review requirements |
-| `appledger reconcile --apply` | Apply changes allowed by policy and current authority |
-| `appledger diff --from REV --to REV` | Explain ledger changes at explicit revisions |
-| `appledger migrate --from forgetrail --plan` | Produce migration report |
-| `appledger migrate --from forgetrail --apply` | Apply reviewed/supported migration mapping |
-| `appledger render --view progress` | Regenerate a declared derived view |
+| Command | Status | Behavior |
+| --- | --- | --- |
+| `appledger check` | implemented | Read-only validation with stable finding codes. `--format text` or `json`. |
+| `appledger orient` | implemented | Bounded source-linked brief. `--task` and `--budget`. Selection is deterministic and the brief says so. |
+| `appledger render` | implemented | Derived orientation, progress, or history view. `--write` updates `views/` only when the bytes differ. |
+| `appledger transaction` | implemented | `status`, `resume`, and `rollback` for an interrupted apply. |
+| `appledger init` | not implemented | Would create minimal files without overwriting existing records. |
+| `appledger reconcile` | not implemented | Would plan or apply semantic reconciliation and label updates. |
+| `appledger diff` | not implemented | Would explain ledger changes between two explicit revisions. |
+| `appledger migrate` | not implemented | Would preview or apply a ForgeTrail tracking migration. |
 
 `orient` can use deterministic selection or agent assistance. It MUST disclose which. All commands support explicit root and bounded scope. Read-only commands do not start target servers or access the network implicitly.
 

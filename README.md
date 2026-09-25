@@ -28,6 +28,8 @@ pnpm exec appledger check
 
 `appledger transaction resume` and `appledger transaction rollback` finish or undo an interrupted apply. They replace only journaled paths, and they leave a file alone when its bytes changed after the apply started. A second apply of bytes that are already on disk writes nothing.
 
+The curation skill is [`skills/appledger/SKILL.md`](skills/appledger/SKILL.md). Command status lives in [`spec/10-tooling-and-automation.md`](spec/10-tooling-and-automation.md). The skill does not publish, deploy, or generate xFacts labels.
+
 ## Site
 
 `site/` is a FilePress stub. Preview with `pnpm site:dev`. LocalSlip lease name: `appledger-site` on port 46002. Do not deploy from this tree until the pages match shipped behavior.
