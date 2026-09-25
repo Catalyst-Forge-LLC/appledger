@@ -20,7 +20,7 @@ pnpm exec appledger check --root examples/minimal/appledger
 pnpm exec appledger check
 ```
 
-`appledger check` reads a ledger and prints findings. It does not modify files. Other commands from the specification are not implemented yet.
+`appledger check` reads a ledger and prints findings. It does not modify files. Errors are schema, predicate, and path problems. Warnings mean a recorded source is missing, its digest no longer matches, or a claim's git revision is not HEAD. A missing file is not treated as proof that a feature is gone. Other commands from the specification are not implemented yet.
 
 ## Site
 

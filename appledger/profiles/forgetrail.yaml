@@ -14,4 +14,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-cdc21f18-a2fc-440c-8af4-1e719cc48c04
+  - id: crit-738e19e3-1b5f-4528-a1ca-2c5a3b7cd554
+    text: Rename, missing source, and revision checks report review findings and do not rewrite the ledger.
+    status: met
+    evidence_refs:
+    - evidence-6c84d111-65c3-4aeb-b338-faaeb2edbe81
 transitions: []

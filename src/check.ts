@@ -1,7 +1,8 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { isAbsolute, join, relative, resolve, sep } from "node:path";
+import { join, relative, resolve, sep } from "node:path";
 import { PREDICATES } from "./predicates.js";
 import { schemaErrors } from "./schemas.js";
+import { checkSources, isInside, isUnsafeRelative } from "./sources.js";
 import { parseYaml, splitFrontMatter } from "./yaml.js";
 
 export type Severity = "error" | "warning";
@@ -83,6 +84,7 @@ export function checkLedger(input: string): CheckResult {
   }
 
   checkRelations(records, byId, manifestObj, findings);
+  checkSources(ledgerRoot, manifestObj, records, findings);
   checkSupersedes(records, byId, findings);
   checkDepends(records, byId, findings);
   checkProfile(ledgerRoot, manifestObj, findings);
@@ -428,13 +430,4 @@ function sameSet(left: Set<string>, right: Set<string>): boolean {
 function stringField(value: Record<string, unknown>, key: string): string | undefined {
   const field = value[key];
   return typeof field === "string" ? field : undefined;
-}
-
-function isUnsafeRelative(path: string): boolean {
-  return isAbsolute(path) || path.split("/").includes("..") || /^[A-Za-z]:/.test(path);
-}
-
-function isInside(parent: string, child: string): boolean {
-  const rel = relative(resolve(parent), resolve(child));
-  return rel === "" || (!rel.startsWith(`..${sep}`) && rel !== ".." && !isAbsolute(rel));
 }
