@@ -1,0 +1,53 @@
+{
+  "name": "appledger",
+  "version": "0.0.0",
+  "description": "AppLedger: an open text record of what an application is for, how it fits together, what it does, and how it changes.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "appledger": "./dist/cli.js"
+  },
+  "files": [
+    "dist/",
+    "schemas/",
+    "spec/",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "verify": "pnpm test && pnpm build",
+    "check": "node dist/cli.js check",
+    "site:dev": "pnpm --dir site dev",
+    "site:build": "pnpm --dir site build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "author": {
+    "name": "Catalyst Forge LLC",
+    "url": "https://catalystforge.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Catalyst-Forge-LLC/appledger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Catalyst-Forge-LLC/appledger/issues"
+  },
+  "homepage": "https://appledger.dev",
+  "publishConfig": {
+    "access": "public"
+  }
+}

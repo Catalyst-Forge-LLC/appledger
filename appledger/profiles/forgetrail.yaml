@@ -1,0 +1,17 @@
+profile: forgetrail
+profile_version: 0.1.0
+archetype: product
+project_status: active
+current_phase_instance: phase-625c6d87-193c-4c7e-9570-faf05d96aa58
+phase_instances:
+- id: phase-625c6d87-193c-4c7e-9570-faf05d96aa58
+  phase: plan
+  status: in_progress
+  started_at: '2026-09-25T20:15:00Z'
+  criteria:
+  - id: crit-64a61051-9bb0-4324-bdfb-cd4666253695
+    text: The format checker accepts the v0.1 fixtures and this product ledger.
+    status: met
+    evidence_refs:
+    - evidence-cdc21f18-a2fc-440c-8af4-1e719cc48c04
+transitions: []

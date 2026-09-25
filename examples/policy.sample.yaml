@@ -1,0 +1,35 @@
+policy_version: 0.1.0
+authorized_by:
+  id: example-owner
+  type: human
+  source: examples/policy.sample.yaml
+  recorded_at: '2026-09-25T19:00:00Z'
+  scope: example-only
+local_maintenance:
+  deterministic_extraction: true
+  internal_agent_curation: false
+  internal_label_selection: false
+public_projection:
+  policy_sources: []
+  targets: []
+gates:
+  work_completion:
+    blocking:
+    - unmet_acceptance
+    - missing_reconciliation
+    allow_attributed_waiver: true
+  session_handoff:
+    blocking:
+    - incomplete_transaction
+    allow_unfinished_work: true
+  commit:
+    blocking:
+    - invalid_records
+    - broken_references
+    allow_preexisting_gaps: true
+  release:
+    blocking:
+    - missing_label_disposition
+    - private_data_leakage
+    allow_documented_exceptions: true
+waivers: []

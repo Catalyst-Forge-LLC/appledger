@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AppLedger v0.1 record envelope",
+  "description": "Envelope only. Full conformance also requires kind-specific and semantic checks.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format_version",
+    "id",
+    "kind",
+    "title",
+    "record_status",
+    "created_at",
+    "updated_at",
+    "recorded_by",
+    "visibility",
+    "relations",
+    "claims"
+  ],
+  "properties": {
+    "format_version": {
+      "type": "string",
+      "pattern": "^0\\.1\\.\\d+$"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "enum": [
+        "application",
+        "goal",
+        "stakeholder",
+        "use_case",
+        "concept",
+        "component",
+        "decision",
+        "constraint",
+        "question",
+        "work",
+        "session",
+        "lesson",
+        "change",
+        "evidence",
+        "capability_ref"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "record_status": {
+      "enum": [
+        "active",
+        "superseded",
+        "retired"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "recorded_by": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "enum": [
+            "human",
+            "agent",
+            "tool",
+            "import"
+          ]
+        }
+      }
+    },
+    "visibility": {
+      "enum": [
+        "internal",
+        "public"
+      ]
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "target"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "serves",
+              "supports",
+              "realizes",
+              "uses",
+              "defines",
+              "implemented_by",
+              "owned_by",
+              "constrained_by",
+              "decided_by",
+              "verified_by",
+              "affects",
+              "depends_on",
+              "supersedes",
+              "derived_from",
+              "recorded_in"
+            ]
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "statement",
+          "basis",
+          "status",
+          "evidence_refs",
+          "scope"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "basis": {
+            "enum": [
+              "declared",
+              "extracted",
+              "observed",
+              "inferred"
+            ]
+          },
+          "status": {
+            "enum": [
+              "supported",
+              "unresolved",
+              "disputed",
+              "stale"
+            ]
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "scope": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "repository_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "environment": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "data": {
+      "type": "object"
+    },
+    "extensions": {
+      "type": "object"
+    }
+  }
+}

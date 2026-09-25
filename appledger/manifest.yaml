@@ -1,0 +1,15 @@
+format: appledger
+format_version: 0.1.0
+ledger_id: ledger-7d725272-c8a0-4d7b-967e-dcf1329e6b6c
+application_id: app-0d73a633-0c61-4cae-b285-1855b7f8dded
+repositories:
+- id: repo-appledger
+  root: .
+  url: https://github.com/Catalyst-Forge-LLC/appledger.git
+record_roots:
+- records
+bindings: []
+profiles:
+- id: forgetrail
+  version: 0.1.0
+  path: profiles/forgetrail.yaml

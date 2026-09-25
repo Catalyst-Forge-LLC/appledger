@@ -1,0 +1,16 @@
+profile: forgetrail
+profile_version: 0.1.0
+archetype: one-shot
+project_status: active
+current_phase_instance: phase-plan-1
+phase_instances:
+- id: phase-plan-1
+  phase: plan
+  status: in_progress
+  started_at: '2026-09-25T19:00:00Z'
+  criteria:
+  - id: approve-brief
+    text: Owner approves the brief
+    status: pending
+    evidence_refs: []
+transitions: []

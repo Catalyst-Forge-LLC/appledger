@@ -1,0 +1,6 @@
+/build
+/node_modules
+/docs/dist
+.filepress/
+.filepress-genie/
+.filepress-import/

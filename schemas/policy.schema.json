@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AppLedger v0.1 curation policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "policy_version",
+    "authorized_by",
+    "local_maintenance",
+    "public_projection",
+    "gates"
+  ],
+  "properties": {
+    "policy_version": {
+      "type": "string",
+      "pattern": "^0\\.1\\.\\d+$"
+    },
+    "authorized_by": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "source", "recorded_at", "scope"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "type": { "enum": ["human", "agent", "tool", "import"] },
+        "source": { "type": "string", "minLength": 1 },
+        "recorded_at": { "type": "string", "format": "date-time" },
+        "scope": { "type": "string", "minLength": 1 }
+      }
+    },
+    "local_maintenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "deterministic_extraction",
+        "internal_agent_curation",
+        "internal_label_selection"
+      ],
+      "properties": {
+        "deterministic_extraction": { "type": "boolean" },
+        "internal_agent_curation": { "type": "boolean" },
+        "internal_label_selection": { "type": "boolean" }
+      }
+    },
+    "public_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_sources", "targets"],
+      "properties": {
+        "policy_sources": { "type": "array", "items": { "type": "string" } },
+        "targets": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["work_completion", "session_handoff", "commit", "release"],
+      "properties": {
+        "work_completion": { "$ref": "#/$defs/gate" },
+        "session_handoff": { "$ref": "#/$defs/gate" },
+        "commit": { "$ref": "#/$defs/gate" },
+        "release": { "$ref": "#/$defs/gate" }
+      }
+    },
+    "waivers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["requirement", "authority", "reason", "scope", "revisit"],
+        "properties": {
+          "requirement": { "type": "string", "minLength": 1 },
+          "authority": { "type": "string", "minLength": 1 },
+          "reason": { "type": "string", "minLength": 1 },
+          "scope": { "type": "string", "minLength": 1 },
+          "revisit": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["blocking"],
+      "properties": {
+        "blocking": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "allow_attributed_waiver": { "type": "boolean" },
+        "allow_unfinished_work": { "type": "boolean" },
+        "allow_preexisting_gaps": { "type": "boolean" },
+        "allow_documented_exceptions": { "type": "boolean" }
+      }
+    }
+  }
+}

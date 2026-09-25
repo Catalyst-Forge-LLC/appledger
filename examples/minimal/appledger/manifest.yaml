@@ -1,0 +1,14 @@
+format: appledger
+format_version: 0.1.0
+ledger_id: ledger-workshop-demo
+application_id: app-workshop-demo
+repositories:
+- id: repo-demo
+  root: .
+record_roots:
+- records
+bindings: []
+profiles:
+- id: forgetrail
+  version: 0.1.0
+  path: profiles/forgetrail.yaml

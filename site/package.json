@@ -1,0 +1,26 @@
+{
+  "name": "appledger-site",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "localslip claim appledger-site --port 46002 && filepress dev --host 0.0.0.0",
+    "build": "filepress build",
+    "preview": "filepress preview",
+    "check": "filepress check"
+  },
+  "devDependencies": {
+    "getfilepress": "^0.1.39"
+  },
+  "pnpm": {
+    "overrides": {
+      "js-yaml": "3.15.2",
+      "sharp": "0.35.4"
+    },
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "getfilepress",
+      "workerd"
+    ]
+  }
+}
