@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-import { checkLedger } from "./check.js";
+import { checkLedger, resolveLedgerRoot } from "./check.js";
 import { listTransactions, resumeTransaction, rollbackTransaction } from "./transaction.js";
+import { orientLedger, renderView, writeView, type ViewName } from "./views.js";
 
 const argv = process.argv.slice(2);
 const command = argv[0];
@@ -11,9 +12,13 @@ if (!command || command === "--help" || command === "-h") {
   runCheck(argv.slice(1));
 } else if (command === "transaction") {
   runTransaction(argv.slice(1));
+} else if (command === "orient") {
+  runOrient(argv.slice(1));
+} else if (command === "render") {
+  runRender(argv.slice(1));
 } else {
   console.error(`appledger ${command} is not implemented.`);
-  console.error("Implemented: check, transaction");
+  console.error("Implemented: check, orient, render, transaction");
   process.exit(4);
 }
 
@@ -106,6 +111,91 @@ function parseRoot(args: string[], known: Set<string>): { root: string } | undef
   return { root };
 }
 
+function runOrient(args: string[]): void {
+  const parsed = parseViewArgs(args, false);
+  if (!parsed) return;
+  try {
+    console.log(orientLedger({ root: parsed.root, task: parsed.task, budgetWords: parsed.budget }));
+  } catch (err) {
+    console.error(err instanceof Error ? err.message : String(err));
+    process.exit(5);
+  }
+}
+
+function runRender(args: string[]): void {
+  const parsed = parseViewArgs(args, true);
+  if (!parsed) return;
+  if (!parsed.view) {
+    console.error("--view must be orientation, progress, or history");
+    process.exit(2);
+  }
+  try {
+    const markdown = renderView({
+      root: parsed.root,
+      view: parsed.view,
+      task: parsed.task,
+      budgetWords: parsed.budget,
+    });
+    if (!parsed.write) {
+      console.log(markdown);
+      return;
+    }
+    const ledgerRoot = resolveLedgerRoot(parsed.root);
+    const result = writeView(ledgerRoot, parsed.view, markdown);
+    console.log(result.written ? `wrote ${result.path}` : `unchanged ${result.path}`);
+  } catch (err) {
+    console.error(err instanceof Error ? err.message : String(err));
+    process.exit(5);
+  }
+}
+
+function parseViewArgs(
+  args: string[],
+  allowWrite: boolean,
+): { root: string; task?: string; budget?: number; view?: ViewName; write: boolean } | undefined {
+  let root = process.cwd();
+  let task: string | undefined;
+  let budget: number | undefined;
+  let view: ViewName | undefined;
+  let write = false;
+  for (let i = 0; i < args.length; i += 1) {
+    const arg = args[i];
+    if (arg === "--write") {
+      if (!allowWrite) {
+        console.error("Unknown argument --write");
+        process.exit(2);
+      }
+      write = true;
+      continue;
+    }
+    const next = args[i + 1];
+    if (!next || next.startsWith("--")) {
+      console.error(`${arg} requires a value`);
+      process.exit(2);
+    }
+    if (arg === "--root") root = next;
+    else if (arg === "--task") task = next;
+    else if (arg === "--view") {
+      if (next !== "orientation" && next !== "progress" && next !== "history") {
+        console.error("--view must be orientation, progress, or history");
+        process.exit(2);
+      }
+      view = next;
+    } else if (arg === "--budget") {
+      if (!/^[1-9]\d*$/.test(next)) {
+        console.error("--budget must be a positive integer");
+        process.exit(2);
+      }
+      budget = Number(next);
+    } else {
+      console.error(`Unknown argument ${arg}`);
+      process.exit(2);
+    }
+    i += 1;
+  }
+  return { root, task, budget, view, write };
+}
+
 function flag(args: string[], name: string): string | undefined {
   const index = args.indexOf(name);
   if (index === -1) return undefined;
@@ -114,11 +204,14 @@ function flag(args: string[], name: string): string | undefined {
 
 function usage(code: number): never {
   console.log(`appledger check [--root DIR] [--format text|json]
+appledger orient [--root DIR] [--task TEXT] [--budget N]
+appledger render --view orientation|progress|history [--root DIR] [--task TEXT] [--budget N] [--write]
 appledger transaction status [--root DIR]
 appledger transaction resume --id ID [--root DIR]
 appledger transaction rollback --id ID [--root DIR]
 
-check reads a ledger and does not modify files.
-transaction resume and rollback recover an interrupted apply. They do not start a new reconciliation.`);
+check, orient, and render do not modify files unless render is given --write.
+orient selects records deterministically and keeps recorded gaps even when the word budget is small.
+render --write updates views/<view>.md only when the bytes differ.`);
   process.exit(code);
 }

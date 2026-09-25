@@ -22,6 +22,10 @@ pnpm exec appledger check
 
 `appledger check` reads a ledger and prints findings. It does not modify files. Errors are schema, predicate, and path problems. Warnings mean a recorded source is missing, its digest no longer matches, a claim's git revision is not HEAD, or a transaction journal is still open. A missing file is not treated as proof that a feature is gone.
 
+`appledger orient` prints a short brief. Selection is deterministic and says so. A task limits the related records. Recorded gaps stay in the brief when the word budget is too small for them. It does not modify files.
+
+`appledger render --view progress` and `--view history` print derived views. `--write` stores `views/<view>.md` and leaves the file untouched when the bytes are unchanged. These views do not replace `README.md`.
+
 `appledger transaction resume` and `appledger transaction rollback` finish or undo an interrupted apply. They replace only journaled paths, and they leave a file alone when its bytes changed after the apply started. A second apply of bytes that are already on disk writes nothing.
 
 ## Site

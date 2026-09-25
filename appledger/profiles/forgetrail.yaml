@@ -24,4 +24,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-0233ffe9-589c-4910-8a63-51c85106a377
+  - id: crit-d572c8bf-2ce8-4a3b-b36b-8905209ff40f
+    text: Orientation stays within a word budget without hiding recorded gaps, and a second progress render does not change the file.
+    status: met
+    evidence_refs:
+    - evidence-29ba6db1-0832-47db-86b9-4c709b7f38e8
 transitions: []
