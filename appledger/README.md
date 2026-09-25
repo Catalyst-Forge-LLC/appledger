@@ -4,8 +4,8 @@ This ledger is the project record for the AppLedger repository. It is not the no
 
 AppLedger is a text record of what an application is for, how it fits together, what it does, and how it changes. This repository holds that specification, a format checker, and this ledger about the product itself.
 
-Current phase: Plan. The format checker validates structure and reports missing sources, digest mismatches, and revision drift as warnings. The accepted name is `appledger` for the GitHub repository, the npm package, the CLI, and this directory. npm `0.0.0` is a name hold, not a release of this source.
+Current phase: Plan. The format checker validates structure, reports source and freshness warnings, and reports an open transaction journal. Resume and rollback recover an interrupted apply. The accepted name is `appledger` for the GitHub repository, the npm package, the CLI, and this directory. npm `0.0.0` is a name hold, not a release of this source.
 
 The checker does not migrate ForgeTrail. `.forgetrail/workflow_tracking.json` is a pointer, not a second decision log. AppLedger.dev is not deployed. No xFacts labels are claimed.
 
-Read the [application record](records/application/app-0d73a633-0c61-4cae-b285-1855b7f8dded.md), the [name decision](records/decision/decision-0b417999-ebde-49c2-9840-a27ca31e51b1.md), the [format-checker work](records/work/work-e758a913-b860-41d5-af82-ba71914b5e8a.md), and the [source and freshness work](records/work/work-f162e120-92ce-468a-8e94-507bbd99c16f.md). Resume from the [session](records/session/session-b7e6c468-298a-4146-a4bb-7886f1a74fbc.md).
+Read the [application record](records/application/app-0d73a633-0c61-4cae-b285-1855b7f8dded.md), the [name decision](records/decision/decision-0b417999-ebde-49c2-9840-a27ca31e51b1.md), the [format-checker work](records/work/work-e758a913-b860-41d5-af82-ba71914b5e8a.md), the [source and freshness work](records/work/work-f162e120-92ce-468a-8e94-507bbd99c16f.md), and the [transaction work](records/work/work-110dc629-54b0-40ce-9b6a-03397f7f02ee.md). Resume from the [session](records/session/session-b7e6c468-298a-4146-a4bb-7886f1a74fbc.md).

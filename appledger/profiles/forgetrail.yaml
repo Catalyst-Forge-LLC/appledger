@@ -19,4 +19,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-6c84d111-65c3-4aeb-b338-faaeb2edbe81
+  - id: crit-a7eb20da-1b9e-4efc-9bb2-b5c5653cedec
+    text: An interrupted multi-file apply stays incomplete, and a concurrent edit is not overwritten.
+    status: met
+    evidence_refs:
+    - evidence-0233ffe9-589c-4910-8a63-51c85106a377
 transitions: []

@@ -1,43 +1,38 @@
 #!/usr/bin/env node
 import { checkLedger } from "./check.js";
+import { listTransactions, resumeTransaction, rollbackTransaction } from "./transaction.js";
 
 const argv = process.argv.slice(2);
 const command = argv[0];
 
 if (!command || command === "--help" || command === "-h") {
   usage(command ? 0 : 2);
-} else if (command !== "check") {
-  console.error(`appledger ${command} is not implemented.`);
-  console.error("Implemented: check");
-  process.exit(4);
+} else if (command === "check") {
+  runCheck(argv.slice(1));
+} else if (command === "transaction") {
+  runTransaction(argv.slice(1));
 } else {
-  let root = process.cwd();
+  console.error(`appledger ${command} is not implemented.`);
+  console.error("Implemented: check, transaction");
+  process.exit(4);
+}
+
+function runCheck(args: string[]): void {
+  const parsed = parseRoot(args, new Set(["--root", "--format"]));
+  if (!parsed) return;
   let format: "text" | "json" = "text";
-  for (let i = 1; i < argv.length; i += 1) {
-    const arg = argv[i];
-    if (arg === "--root") {
-      const next = argv[i + 1];
-      if (!next) {
-        console.error("--root requires a path");
-        process.exit(2);
-      }
-      root = next;
-      i += 1;
-    } else if (arg === "--format") {
-      const next = argv[i + 1];
+  for (let i = 0; i < args.length; i += 1) {
+    if (args[i] === "--format") {
+      const next = args[i + 1];
       if (next !== "text" && next !== "json") {
         console.error("--format must be text or json");
         process.exit(2);
       }
       format = next;
-      i += 1;
-    } else {
-      console.error(`Unknown argument ${arg}`);
-      process.exit(2);
     }
   }
   try {
-    const result = checkLedger(root);
+    const result = checkLedger(parsed.root);
     if (format === "json") {
       console.log(JSON.stringify(result, null, 2));
     } else if (result.findings.length === 0) {
@@ -54,10 +49,76 @@ if (!command || command === "--help" || command === "-h") {
   }
 }
 
+function runTransaction(args: string[]): void {
+  const action = args[0];
+  if (action !== "status" && action !== "resume" && action !== "rollback") {
+    console.error("Usage: appledger transaction status|resume|rollback [--root DIR] [--id ID]");
+    process.exit(2);
+  }
+  const parsed = parseRoot(args.slice(1), new Set(["--root", "--id"]));
+  if (!parsed) return;
+  const id = flag(args, "--id");
+  try {
+    if (action === "status") {
+      const pending = listTransactions(parsed.root).filter((item) => item.status !== "complete");
+      if (pending.length === 0) {
+        console.log("no pending transactions");
+        process.exit(0);
+      }
+      for (const item of pending) console.log(`${item.status} ${item.id}: ${item.message}`);
+      process.exit(1);
+    }
+    if (!id) {
+      console.error("--id is required");
+      process.exit(2);
+    }
+    const result = action === "resume" ? resumeTransaction(parsed.root, id) : rollbackTransaction(parsed.root, id);
+    console.log(`${result.status} ${result.id}: ${result.message}`);
+    if (result.status === "conflict") process.exit(3);
+    if (!result.ok) process.exit(1);
+    process.exit(0);
+  } catch (err) {
+    console.error(err instanceof Error ? err.message : String(err));
+    process.exit(5);
+  }
+}
+
+function parseRoot(args: string[], known: Set<string>): { root: string } | undefined {
+  let root = process.cwd();
+  for (let i = 0; i < args.length; i += 1) {
+    const arg = args[i];
+    if (!arg.startsWith("--")) {
+      console.error(`Unknown argument ${arg}`);
+      process.exit(2);
+    }
+    if (!known.has(arg)) {
+      console.error(`Unknown argument ${arg}`);
+      process.exit(2);
+    }
+    const next = args[i + 1];
+    if (!next) {
+      console.error(`${arg} requires a value`);
+      process.exit(2);
+    }
+    if (arg === "--root") root = next;
+    i += 1;
+  }
+  return { root };
+}
+
+function flag(args: string[], name: string): string | undefined {
+  const index = args.indexOf(name);
+  if (index === -1) return undefined;
+  return args[index + 1];
+}
+
 function usage(code: number): never {
   console.log(`appledger check [--root DIR] [--format text|json]
+appledger transaction status [--root DIR]
+appledger transaction resume --id ID [--root DIR]
+appledger transaction rollback --id ID [--root DIR]
 
-Reads an AppLedger directory and reports schema, reference, and predicate findings.
-Does not modify files. Other commands are not implemented yet.`);
+check reads a ledger and does not modify files.
+transaction resume and rollback recover an interrupted apply. They do not start a new reconciliation.`);
   process.exit(code);
 }

@@ -20,7 +20,9 @@ pnpm exec appledger check --root examples/minimal/appledger
 pnpm exec appledger check
 ```
 
-`appledger check` reads a ledger and prints findings. It does not modify files. Errors are schema, predicate, and path problems. Warnings mean a recorded source is missing, its digest no longer matches, or a claim's git revision is not HEAD. A missing file is not treated as proof that a feature is gone. Other commands from the specification are not implemented yet.
+`appledger check` reads a ledger and prints findings. It does not modify files. Errors are schema, predicate, and path problems. Warnings mean a recorded source is missing, its digest no longer matches, a claim's git revision is not HEAD, or a transaction journal is still open. A missing file is not treated as proof that a feature is gone.
+
+`appledger transaction resume` and `appledger transaction rollback` finish or undo an interrupted apply. They replace only journaled paths, and they leave a file alone when its bytes changed after the apply started. A second apply of bytes that are already on disk writes nothing.
 
 ## Site
 

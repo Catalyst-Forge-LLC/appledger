@@ -3,6 +3,7 @@ import { join, relative, resolve, sep } from "node:path";
 import { PREDICATES } from "./predicates.js";
 import { schemaErrors } from "./schemas.js";
 import { checkSources, isInside, isUnsafeRelative } from "./sources.js";
+import { listTransactions } from "./transaction.js";
 import { parseYaml, splitFrontMatter } from "./yaml.js";
 
 export type Severity = "error" | "warning";
@@ -89,6 +90,7 @@ export function checkLedger(input: string): CheckResult {
   checkDepends(records, byId, findings);
   checkProfile(ledgerRoot, manifestObj, findings);
   checkPolicy(ledgerRoot, findings);
+  checkPendingTransactions(ledgerRoot, findings);
 
   return result(ledgerRoot, findings);
 }
@@ -99,6 +101,21 @@ function result(ledgerRoot: string, findings: Finding[]): CheckResult {
     ledgerRoot,
     findings,
   };
+}
+
+function checkPendingTransactions(ledgerRoot: string, findings: Finding[]): void {
+  const home = resolve(ledgerRoot, "..");
+  for (const item of listTransactions(home)) {
+    if (item.status === "complete" || item.status === "unchanged" || item.status === "rolled_back") continue;
+    findings.push(
+      finding(
+        "incomplete_transaction",
+        "warning",
+        `.appledger-cache/transactions/${item.id}/journal.json`,
+        `${item.message} Recover it before trusting generated views.`,
+      ),
+    );
+  }
 }
 
 function finding(code: string, severity: Severity, path: string, message: string): Finding {
