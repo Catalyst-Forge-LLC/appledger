@@ -9,5 +9,6 @@ These files are copies so AppLedger can validate without depending on the child 
 | skillfacts | 0.1.0 | `skillfacts/0.1.0/skill-facts.schema.json` | `1487c5a04f9234f4ab5f4f817ca5b76fdff4ece4` |
 | toolfacts | 0.1.0 | `toolfacts/0.1.0/tool-facts.schema.json` | `23fe664bce0fcc7537dfbbe26913cb75249a01ba` |
 | agentfacts | 0.1.0 | `agentfacts/0.1.0/agent-facts.schema.json` | `d71c9883e3fa2d104c5d7f06d92ee86c56f9089c` |
+| modelfacts | 0.1.0 | `modelfacts/0.1.0/model-facts.schema.json` | `10cace218a461f0739655d09e26798ef3af14047` |
 
-FeatureFacts source paths: `schemas/registry.schema.json`, `schemas/feature-record.schema.json`, `schemas/common.schema.json`. AppFacts source path: `site/schema/app-facts.schema.json`. SkillFacts source path: `site/schema/skill-facts.schema.json`. ToolFacts source path: `site/schema/tool-facts.schema.json`. AgentFacts source path: `site/schema/agent-facts.schema.json`.
+FeatureFacts source paths: `schemas/registry.schema.json`, `schemas/feature-record.schema.json`, `schemas/common.schema.json`. AppFacts source path: `site/schema/app-facts.schema.json`. SkillFacts source path: `site/schema/skill-facts.schema.json`. ToolFacts source path: `site/schema/tool-facts.schema.json`. AgentFacts source path: `site/schema/agent-facts.schema.json`. ModelFacts source path: `site/schema/model-facts.schema.json`.

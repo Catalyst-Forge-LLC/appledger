@@ -59,4 +59,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-194a6abc-4bd6-477c-ac1d-4dd8cca5c762
+  - id: crit-fbc5588d-5caf-4285-8a81-2fac638e2f14
+    text: Offline metadata can confirm an exact variant, and a different variant does not inherit context window or benchmarks.
+    status: met
+    evidence_refs:
+    - evidence-278c5571-ff60-4b29-b318-5c7bdf7969d4
 transitions: []

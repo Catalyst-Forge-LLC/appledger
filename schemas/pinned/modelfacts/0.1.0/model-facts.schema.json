@@ -1,0 +1,238 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://modelfacts.dev/schema/model-facts.schema.json",
+  "title": "ModelFacts frontmatter",
+  "type": "object",
+  "required": [
+    "model_facts_version",
+    "name",
+    "developer",
+    "status",
+    "license",
+    "architecture",
+    "training",
+    "capabilities",
+    "safety",
+    "generated"
+  ],
+  "properties": {
+    "model_facts_version": {
+      "type": "string",
+      "description": "Spec version this file conforms to, e.g. 0.1.0"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Official model name and version, e.g. Llama-3.1-70B-Instruct"
+    },
+    "developer": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Organization (or person) that trained/released the model"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "deprecated", "preview", "archived"]
+    },
+    "license": {
+      "type": "string",
+      "description": "SPDX identifier or official license name when known, otherwise UNKNOWN"
+    },
+    "release_date": { "type": "string", "format": "date" },
+    "homepage": { "type": "string", "format": "uri" },
+    "repository": { "type": "string", "format": "uri" },
+    "weights": { "type": "string", "format": "uri" },
+    "base_model": { "type": "string", "minLength": 1 },
+    "architecture": {
+      "type": "object",
+      "required": ["type", "parameters", "context_window", "quantization"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Structural framework, e.g. dense transformer (decoder-only), mixture of experts (MoE)"
+        },
+        "parameters": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Total trainable parameters, e.g. 70B, 8x22B, undisclosed"
+        },
+        "active_parameters": {
+          "type": "string",
+          "description": "Parameters active per token (MoE)"
+        },
+        "context_window": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Max tokens per inference, e.g. 128k"
+        },
+        "quantization": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Precision as distributed, e.g. bf16, 4-bit (GPTQ), GGUF Q4_K_M"
+        },
+        "modalities_in": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "modalities_out": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "additionalProperties": false
+    },
+    "training": {
+      "type": "object",
+      "required": ["knowledge_cutoff", "methodology"],
+      "properties": {
+        "knowledge_cutoff": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Date training-data collection ended (YYYY-MM or YYYY-MM-DD), or undisclosed"
+        },
+        "methodology": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Training pipeline, e.g. pre-training \u2192 SFT \u2192 DPO"
+        },
+        "tokens": {
+          "type": "string",
+          "description": "Total training tokens, e.g. 15T, undisclosed"
+        },
+        "data_composition": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "required": ["component", "percent", "source_type", "purpose"],
+            "properties": {
+              "component": { "type": "string", "minLength": 1 },
+              "percent": {
+                "oneOf": [
+                  { "type": "number", "minimum": 0, "maximum": 100 },
+                  { "type": "string", "enum": ["undisclosed"] }
+                ]
+              },
+              "source_type": { "type": "string", "minLength": 1 },
+              "purpose": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "capabilities": {
+      "type": "object",
+      "required": [
+        "natural_language",
+        "reasoning_math",
+        "coding",
+        "vision_input",
+        "audio_input"
+      ],
+      "properties": {
+        "natural_language": { "type": "string", "enum": ["full", "limited"] },
+        "reasoning_math": {
+          "type": "string",
+          "enum": ["high", "medium", "low", "unresolved"],
+          "description": "Assessment for comparison, not a ModelFacts measurement. Use unresolved when the card gives no basis. Record the evidence basis in notes or comments."
+        },
+        "coding": {
+          "type": "string",
+          "enum": ["high", "medium", "low", "unresolved"],
+          "description": "Assessment for comparison, not a ModelFacts measurement. Use unresolved when the card gives no basis. Record the evidence basis in notes or comments."
+        },
+        "vision_input": { "type": "string", "enum": ["enabled", "disabled"] },
+        "audio_input": { "type": "string", "enum": ["enabled", "disabled"] },
+        "tool_use": { "type": "string", "enum": ["native", "prompted", "none"] },
+        "languages": { "type": "string", "minLength": 1 },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Evidence basis for capability assessments, plus stated nuance such as supported languages"
+        }
+      },
+      "additionalProperties": false
+    },
+    "safety": {
+      "type": "object",
+      "required": ["refusal_sensitivity", "instruction_following", "filter_type"],
+      "properties": {
+        "refusal_sensitivity": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "unresolved"],
+          "description": "Assessment of refusal posture, not a measured protocol. Use unresolved when the publisher gives no basis."
+        },
+        "instruction_following": {
+          "type": "string",
+          "enum": ["high", "medium", "low", "unresolved"],
+          "description": "Assessment of instruction adherence, not a ModelFacts measurement. Use unresolved when the card gives no basis."
+        },
+        "filter_type": {
+          "type": "string",
+          "enum": ["raw", "censored", "hybrid"],
+          "description": "Assessment of built-in filtering, not a certification."
+        },
+        "hallucination_benchmark": {
+          "type": "object",
+          "required": ["name", "score"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "score": { "type": "number" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "benchmarks": {
+      "type": "array",
+      "maxItems": 10,
+      "description": "Published scores copied from a named source for this variant. Omit rather than invent. notes should name source, variant, shot count, and metric.",
+      "items": {
+        "type": "object",
+        "required": ["name", "score"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "score": { "type": "number" },
+          "notes": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "generated": {
+      "type": "object",
+      "required": ["date", "generator"],
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "generator": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "reviewed": {
+      "type": "object",
+      "description": "Optional human review stamp. Presence is not certification.",
+      "required": ["date", "by", "status"],
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "by": { "type": "string", "minLength": 1 },
+        "status": {
+          "type": "string",
+          "enum": ["publisher-authored", "independently-reviewed", "stale"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "credits": {
+      "type": "object",
+      "properties": {
+        "generated_with": { "type": "string" },
+        "built_by": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

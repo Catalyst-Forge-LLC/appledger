@@ -8,6 +8,7 @@ import { runPinnedOperation } from "./refresh.js";
 import { runSkillFactsOperation } from "./skillfacts.js";
 import { runToolFactsOperation } from "./toolfacts.js";
 import { runAgentFactsOperation } from "./agentfacts.js";
+import { runModelFactsOperation } from "./modelfacts.js";
 
 export const FAMILIES = ["appfacts", "featurefacts", "toolfacts", "agentfacts", "skillfacts", "modelfacts"] as const;
 
@@ -63,22 +64,10 @@ export const ADAPTERS: AdapterDeclaration[] = FAMILIES.map((family) => ({
   id: `appledger.${family}`,
   version: "0.1.0",
   family,
-  schemaVersions:
-    family === "featurefacts"
-      ? ["0.2.0"]
-      : family === "appfacts" || family === "skillfacts" || family === "toolfacts" || family === "agentfacts"
-        ? ["0.1.0"]
-        : [],
+  schemaVersions: family === "featurefacts" ? ["0.2.0"] : ["0.1.0"],
   subjectTypes: subjectTypes(family),
   inputTypes: ["binding"],
-  deterministicOperations:
-    family === "featurefacts" ||
-    family === "appfacts" ||
-    family === "skillfacts" ||
-    family === "toolfacts" ||
-    family === "agentfacts"
-      ? ["discover", "validate", "extract", "checkFreshness", "propose"]
-      : ["discover"],
+  deterministicOperations: ["discover", "validate", "extract", "checkFreshness", "propose"],
   agentAssistedOperations: [],
   network: false,
   runtime: false,
@@ -118,6 +107,8 @@ export function runOperation(input: {
         rows.push(...runToolFactsOperation({ ledgerRoot, operation: input.operation, subjectId: input.subjectId }));
       } else if (family === "agentfacts" && isPinnedOperation(input.operation)) {
         rows.push(...runAgentFactsOperation({ ledgerRoot, operation: input.operation, subjectId: input.subjectId }));
+      } else if (family === "modelfacts" && isPinnedOperation(input.operation)) {
+        rows.push(...runModelFactsOperation({ ledgerRoot, operation: input.operation, subjectId: input.subjectId }));
       } else {
         rows.push(
           result(adapterFor(family), input.operation, input.subjectId ?? "", "unsupported", null, [

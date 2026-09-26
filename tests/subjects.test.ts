@@ -120,29 +120,20 @@ describe("subject inventory", () => {
     expect(discoverSubjects({ root, family: "featurefacts", subjectId: "app-workshop-demo" })).toEqual(discovered);
   });
 
-  it("pins AppFacts and FeatureFacts schemas and leaves the other families unsupported", () => {
+  it("pins a schema for each family and leaves render unsupported", () => {
     expect(ADAPTERS).toHaveLength(6);
     for (const adapter of ADAPTERS) {
       expect(adapter.network).toBe(false);
       expect(adapter.runtime).toBe(false);
       expect(adapter.ownedFields).toEqual([]);
       expect(adapter.agentAssistedOperations).toEqual([]);
-      if (adapter.family === "featurefacts") {
-        expect(adapter.schemaVersions).toEqual(["0.2.0"]);
-        expect(adapter.deterministicOperations).toContain("validate");
-      } else if (adapter.family === "appfacts") {
-        expect(adapter.schemaVersions).toEqual(["0.1.0"]);
-      } else if (adapter.family === "skillfacts" || adapter.family === "toolfacts" || adapter.family === "agentfacts") {
-        expect(adapter.schemaVersions).toEqual(["0.1.0"]);
-        expect(adapter.deterministicOperations).toContain("validate");
-      } else {
-        expect(adapter.schemaVersions).toEqual([]);
-        expect(adapter.deterministicOperations).toEqual(["discover"]);
-      }
+      expect(adapter.schemaVersions).toEqual(adapter.family === "featurefacts" ? ["0.2.0"] : ["0.1.0"]);
+      expect(adapter.deterministicOperations).toContain("validate");
     }
     const root = copyMinimal();
     expect(discoverSubjects({ root })).toEqual(discoverSubjects({ root }));
-    const extracted = runOperation({ root, operation: "extract", family: "modelfacts" });
-    expect(extracted[0]?.disposition).toBe("unsupported");
+    const rendered = runOperation({ root, operation: "render", family: "modelfacts" });
+    expect(rendered[0]?.disposition).toBe("unsupported");
+    expect(rendered[0]?.findings.join(" ")).toMatch(/No label was written/);
   });
 });
