@@ -1,0 +1,1410 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://featurefacts.dev/schema/v0.2.0/common.schema.json",
+  "title": "FeatureFacts common",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*:)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*(?:^|/)\\.(?:/|$))(?!.*//)(?!.*[\\x00-\\x1f])[^/]+(?:/[^/]+)*$"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "datetime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "content_sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "common.schema.json#/$defs/path"
+        },
+        "content_sha256": {
+          "$ref": "common.schema.json#/$defs/hash"
+        },
+        "start_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "dependentRequired": {
+        "end_line": [
+          "start_line"
+        ]
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adapter_id",
+        "adapter_version",
+        "origin",
+        "method"
+      ],
+      "properties": {
+        "adapter_id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "adapter_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "origin": {
+          "type": "string",
+          "enum": [
+            "deterministic",
+            "agent-assisted",
+            "maintainer"
+          ]
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "declaration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actor",
+        "source",
+        "recorded_at"
+      ],
+      "properties": {
+        "actor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recorded_at": {
+          "$ref": "common.schema.json#/$defs/datetime"
+        },
+        "locator": {
+          "$ref": "common.schema.json#/$defs/locator"
+        }
+      }
+    },
+    "diagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "severity",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "info",
+            "warning",
+            "error"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "$ref": "common.schema.json#/$defs/path"
+        }
+      }
+    },
+    "adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "kind",
+        "state",
+        "eligible_files",
+        "inspected_files",
+        "diagnostics"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "tree",
+            "surface",
+            "document",
+            "test",
+            "graph",
+            "history"
+          ]
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "completed",
+            "partial",
+            "skipped",
+            "unsupported",
+            "failed"
+          ]
+        },
+        "eligible_files": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/path"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "inspected_files": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/path"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/diagnostic"
+          },
+          "minItems": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "partial",
+                  "skipped",
+                  "unsupported",
+                  "failed"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "diagnostics": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface_id",
+        "association"
+      ],
+      "properties": {
+        "surface_id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "association": {
+          "type": "string",
+          "enum": [
+            "explicit-annotation",
+            "static-reference",
+            "maintainer-reviewed"
+          ]
+        }
+      }
+    },
+    "assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "result",
+        "adapter_ids",
+        "links",
+        "reason"
+      ],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "assessed",
+            "partial",
+            "unassessed",
+            "not-applicable",
+            "undisclosed"
+          ]
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "linked-evidence",
+            "no-linked-evidence",
+            "unknown",
+            "not-applicable",
+            "undisclosed"
+          ]
+        },
+        "adapter_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/link"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "assessed"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "string",
+                "enum": [
+                  "linked-evidence",
+                  "no-linked-evidence"
+                ]
+              },
+              "adapter_ids": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "partial"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "string",
+                "enum": [
+                  "linked-evidence",
+                  "unknown"
+                ]
+              },
+              "adapter_ids": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "unassessed"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "const": "unknown"
+              },
+              "links": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "not-applicable"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "const": "not-applicable"
+              },
+              "links": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "undisclosed"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "const": "undisclosed"
+              },
+              "links": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "result": {
+                "const": "linked-evidence"
+              }
+            },
+            "required": [
+              "result"
+            ]
+          },
+          "then": {
+            "properties": {
+              "links": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "result": {
+                "const": "no-linked-evidence"
+              }
+            },
+            "required": [
+              "result"
+            ]
+          },
+          "then": {
+            "properties": {
+              "state": {
+                "const": "assessed"
+              },
+              "links": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "result": {
+                "const": "unknown"
+              }
+            },
+            "required": [
+              "result"
+            ]
+          },
+          "then": {
+            "properties": {
+              "links": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "conditions",
+        "reason"
+      ],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "unrestricted",
+            "conditional",
+            "unavailable",
+            "unknown",
+            "undisclosed"
+          ]
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "plan",
+                  "role",
+                  "flag",
+                  "other"
+                ]
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "conditional"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "conditions": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "not": {
+                  "const": "conditional"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "conditions": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "audiences": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "values",
+        "reason"
+      ],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "known",
+            "unknown",
+            "undisclosed"
+          ]
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "user",
+              "operator",
+              "admin",
+              "agent",
+              "developer"
+            ]
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "known"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "values": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "unknown",
+                  "undisclosed"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "values": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "discovery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "surfaces",
+        "adapter_ids",
+        "reason"
+      ],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "assessed",
+            "partial",
+            "unassessed",
+            "undisclosed"
+          ]
+        },
+        "surfaces": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "landing",
+              "in-app",
+              "cli-help",
+              "api-docs",
+              "operator-docs",
+              "other"
+            ]
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "adapter_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "unassessed",
+                  "undisclosed"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "surfaces": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "assessed",
+                  "partial"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "adapter_ids": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "state",
+        "assertion"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "observed",
+            "declared",
+            "inferred"
+          ]
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "current",
+            "stale",
+            "unresolved"
+          ]
+        },
+        "assertion": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field",
+            "value",
+            "claim"
+          ],
+          "properties": {
+            "field": {
+              "type": "string",
+              "enum": [
+                "capability",
+                "recognition",
+                "lifecycle",
+                "availability",
+                "maturity",
+                "audiences",
+                "discovery",
+                "intent",
+                "publication",
+                "dependencies",
+                "docs",
+                "tests"
+              ]
+            },
+            "value": {},
+            "claim": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "locator": {
+          "$ref": "common.schema.json#/$defs/locator"
+        },
+        "provenance": {
+          "$ref": "common.schema.json#/$defs/provenance"
+        },
+        "declaration": {
+          "$ref": "common.schema.json#/$defs/declaration"
+        },
+        "support_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "uncertainty": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "observed"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "locator",
+              "provenance"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "declaration"
+                  ]
+                },
+                {
+                  "required": [
+                    "support_ids"
+                  ]
+                },
+                {
+                  "required": [
+                    "method"
+                  ]
+                },
+                {
+                  "required": [
+                    "uncertainty"
+                  ]
+                },
+                {
+                  "required": [
+                    "rationale"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "declared"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "declaration"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "locator"
+                  ]
+                },
+                {
+                  "required": [
+                    "provenance"
+                  ]
+                },
+                {
+                  "required": [
+                    "support_ids"
+                  ]
+                },
+                {
+                  "required": [
+                    "method"
+                  ]
+                },
+                {
+                  "required": [
+                    "uncertainty"
+                  ]
+                },
+                {
+                  "required": [
+                    "rationale"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "inferred"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "support_ids",
+              "method",
+              "uncertainty",
+              "rationale"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "locator"
+                  ]
+                },
+                {
+                  "required": [
+                    "provenance"
+                  ]
+                },
+                {
+                  "required": [
+                    "declaration"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "last_seen_scan_id",
+        "reason"
+      ],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "current",
+            "stale",
+            "unresolved"
+          ]
+        },
+        "last_seen_scan_id": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "type",
+        "status"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "maintenance",
+            "archived",
+            "experimental",
+            "unknown",
+            "undisclosed"
+          ]
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "editorial": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "locked",
+        "aliases",
+        "notes"
+      ],
+      "properties": {
+        "locked": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "name",
+              "description",
+              "type",
+              "lifecycle",
+              "availability",
+              "maturity",
+              "audiences",
+              "intent",
+              "publication",
+              "entry_points",
+              "implements",
+              "dependencies"
+            ]
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "notes": {
+          "type": "string"
+        },
+        "retirement": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reason",
+            "approved_by",
+            "evidence_ids"
+          ],
+          "properties": {
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "approved_by": {
+              "type": "string",
+              "minLength": 1
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "$ref": "common.schema.json#/$defs/id"
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          }
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "registered",
+        "selected",
+        "unlabeled"
+      ],
+      "properties": {
+        "scope": {
+          "const": "eligible-confirmed-active"
+        },
+        "registered": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "selected": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unlabeled": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "rollup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "eligible",
+        "assessed",
+        "with_links",
+        "without_links",
+        "partial",
+        "unassessed",
+        "not_applicable",
+        "undisclosed"
+      ],
+      "properties": {
+        "eligible": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "assessed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "with_links": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "without_links": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "partial": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unassessed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "not_applicable": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "undisclosed": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "label_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "lifecycle",
+        "availability",
+        "conditions",
+        "maturity",
+        "documentation",
+        "tests",
+        "evidence_state"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lifecycle": {
+          "type": "string",
+          "enum": [
+            "implemented",
+            "released",
+            "stub",
+            "retired",
+            "unknown",
+            "undisclosed"
+          ]
+        },
+        "availability": {
+          "type": "string",
+          "enum": [
+            "unrestricted",
+            "conditional",
+            "unavailable",
+            "unknown",
+            "undisclosed"
+          ]
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "plan",
+                  "role",
+                  "flag",
+                  "other"
+                ]
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "maturity": {
+          "type": "string",
+          "enum": [
+            "stable",
+            "experimental",
+            "deprecated",
+            "unknown",
+            "undisclosed"
+          ]
+        },
+        "documentation": {
+          "type": "string",
+          "enum": [
+            "linked-evidence",
+            "no-linked-evidence",
+            "partial",
+            "unknown",
+            "not-applicable",
+            "undisclosed"
+          ]
+        },
+        "tests": {
+          "type": "string",
+          "enum": [
+            "linked-evidence",
+            "no-linked-evidence",
+            "partial",
+            "unknown",
+            "not-applicable",
+            "undisclosed"
+          ]
+        },
+        "evidence_state": {
+          "type": "string",
+          "enum": [
+            "current",
+            "stale",
+            "unresolved",
+            "declared"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "availability": {
+                "const": "conditional"
+              }
+            },
+            "required": [
+              "availability"
+            ]
+          },
+          "then": {
+            "properties": {
+              "conditions": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "availability": {
+                "not": {
+                  "const": "conditional"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "conditions": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "surface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "ref",
+        "locator",
+        "provenance",
+        "state"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "file",
+            "symbol",
+            "route",
+            "command",
+            "job",
+            "flag",
+            "permission",
+            "nav",
+            "api",
+            "schema",
+            "document",
+            "test",
+            "other"
+          ]
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "locator": {
+          "$ref": "common.schema.json#/$defs/locator"
+        },
+        "provenance": {
+          "$ref": "common.schema.json#/$defs/provenance"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "current",
+            "stale",
+            "unresolved"
+          ]
+        }
+      }
+    }
+  }
+}

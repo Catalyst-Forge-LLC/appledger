@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://featurefacts.dev/schema/v0.2.0/registry.schema.json",
+  "title": "FeatureFacts registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "scan_id",
+    "product",
+    "features",
+    "redirects"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "0.2.0"
+    },
+    "scan_id": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "product": {
+      "$ref": "common.schema.json#/$defs/product"
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "$ref": "feature-record.schema.json"
+      },
+      "minItems": 0
+    },
+    "redirects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "from",
+          "to",
+          "reason",
+          "approved_by"
+        ],
+        "properties": {
+          "from": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "to": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approved_by": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "minItems": 0
+    }
+  }
+}

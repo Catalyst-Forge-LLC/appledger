@@ -113,23 +113,33 @@ describe("subject inventory", () => {
     expect(existsSync(join(root, ".featurefacts", "label.md"))).toBe(false);
 
     const extracted = runOperation({ root, operation: "extract", family: "featurefacts", subjectId: "app-workshop-demo" });
-    expect(extracted.every((row) => row.disposition === "unsupported")).toBe(true);
-    expect(extracted.every((row) => row.changedFields.length === 0)).toBe(true);
+    expect(extracted[0]?.disposition).toBe("failed");
+    expect(extracted[0]?.changedFields).toEqual([]);
+    expect(extracted[0]?.findings.join(" ")).not.toMatch(/feature failed|absent/i);
     expect(existsSync(join(root, ".featurefacts", "label.md"))).toBe(false);
     expect(discoverSubjects({ root, family: "featurefacts", subjectId: "app-workshop-demo" })).toEqual(discovered);
   });
 
-  it("declares discover as the only operation and does not use the network", () => {
+  it("pins AppFacts and FeatureFacts schemas and leaves the other families unsupported", () => {
     expect(ADAPTERS).toHaveLength(6);
     for (const adapter of ADAPTERS) {
-      expect(adapter.deterministicOperations).toEqual(["discover"]);
-      expect(adapter.agentAssistedOperations).toEqual([]);
-      expect(adapter.schemaVersions).toEqual([]);
       expect(adapter.network).toBe(false);
       expect(adapter.runtime).toBe(false);
       expect(adapter.ownedFields).toEqual([]);
+      expect(adapter.agentAssistedOperations).toEqual([]);
+      if (adapter.family === "featurefacts") {
+        expect(adapter.schemaVersions).toEqual(["0.2.0"]);
+        expect(adapter.deterministicOperations).toContain("validate");
+      } else if (adapter.family === "appfacts") {
+        expect(adapter.schemaVersions).toEqual(["0.1.0"]);
+      } else {
+        expect(adapter.schemaVersions).toEqual([]);
+        expect(adapter.deterministicOperations).toEqual(["discover"]);
+      }
     }
     const root = copyMinimal();
     expect(discoverSubjects({ root })).toEqual(discoverSubjects({ root }));
+    const extracted = runOperation({ root, operation: "extract", family: "toolfacts" });
+    expect(extracted[0]?.disposition).toBe("unsupported");
   });
 });

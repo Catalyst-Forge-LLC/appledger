@@ -1,0 +1,284 @@
+id: resume-importer
+name: Resume import
+description: Parse an uploaded text resume into a draft profile.
+type: feature
+recognition: confirmed
+lifecycle: released
+availability:
+  state: conditional
+  conditions:
+  - kind: plan
+    value: Pro
+  - kind: role
+    value: member
+  reason: Declared by the synthetic maintainer, not inferred from route presence.
+maturity: experimental
+audiences:
+  state: known
+  values:
+  - user
+  reason: Declared fixture audience.
+discovery:
+  state: partial
+  surfaces:
+  - in-app
+  adapter_ids:
+  - fixture-surface
+  reason: The local fixture shows an in-app menu. No global marketing absence is inferred.
+intent: limited-discovery
+publication:
+  scope: public
+  reason: Fixture Maintainer approved the label fields for this capability.
+entry_points:
+- import-route
+- import-api
+implements:
+- import-api
+dependencies: []
+docs:
+  state: assessed
+  result: linked-evidence
+  adapter_ids:
+  - fixture-document
+  links:
+  - surface_id: import-doc
+    association: explicit-annotation
+  reason: An explicit feature annotation was found in the inspected documentation.
+tests:
+  state: assessed
+  result: linked-evidence
+  adapter_ids:
+  - fixture-test
+  links:
+  - surface_id: import-test
+    association: explicit-annotation
+  reason: An explicit feature annotation was found. Test execution and breadth were
+    not assessed.
+observation:
+  state: current
+  last_seen_scan_id: demo-scan-1
+  reason: Current fixture source evidence is available.
+evidence:
+- id: resume-importer-capability
+  kind: observed
+  state: current
+  assertion:
+    field: capability
+    value: Parse an uploaded text resume into a draft profile.
+    claim: The fixture explicitly describes the import behavior.
+  locator:
+    path: src/routes.txt
+    content_sha256: 3dfdcb9f263bc348088a1e2c2db874b75f8a10134104ac482420889d101823a8
+    start_line: 1
+  provenance:
+    adapter_id: fixture-surface
+    adapter_version: 0.2.0
+    origin: deterministic
+    method: explicit-fixture-descriptor
+- id: resume-importer-recognition
+  kind: declared
+  state: current
+  assertion:
+    field: recognition
+    value: confirmed
+    claim: The synthetic maintainer declares recognition.
+  declaration:
+    actor: Fixture Maintainer
+    source: decisions/features.md
+    recorded_at: '2026-09-19T20:00:00Z'
+    locator:
+      path: decisions/features.md
+      content_sha256: 993477816b8756831bb28721faf688007fc64af24ad8aa9b4572a6bf54b1dc77
+      start_line: 3
+      end_line: 11
+- id: resume-importer-lifecycle
+  kind: declared
+  state: current
+  assertion:
+    field: lifecycle
+    value: released
+    claim: The synthetic maintainer declares lifecycle.
+  declaration:
+    actor: Fixture Maintainer
+    source: decisions/features.md
+    recorded_at: '2026-09-19T20:00:00Z'
+    locator:
+      path: decisions/features.md
+      content_sha256: 993477816b8756831bb28721faf688007fc64af24ad8aa9b4572a6bf54b1dc77
+      start_line: 3
+      end_line: 11
+- id: resume-importer-availability
+  kind: declared
+  state: current
+  assertion:
+    field: availability
+    value:
+      state: conditional
+      conditions:
+      - kind: plan
+        value: Pro
+      - kind: role
+        value: member
+      reason: Declared by the synthetic maintainer, not inferred from route presence.
+    claim: The synthetic maintainer declares availability.
+  declaration:
+    actor: Fixture Maintainer
+    source: decisions/features.md
+    recorded_at: '2026-09-19T20:00:00Z'
+    locator:
+      path: decisions/features.md
+      content_sha256: 993477816b8756831bb28721faf688007fc64af24ad8aa9b4572a6bf54b1dc77
+      start_line: 3
+      end_line: 11
+- id: resume-importer-maturity
+  kind: declared
+  state: current
+  assertion:
+    field: maturity
+    value: experimental
+    claim: The synthetic maintainer declares maturity.
+  declaration:
+    actor: Fixture Maintainer
+    source: decisions/features.md
+    recorded_at: '2026-09-19T20:00:00Z'
+    locator:
+      path: decisions/features.md
+      content_sha256: 993477816b8756831bb28721faf688007fc64af24ad8aa9b4572a6bf54b1dc77
+      start_line: 3
+      end_line: 11
+- id: resume-importer-audiences
+  kind: declared
+  state: current
+  assertion:
+    field: audiences
+    value:
+      state: known
+      values:
+      - user
+      reason: Declared fixture audience.
+    claim: The synthetic maintainer declares audiences.
+  declaration:
+    actor: Fixture Maintainer
+    source: decisions/features.md
+    recorded_at: '2026-09-19T20:00:00Z'
+    locator:
+      path: decisions/features.md
+      content_sha256: 993477816b8756831bb28721faf688007fc64af24ad8aa9b4572a6bf54b1dc77
+      start_line: 3
+      end_line: 11
+- id: resume-importer-intent
+  kind: declared
+  state: current
+  assertion:
+    field: intent
+    value: limited-discovery
+    claim: The synthetic maintainer declares intent.
+  declaration:
+    actor: Fixture Maintainer
+    source: decisions/features.md
+    recorded_at: '2026-09-19T20:00:00Z'
+    locator:
+      path: decisions/features.md
+      content_sha256: 993477816b8756831bb28721faf688007fc64af24ad8aa9b4572a6bf54b1dc77
+      start_line: 3
+      end_line: 11
+- id: resume-importer-publication
+  kind: declared
+  state: current
+  assertion:
+    field: publication
+    value:
+      scope: public
+      reason: Fixture Maintainer approved the label fields for this capability.
+    claim: The synthetic maintainer declares publication.
+  declaration:
+    actor: Fixture Maintainer
+    source: decisions/features.md
+    recorded_at: '2026-09-19T20:00:00Z'
+    locator:
+      path: decisions/features.md
+      content_sha256: 993477816b8756831bb28721faf688007fc64af24ad8aa9b4572a6bf54b1dc77
+      start_line: 3
+      end_line: 11
+- id: resume-importer-discovery
+  kind: observed
+  state: current
+  assertion:
+    field: discovery
+    value:
+      state: partial
+      surfaces:
+      - in-app
+      adapter_ids:
+      - fixture-surface
+      reason: The local fixture shows an in-app menu. No global marketing absence
+        is inferred.
+    claim: The fixture explicitly names an in-app Import resume menu.
+  locator:
+    path: src/routes.txt
+    content_sha256: 3dfdcb9f263bc348088a1e2c2db874b75f8a10134104ac482420889d101823a8
+    start_line: 1
+  provenance:
+    adapter_id: fixture-surface
+    adapter_version: 0.2.0
+    origin: deterministic
+    method: explicit-fixture-descriptor
+- id: resume-importer-docs
+  kind: observed
+  state: current
+  assertion:
+    field: docs
+    value:
+      state: assessed
+      result: linked-evidence
+      adapter_ids:
+      - fixture-document
+      links:
+      - surface_id: import-doc
+        association: explicit-annotation
+      reason: An explicit feature annotation was found in the inspected documentation.
+    claim: The document carries an exact feature annotation.
+  locator:
+    path: docs/import.md
+    content_sha256: 05d12dd323c03a5ddf6f58c4a1705cd45d13fbc52f91c459868b5214886b4bcb
+    start_line: 1
+  provenance:
+    adapter_id: fixture-document
+    adapter_version: 0.2.0
+    origin: deterministic
+    method: explicit-fixture-descriptor
+- id: resume-importer-tests
+  kind: observed
+  state: current
+  assertion:
+    field: tests
+    value:
+      state: assessed
+      result: linked-evidence
+      adapter_ids:
+      - fixture-test
+      links:
+      - surface_id: import-test
+        association: explicit-annotation
+      reason: An explicit feature annotation was found. Test execution and breadth
+        were not assessed.
+    claim: The test descriptor carries an exact feature annotation, not a passing
+      result.
+  locator:
+    path: tests/import.test.txt
+    content_sha256: 1e024965fc157b958a39cec5f06ddd074d868166e3a2b3810da454d59593f8d7
+    start_line: 1
+  provenance:
+    adapter_id: fixture-test
+    adapter_version: 0.2.0
+    origin: deterministic
+    method: explicit-fixture-descriptor
+editorial:
+  locked:
+  - name
+  - intent
+  - publication
+  aliases:
+  - cv-import
+  notes: Keep approved presentation decisions through rescans.
+uncertainty_reasons: {}

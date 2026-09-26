@@ -39,4 +39,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-4488163f-4acd-4a2f-98c5-aee9c998948b
+  - id: crit-1e0ad486-8a1c-4056-867f-6f2c31be7eab
+    text: A FeatureFacts register can be validated against the pinned schema, and a derived title update does not copy recognition or lifecycle.
+    status: met
+    evidence_refs:
+    - evidence-caea53ce-e9fe-4aaf-a405-24e3554b9c48
 transitions: []

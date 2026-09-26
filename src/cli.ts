@@ -2,7 +2,7 @@
 import { checkLedger, resolveLedgerRoot } from "./check.js";
 import { listTransactions, resumeTransaction, rollbackTransaction } from "./transaction.js";
 import { orientLedger, renderView, writeView, type ViewName } from "./views.js";
-import { discoverSubjects, FAMILIES, type Family } from "./adapters.js";
+import { discoverSubjects, FAMILIES, runOperation, type Family, type Operation } from "./adapters.js";
 
 const argv = process.argv.slice(2);
 const command = argv[0];
@@ -200,31 +200,58 @@ function parseViewArgs(
 }
 
 function runSubjects(args: string[]): void {
-  const parsed = parseRoot(args, new Set(["--root", "--format", "--family", "--subject"]));
-  if (!parsed) return;
+  let root = process.cwd();
   let format: "text" | "json" = "text";
   let family: Family | undefined;
   let subjectId: string | undefined;
+  let operation: Operation = "discover";
+  let apply = false;
   for (let i = 0; i < args.length; i += 1) {
+    const arg = args[i];
+    if (arg === "--apply") {
+      apply = true;
+      continue;
+    }
     const next = args[i + 1];
-    if (args[i] === "--format") {
+    if (!next || next.startsWith("--")) {
+      console.error(`${arg} requires a value`);
+      process.exit(2);
+    }
+    if (arg === "--root") root = next;
+    else if (arg === "--format") {
       if (next !== "text" && next !== "json") {
         console.error("--format must be text or json");
         process.exit(2);
       }
       format = next;
-    } else if (args[i] === "--family") {
-      if (!next || !(FAMILIES as readonly string[]).includes(next)) {
+    } else if (arg === "--family") {
+      if (!(FAMILIES as readonly string[]).includes(next)) {
         console.error(`--family must be one of ${FAMILIES.join(", ")}`);
         process.exit(2);
       }
       family = next as Family;
-    } else if (args[i] === "--subject") {
-      subjectId = next;
+    } else if (arg === "--subject") subjectId = next;
+    else if (arg === "--operation") {
+      if (next !== "discover" && next !== "validate" && next !== "extract" && next !== "checkFreshness" && next !== "propose") {
+        console.error("--operation must be discover, validate, extract, checkFreshness, or propose");
+        process.exit(2);
+      }
+      operation = next;
+    } else {
+      console.error(`Unknown argument ${arg}`);
+      process.exit(2);
     }
+    i += 1;
+  }
+  if (apply && operation !== "propose") {
+    console.error("--apply is only valid with --operation propose");
+    process.exit(2);
   }
   try {
-    const rows = discoverSubjects({ root: parsed.root, family, subjectId });
+    const rows =
+      operation === "discover" && !apply
+        ? discoverSubjects({ root, family, subjectId })
+        : runOperation({ root, operation, family, subjectId, apply });
     if (format === "json") console.log(JSON.stringify(rows, null, 2));
     else {
       for (const row of rows) {
@@ -249,13 +276,13 @@ function usage(code: number): never {
   console.log(`appledger check [--root DIR] [--format text|json]
 appledger orient [--root DIR] [--task TEXT] [--budget N]
 appledger render --view orientation|progress|history [--root DIR] [--task TEXT] [--budget N] [--write]
-appledger subjects [--root DIR] [--family NAME] [--subject ID] [--format text|json]
+appledger subjects [--root DIR] [--family NAME] [--subject ID] [--operation discover|validate|extract|checkFreshness|propose] [--apply] [--format text|json]
 appledger transaction status [--root DIR]
 appledger transaction resume --id ID [--root DIR]
 appledger transaction rollback --id ID [--root DIR]
 
 check, orient, render, and subjects do not modify files unless render is given --write.
-subjects lists one row per subject. It does not write a label.
+subjects lists one row per subject. Validate and extract read pinned AppFacts and FeatureFacts schemas and do not write. Propose --apply updates a derived cached title only.
 orient selects records deterministically and keeps recorded gaps even when the word budget is small.
 render --write updates views/<view>.md only when the bytes differ.`);
   process.exit(code);

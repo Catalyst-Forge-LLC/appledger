@@ -73,7 +73,7 @@ export function checkSources(
         "unsupported",
         "warning",
         "manifest.yaml",
-        `Binding ${binding.id} file was read. The ${binding.family} parser is not implemented, so native ids were neither confirmed nor denied. ${NOT_ABSENT}`,
+        `Binding ${binding.id} file was read. Check does not interpret ${binding.family}. Native ids were neither confirmed nor denied. ${NOT_ABSENT}`,
       ),
     );
   }

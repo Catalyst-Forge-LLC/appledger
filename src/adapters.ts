@@ -4,6 +4,7 @@ import { resolveLedgerRoot } from "./check.js";
 import { inputSetFingerprint, sha256Hex } from "./digest.js";
 import { isInside, isUnsafeRelative } from "./sources.js";
 import { parseYaml } from "./yaml.js";
+import { runPinnedOperation } from "./refresh.js";
 
 export const FAMILIES = ["appfacts", "featurefacts", "toolfacts", "agentfacts", "skillfacts", "modelfacts"] as const;
 
@@ -59,10 +60,13 @@ export const ADAPTERS: AdapterDeclaration[] = FAMILIES.map((family) => ({
   id: `appledger.${family}`,
   version: "0.1.0",
   family,
-  schemaVersions: [],
+  schemaVersions: family === "featurefacts" ? ["0.2.0"] : family === "appfacts" ? ["0.1.0"] : [],
   subjectTypes: subjectTypes(family),
   inputTypes: ["binding"],
-  deterministicOperations: ["discover"],
+  deterministicOperations:
+    family === "featurefacts" || family === "appfacts"
+      ? ["discover", "validate", "extract", "checkFreshness", "propose"]
+      : ["discover"],
   agentAssistedOperations: [],
   network: false,
   runtime: false,
@@ -79,15 +83,32 @@ export function runOperation(input: {
   operation: Operation;
   family?: Family;
   subjectId?: string;
+  apply?: boolean;
 }): AdapterResult[] {
   const ledgerRoot = resolveLedgerRoot(input.root);
   if (input.operation !== "discover") {
-    const families = input.family ? [input.family] : FAMILIES;
-    return families.map((family) =>
-      result(adapterFor(family), input.operation, input.subjectId ?? "", "unsupported", null, [
-        `${input.operation} is not implemented for ${family}. No label was written.`,
-      ]),
-    );
+    const families = input.family ? [input.family] : [...FAMILIES];
+    const rows: AdapterResult[] = [];
+    for (const family of families) {
+      if ((family === "appfacts" || family === "featurefacts") && isPinnedOperation(input.operation)) {
+        rows.push(
+          ...runPinnedOperation({
+            ledgerRoot,
+            operation: input.operation,
+            family,
+            subjectId: input.subjectId,
+            apply: input.apply,
+          }),
+        );
+      } else {
+        rows.push(
+          result(adapterFor(family), input.operation, input.subjectId ?? "", "unsupported", null, [
+            `${input.operation} is not implemented for ${family}. No label was written.`,
+          ]),
+        );
+      }
+    }
+    return rows;
   }
 
   const manifest = readManifest(ledgerRoot);
@@ -155,7 +176,9 @@ function bindingRow(bindings: Binding[], repos: Map<string, string>): AdapterRes
     }
   }
   if (!failed && files.length > 0) {
-    findings.push(`The ${first.family} parser is not implemented, so native ids were neither confirmed nor denied. No label was written.`);
+    findings.push(
+      `Discover does not interpret ${first.family}. Native ids were neither confirmed nor denied. No label was written.`,
+    );
   }
   let disposition: Disposition = "unsupported";
   if (failed) disposition = "failed";
@@ -306,6 +329,10 @@ function adapterFor(family: Family): AdapterDeclaration {
   const found = ADAPTERS.find((adapter) => adapter.family === family);
   if (!found) throw new Error(`No adapter for ${family}`);
   return found;
+}
+
+function isPinnedOperation(operation: Operation): boolean {
+  return operation === "validate" || operation === "extract" || operation === "checkFreshness" || operation === "propose";
 }
 
 function subjectTypes(family: Family): string[] {
