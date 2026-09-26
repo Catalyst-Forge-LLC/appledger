@@ -132,7 +132,7 @@ describe("subject inventory", () => {
         expect(adapter.deterministicOperations).toContain("validate");
       } else if (adapter.family === "appfacts") {
         expect(adapter.schemaVersions).toEqual(["0.1.0"]);
-      } else if (adapter.family === "skillfacts" || adapter.family === "toolfacts") {
+      } else if (adapter.family === "skillfacts" || adapter.family === "toolfacts" || adapter.family === "agentfacts") {
         expect(adapter.schemaVersions).toEqual(["0.1.0"]);
         expect(adapter.deterministicOperations).toContain("validate");
       } else {
@@ -142,7 +142,7 @@ describe("subject inventory", () => {
     }
     const root = copyMinimal();
     expect(discoverSubjects({ root })).toEqual(discoverSubjects({ root }));
-    const extracted = runOperation({ root, operation: "extract", family: "agentfacts" });
+    const extracted = runOperation({ root, operation: "extract", family: "modelfacts" });
     expect(extracted[0]?.disposition).toBe("unsupported");
   });
 });

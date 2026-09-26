@@ -1,0 +1,206 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agentfacts.dev/schema/agent-facts.schema.json",
+  "title": "AgentFacts frontmatter",
+  "type": "object",
+  "required": [
+    "agent_facts_version",
+    "name",
+    "developer",
+    "kind",
+    "status",
+    "license",
+    "model",
+    "tools",
+    "reach",
+    "autonomy",
+    "memory",
+    "egress",
+    "generated"
+  ],
+  "properties": {
+    "agent_facts_version": {
+      "type": "string",
+      "description": "Spec version this file conforms to, e.g. 0.1.0"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Configuration name, e.g. ForgeTrail Reference Agent"
+    },
+    "developer": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Organization (or person) that ships this configuration"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "cli-agent",
+        "ide-extension",
+        "autonomous-service",
+        "chatbot",
+        "workflow"
+      ],
+      "description": "Actor kind. MCP servers are instruments (ToolFacts), not AgentFacts kinds."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "deprecated", "preview", "archived"]
+    },
+    "license": {
+      "type": "string",
+      "description": "SPDX identifier or official license name when known, otherwise UNKNOWN"
+    },
+    "release_date": { "type": "string", "format": "date" },
+    "homepage": { "type": "string", "format": "uri" },
+    "repository": { "type": "string", "format": "uri" },
+    "version": { "type": "string", "minLength": 1 },
+    "model": {
+      "type": "object",
+      "required": ["binding"],
+      "properties": {
+        "binding": {
+          "type": "string",
+          "enum": ["fixed", "configurable", "host-provided", "bring-your-own"]
+        },
+        "models": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Model names, and/or URLs or paths to MODEL_FACTS.md files"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tools": {
+      "type": "object",
+      "required": ["count", "executes_shell", "browses_web"],
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of tools attached in this configuration"
+        },
+        "executes_shell": { "type": "boolean" },
+        "browses_web": { "type": "boolean" },
+        "categories": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "toolsets": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "URLs or paths to TOOL_FACTS.md files (itemized detail)"
+        }
+      },
+      "additionalProperties": false
+    },
+    "reach": {
+      "type": "object",
+      "required": ["filesystem", "network"],
+      "properties": {
+        "filesystem": {
+          "type": "string",
+          "enum": ["none", "read", "read-write", "scoped", "undisclosed"]
+        },
+        "network": {
+          "type": "string",
+          "enum": ["none", "allowlist", "unrestricted", "undisclosed"]
+        },
+        "destinations": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Domains or URL patterns the agent may contact"
+        },
+        "credentials_required": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "additionalProperties": false
+    },
+    "autonomy": {
+      "type": "object",
+      "required": ["level", "self_looping"],
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": ["reactive", "supervised", "autonomous"]
+        },
+        "approval_required_for": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["writes", "shell", "network", "credentials", "destructive"]
+          }
+        },
+        "self_looping": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "memory": {
+      "type": "object",
+      "required": ["persistence", "location"],
+      "properties": {
+        "persistence": {
+          "type": "string",
+          "enum": ["none", "session", "local", "cloud"]
+        },
+        "location": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Where retained state lives, or undisclosed"
+        }
+      },
+      "additionalProperties": false
+    },
+    "egress": {
+      "type": "object",
+      "required": ["telemetry", "data_shared"],
+      "properties": {
+        "telemetry": {
+          "type": "string",
+          "enum": ["none", "anonymous", "identified", "undisclosed"]
+        },
+        "data_shared": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What leaves the machine, or undisclosed"
+        }
+      },
+      "additionalProperties": false
+    },
+    "generated": {
+      "type": "object",
+      "required": ["date", "generator"],
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "generator": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "reviewed": {
+      "type": "object",
+      "description": "Optional human review stamp. Presence is not certification.",
+      "required": ["date", "by", "status"],
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "by": { "type": "string", "minLength": 1 },
+        "status": {
+          "type": "string",
+          "enum": ["publisher-authored", "independently-reviewed", "stale"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "credits": {
+      "type": "object",
+      "properties": {
+        "generated_with": { "type": "string" },
+        "built_by": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

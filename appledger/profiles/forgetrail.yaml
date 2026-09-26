@@ -54,4 +54,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-2bb710aa-55f4-47ef-bcaf-76bf19e4b44e
+  - id: crit-a13255e1-49bf-4154-a764-2d264c8c6376
+    text: A switched toolset marks reach for review, preserves the configuration identity, and does not claim host enforcement.
+    status: met
+    evidence_refs:
+    - evidence-194a6abc-4bd6-477c-ac1d-4dd8cca5c762
 transitions: []
