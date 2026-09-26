@@ -28,7 +28,7 @@ pnpm exec appledger check
 
 `appledger transaction resume` and `appledger transaction rollback` finish or undo an interrupted apply. They replace only journaled paths, and they leave a file alone when its bytes changed after the apply started. A second apply of bytes that are already on disk writes nothing.
 
-The curation skill is [`skills/appledger/SKILL.md`](skills/appledger/SKILL.md). Command status lives in [`spec/10-tooling-and-automation.md`](spec/10-tooling-and-automation.md). The skill does not publish, deploy, or generate xFacts labels.
+The curation skill is [`skills/appledger/SKILL.md`](skills/appledger/SKILL.md). Command status lives in [`spec/10-tooling-and-automation.md`](spec/10-tooling-and-automation.md). `appledger subjects` lists each subject and a disposition. It does not write a label. The skill does not publish, deploy, or generate xFacts labels.
 
 ## Site
 

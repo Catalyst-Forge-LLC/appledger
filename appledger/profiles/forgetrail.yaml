@@ -34,4 +34,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-1264a1a7-bf6c-45d6-b03b-adc5fe25282a
+  - id: crit-ef1a7a6e-042c-4af3-9d08-4d37f6c1c837
+    text: Subject discovery keeps separate rows for multiple tools, skills, and models, and a missing adapter does not produce a label.
+    status: met
+    evidence_refs:
+    - evidence-4488163f-4acd-4a2f-98c5-aee9c998948b
 transitions: []

@@ -2,6 +2,7 @@
 import { checkLedger, resolveLedgerRoot } from "./check.js";
 import { listTransactions, resumeTransaction, rollbackTransaction } from "./transaction.js";
 import { orientLedger, renderView, writeView, type ViewName } from "./views.js";
+import { discoverSubjects, FAMILIES, type Family } from "./adapters.js";
 
 const argv = process.argv.slice(2);
 const command = argv[0];
@@ -16,9 +17,11 @@ if (!command || command === "--help" || command === "-h") {
   runOrient(argv.slice(1));
 } else if (command === "render") {
   runRender(argv.slice(1));
+} else if (command === "subjects") {
+  runSubjects(argv.slice(1));
 } else {
   console.error(`appledger ${command} is not implemented.`);
-  console.error("Implemented: check, orient, render, transaction");
+  console.error("Implemented: check, orient, render, subjects, transaction");
   process.exit(4);
 }
 
@@ -196,6 +199,46 @@ function parseViewArgs(
   return { root, task, budget, view, write };
 }
 
+function runSubjects(args: string[]): void {
+  const parsed = parseRoot(args, new Set(["--root", "--format", "--family", "--subject"]));
+  if (!parsed) return;
+  let format: "text" | "json" = "text";
+  let family: Family | undefined;
+  let subjectId: string | undefined;
+  for (let i = 0; i < args.length; i += 1) {
+    const next = args[i + 1];
+    if (args[i] === "--format") {
+      if (next !== "text" && next !== "json") {
+        console.error("--format must be text or json");
+        process.exit(2);
+      }
+      format = next;
+    } else if (args[i] === "--family") {
+      if (!next || !(FAMILIES as readonly string[]).includes(next)) {
+        console.error(`--family must be one of ${FAMILIES.join(", ")}`);
+        process.exit(2);
+      }
+      family = next as Family;
+    } else if (args[i] === "--subject") {
+      subjectId = next;
+    }
+  }
+  try {
+    const rows = discoverSubjects({ root: parsed.root, family, subjectId });
+    if (format === "json") console.log(JSON.stringify(rows, null, 2));
+    else {
+      for (const row of rows) {
+        const subject = row.subjectId ? ` ${row.subjectId}` : "";
+        console.log(`${row.disposition} ${row.family}${subject}: ${row.findings[0] ?? ""}`);
+      }
+    }
+    process.exit(rows.some((row) => row.disposition === "failed") ? 1 : 0);
+  } catch (err) {
+    console.error(err instanceof Error ? err.message : String(err));
+    process.exit(5);
+  }
+}
+
 function flag(args: string[], name: string): string | undefined {
   const index = args.indexOf(name);
   if (index === -1) return undefined;
@@ -206,11 +249,13 @@ function usage(code: number): never {
   console.log(`appledger check [--root DIR] [--format text|json]
 appledger orient [--root DIR] [--task TEXT] [--budget N]
 appledger render --view orientation|progress|history [--root DIR] [--task TEXT] [--budget N] [--write]
+appledger subjects [--root DIR] [--family NAME] [--subject ID] [--format text|json]
 appledger transaction status [--root DIR]
 appledger transaction resume --id ID [--root DIR]
 appledger transaction rollback --id ID [--root DIR]
 
-check, orient, and render do not modify files unless render is given --write.
+check, orient, render, and subjects do not modify files unless render is given --write.
+subjects lists one row per subject. It does not write a label.
 orient selects records deterministically and keeps recorded gaps even when the word budget is small.
 render --write updates views/<view>.md only when the bytes differ.`);
   process.exit(code);

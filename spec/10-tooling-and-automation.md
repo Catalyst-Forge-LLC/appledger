@@ -16,6 +16,7 @@ The status column is the command list for the standalone skill. Do not keep a se
 | `appledger orient` | implemented | Bounded source-linked brief. `--task` and `--budget`. Selection is deterministic and the brief says so. |
 | `appledger render` | implemented | Derived orientation, progress, or history view. `--write` updates `views/` only when the bytes differ. |
 | `appledger transaction` | implemented | `status`, `resume`, and `rollback` for an interrupted apply. |
+| `appledger subjects` | implemented | Read-only inventory with one row per subject. A missing adapter is `unsupported`. A family with no subject is `not_applicable`. No label is written. |
 | `appledger init` | not implemented | Would create minimal files without overwriting existing records. |
 | `appledger reconcile` | not implemented | Would plan or apply semantic reconciliation and label updates. |
 | `appledger diff` | not implemented | Would explain ledger changes between two explicit revisions. |

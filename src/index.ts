@@ -13,3 +13,5 @@ export { orientLedger, renderView, writeView } from "./views.js";
 export type { ViewName } from "./views.js";
 export { commandCatalog, demonstrateFreshSession, readCommandCatalog } from "./fresh-session.js";
 export type { CatalogEntry, CommandStatus } from "./fresh-session.js";
+export { ADAPTERS, discoverSubjects, FAMILIES, runOperation } from "./adapters.js";
+export type { AdapterDeclaration, AdapterResult, Disposition, Family, Operation } from "./adapters.js";

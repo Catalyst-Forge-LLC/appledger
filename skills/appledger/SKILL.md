@@ -25,12 +25,13 @@ When the CLI is unavailable, maintain records by hand and name every check that 
 - implemented: `appledger orient`
 - implemented: `appledger render`
 - implemented: `appledger transaction`
+- implemented: `appledger subjects`
 - not implemented: `appledger init`
 - not implemented: `appledger reconcile`
 - not implemented: `appledger diff`
 - not implemented: `appledger migrate`
 
-`orient` in this repository is deterministic. Do not describe it as agent assistance. `render --write` must not replace a hand-written `README.md`.
+`orient` in this repository is deterministic. Do not describe it as agent assistance. `render --write` must not replace a hand-written `README.md`. `subjects` inventories bindings and the application. It does not guess a label or run a target server.
 
 ## Records
 
