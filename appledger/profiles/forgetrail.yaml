@@ -74,4 +74,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-bca65b3f-1429-4c86-8fef-aa6dfd094a5a
+  - id: crit-d5c70c36-0707-42dd-843a-e77fb32f20e2
+    text: ForgeTrail installs do not copy workflow_tracking.json, and a legacy file is reported as a conflict instead of the live phase.
+    status: met
+    evidence_refs:
+    - evidence-81e8dc40-5d05-494f-97e2-74eb4e6b6aaa
 transitions: []

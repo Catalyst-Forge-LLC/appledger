@@ -1,6 +1,6 @@
 # ForgeTrail tracking inventory
 
-Refreshed against ForgeTrail commit `5ddaf9dce2ac34729dd49a7e88937bfe85e03a9b` on 2026-09-26. This is the writer list for a later cutover. It is not that cutover. AppLedger does not modify the ForgeTrail tree from this package.
+Refreshed against ForgeTrail commit `5ddaf9dce2ac34729dd49a7e88937bfe85e03a9b` on 2026-09-26. The cutover that changes this set landed in ForgeTrail commit `70642fc` on 2026-09-26. New installs do not write `workflow_tracking.json`. `getInitialWorkflowTracking` initializes `appledger/` and does not return starter JSON. `validateTracking` and the session hooks treat a legacy file as a conflict. AppLedger still does not modify the ForgeTrail tree from this package.
 
 The earlier inventory was commit `96ae3630abe7e96eed475876ac52e18a9c9a2913`. The code writers below are the same set. The instruction files are now listed with them.
 
@@ -48,4 +48,4 @@ These create the tracking file, tell an agent to write it, or reject anything th
 
 Site pages, the update log, completed specs, and the AppLedger pack copies name the file. They are not the writers above. Public docs that still tell a person to maintain the file have to be updated when the site is published, after pilots, not in this inventory pass.
 
-This repository's own `.forgetrail/workflow_tracking.json` is a pointer. Current ForgeTrail validators reject that pointer. That remains intentional until the cutover.
+This repository's own `.forgetrail/workflow_tracking.json` is a pointer. After the cutover, `validateTracking` accepts that pointer and does not treat it as a decision log.
