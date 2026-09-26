@@ -25,6 +25,11 @@ const skillSchema = JSON.parse(readFileSync(join(root, "skillfacts", "0.1.0", "s
 };
 delete skillSchema.$schema;
 const skillfactsLabel = ajv.compile(skillSchema);
+const toolSchema = JSON.parse(readFileSync(join(root, "toolfacts", "0.1.0", "tool-facts.schema.json"), "utf8")) as {
+  $schema?: string;
+};
+delete toolSchema.$schema;
+const toolfactsLabel = ajv.compile(toolSchema);
 
 if (!featurefactsRegistry) throw new Error("Pinned FeatureFacts registry schema did not load");
 
@@ -32,6 +37,7 @@ export const pinnedValidators = {
   featurefacts: featurefactsRegistry,
   appfacts: appfactsLabel,
   skillfacts: skillfactsLabel,
+  toolfacts: toolfactsLabel,
 } as const;
 
 export function pinnedErrors(validate: ValidateFunction, value: unknown): string[] {

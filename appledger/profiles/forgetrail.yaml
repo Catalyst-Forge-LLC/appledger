@@ -49,4 +49,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-5acf881c-0fff-489c-b245-28ce4907f1aa
+  - id: crit-5628d9d0-7806-4b87-8fca-654b0a118cf8
+    text: A recorded tools/list can mark a new writing tool for review, and a prompt-returning tool stays declared without starting a server.
+    status: met
+    evidence_refs:
+    - evidence-2bb710aa-55f4-47ef-bcaf-76bf19e4b44e
 transitions: []

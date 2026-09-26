@@ -1,0 +1,181 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://toolfacts.dev/schema/tool-facts.schema.json",
+  "title": "ToolFacts frontmatter",
+  "type": "object",
+  "required": [
+    "tool_facts_version",
+    "name",
+    "developer",
+    "version",
+    "status",
+    "license",
+    "kind",
+    "runtime",
+    "credentials",
+    "egress",
+    "tools",
+    "generated"
+  ],
+  "properties": {
+    "tool_facts_version": {
+      "type": "string",
+      "description": "Spec version this file conforms to, e.g. 0.1.0"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Official toolset / MCP server name"
+    },
+    "developer": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Organization (or person) that ships the server"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Server version as distributed, e.g. 0.3.0"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "deprecated", "preview", "archived"]
+    },
+    "license": {
+      "type": "string",
+      "description": "SPDX identifier or official license name when known, otherwise UNKNOWN"
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["mcp-server"],
+      "description": "v0.1 ships mcp-server only; other kinds may arrive in a later minor version"
+    },
+    "homepage": { "type": "string", "format": "uri" },
+    "repository": { "type": "string", "format": "uri" },
+    "runtime": {
+      "type": "object",
+      "required": ["execution", "transport"],
+      "properties": {
+        "execution": {
+          "type": "string",
+          "enum": ["local-process", "container", "remote-service"]
+        },
+        "transport": {
+          "type": "string",
+          "enum": ["stdio", "sse", "streamable-http"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "credentials": {
+      "type": "object",
+      "required": ["required"],
+      "properties": {
+        "required": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Env var / secret names the server needs before it works"
+        }
+      },
+      "additionalProperties": false
+    },
+    "egress": {
+      "type": "object",
+      "required": ["telemetry", "destinations"],
+      "properties": {
+        "telemetry": {
+          "type": "string",
+          "enum": ["none", "anonymous", "identified", "undisclosed"]
+        },
+        "destinations": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Hosts data is sent to. Empty when none. Use [\"undisclosed\"] when not disclosed."
+        }
+      },
+      "additionalProperties": false
+    },
+    "tools": {
+      "type": "array",
+      "minItems": 1,
+      "description": "One entry per tool the server exposes",
+      "items": {
+        "type": "object",
+        "required": ["name", "purpose", "side_effects", "reach", "idempotent"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Tool name as advertised to the host"
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 1,
+            "description": "One-line objective description of what the tool does"
+          },
+          "side_effects": {
+            "type": "string",
+            "enum": ["none", "read", "write", "destructive"],
+            "description": "Load-bearing side-effect class for policy"
+          },
+          "reach": {
+            "type": "object",
+            "required": ["filesystem", "network", "processes"],
+            "properties": {
+              "filesystem": {
+                "type": "string",
+                "enum": ["none", "read", "read-write", "scoped"]
+              },
+              "network": {
+                "type": "string",
+                "enum": ["none", "allowlist", "unrestricted"]
+              },
+              "processes": {
+                "type": "boolean",
+                "description": "Whether the tool spawns processes or a shell"
+              }
+            },
+            "additionalProperties": false
+          },
+          "idempotent": {
+            "type": "boolean",
+            "description": "Whether repeating the call with the same args is safe / equivalent"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "generated": {
+      "type": "object",
+      "required": ["date", "generator"],
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "generator": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "reviewed": {
+      "type": "object",
+      "description": "Optional human review stamp. Presence is not certification.",
+      "required": ["date", "by", "status"],
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "by": { "type": "string", "minLength": 1 },
+        "status": {
+          "type": "string",
+          "enum": ["publisher-authored", "independently-reviewed", "stale"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "credits": {
+      "type": "object",
+      "properties": {
+        "generated_with": { "type": "string" },
+        "built_by": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

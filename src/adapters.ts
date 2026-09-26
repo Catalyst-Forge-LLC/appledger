@@ -6,6 +6,7 @@ import { isInside, isUnsafeRelative } from "./sources.js";
 import { parseYaml } from "./yaml.js";
 import { runPinnedOperation } from "./refresh.js";
 import { runSkillFactsOperation } from "./skillfacts.js";
+import { runToolFactsOperation } from "./toolfacts.js";
 
 export const FAMILIES = ["appfacts", "featurefacts", "toolfacts", "agentfacts", "skillfacts", "modelfacts"] as const;
 
@@ -62,11 +63,15 @@ export const ADAPTERS: AdapterDeclaration[] = FAMILIES.map((family) => ({
   version: "0.1.0",
   family,
   schemaVersions:
-    family === "featurefacts" ? ["0.2.0"] : family === "appfacts" || family === "skillfacts" ? ["0.1.0"] : [],
+    family === "featurefacts"
+      ? ["0.2.0"]
+      : family === "appfacts" || family === "skillfacts" || family === "toolfacts"
+        ? ["0.1.0"]
+        : [],
   subjectTypes: subjectTypes(family),
   inputTypes: ["binding"],
   deterministicOperations:
-    family === "featurefacts" || family === "appfacts" || family === "skillfacts"
+    family === "featurefacts" || family === "appfacts" || family === "skillfacts" || family === "toolfacts"
       ? ["discover", "validate", "extract", "checkFreshness", "propose"]
       : ["discover"],
   agentAssistedOperations: [],
@@ -104,6 +109,8 @@ export function runOperation(input: {
         );
       } else if (family === "skillfacts" && isPinnedOperation(input.operation)) {
         rows.push(...runSkillFactsOperation({ ledgerRoot, operation: input.operation, subjectId: input.subjectId }));
+      } else if (family === "toolfacts" && isPinnedOperation(input.operation)) {
+        rows.push(...runToolFactsOperation({ ledgerRoot, operation: input.operation, subjectId: input.subjectId }));
       } else {
         rows.push(
           result(adapterFor(family), input.operation, input.subjectId ?? "", "unsupported", null, [
