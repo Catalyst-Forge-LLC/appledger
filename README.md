@@ -24,7 +24,7 @@ pnpm exec appledger check
 
 `appledger orient` prints a short brief. Selection is deterministic and says so. A task limits the related records. Recorded gaps stay in the brief when the word budget is too small for them. It does not modify files.
 
-`appledger render --view progress` and `--view history` print derived views. `--write` stores `views/<view>.md` and leaves the file untouched when the bytes are unchanged. These views do not replace `README.md`.
+`appledger render --view progress` and `--view history` print derived views. `--view public` prints only public records. An internal record, including its path or contact text, is omitted, and editing it does not change the public bytes. `--write` stores `views/<view>.md` and leaves the file untouched when the bytes are unchanged. These views do not replace `README.md`. The public view does not upload or deploy.
 
 `appledger transaction resume` and `appledger transaction rollback` finish or undo an interrupted apply. They replace only journaled paths, and they leave a file alone when its bytes changed after the apply started. A second apply of bytes that are already on disk writes nothing.
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { checkLedger, resolveLedgerRoot } from "./check.js";
 import { listTransactions, resumeTransaction, rollbackTransaction } from "./transaction.js";
+import { projectLedger, writePublicProjection } from "./project.js";
 import { orientLedger, renderView, writeView, type ViewName } from "./views.js";
 import { discoverSubjects, FAMILIES, runOperation, type Family, type Operation } from "./adapters.js";
 
@@ -129,10 +130,22 @@ function runRender(args: string[]): void {
   const parsed = parseViewArgs(args, true);
   if (!parsed) return;
   if (!parsed.view) {
-    console.error("--view must be orientation, progress, or history");
+    console.error("--view must be orientation, progress, history, or public");
     process.exit(2);
   }
   try {
+    if (parsed.view === "public") {
+      const projected = projectLedger(parsed.root);
+      for (const finding of projected.findings) console.error(finding);
+      if (!parsed.write) {
+        console.log(projected.markdown);
+        return;
+      }
+      const ledgerRoot = resolveLedgerRoot(parsed.root);
+      const result = writePublicProjection(ledgerRoot, projected.markdown);
+      console.log(result.written ? `wrote ${result.path}` : `unchanged ${result.path}`);
+      return;
+    }
     const markdown = renderView({
       root: parsed.root,
       view: parsed.view,
@@ -155,11 +168,11 @@ function runRender(args: string[]): void {
 function parseViewArgs(
   args: string[],
   allowWrite: boolean,
-): { root: string; task?: string; budget?: number; view?: ViewName; write: boolean } | undefined {
+): { root: string; task?: string; budget?: number; view?: ViewName | "public"; write: boolean } | undefined {
   let root = process.cwd();
   let task: string | undefined;
   let budget: number | undefined;
-  let view: ViewName | undefined;
+  let view: ViewName | "public" | undefined;
   let write = false;
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
@@ -179,8 +192,8 @@ function parseViewArgs(
     if (arg === "--root") root = next;
     else if (arg === "--task") task = next;
     else if (arg === "--view") {
-      if (next !== "orientation" && next !== "progress" && next !== "history") {
-        console.error("--view must be orientation, progress, or history");
+      if (next !== "orientation" && next !== "progress" && next !== "history" && next !== "public") {
+        console.error("--view must be orientation, progress, history, or public");
         process.exit(2);
       }
       view = next;
@@ -275,7 +288,7 @@ function flag(args: string[], name: string): string | undefined {
 function usage(code: number): never {
   console.log(`appledger check [--root DIR] [--format text|json]
 appledger orient [--root DIR] [--task TEXT] [--budget N]
-appledger render --view orientation|progress|history [--root DIR] [--task TEXT] [--budget N] [--write]
+appledger render --view orientation|progress|history|public [--root DIR] [--task TEXT] [--budget N] [--write]
 appledger subjects [--root DIR] [--family NAME] [--subject ID] [--operation discover|validate|extract|checkFreshness|propose] [--apply] [--format text|json]
 appledger transaction status [--root DIR]
 appledger transaction resume --id ID [--root DIR]

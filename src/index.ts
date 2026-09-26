@@ -10,6 +10,8 @@ export {
 } from "./transaction.js";
 export type { PlannedFile, TransactionPlan, TransactionResult, TransactionStatus } from "./transaction.js";
 export { orientLedger, renderView, writeView } from "./views.js";
+export { projectLedger, writePublicProjection } from "./project.js";
+export type { PublicProjection } from "./project.js";
 export type { ViewName } from "./views.js";
 export { commandCatalog, demonstrateFreshSession, readCommandCatalog } from "./fresh-session.js";
 export type { CatalogEntry, CommandStatus } from "./fresh-session.js";

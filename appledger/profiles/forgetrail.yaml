@@ -64,4 +64,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-278c5571-ff60-4b29-b318-5c7bdf7969d4
+  - id: crit-4693f01e-5170-4c56-94c9-16775e2fa8a4
+    text: A private record change leaves the public projection bytes and fingerprint unchanged, and no upload runs.
+    status: met
+    evidence_refs:
+    - evidence-1635305a-1c72-4980-adf5-9dff9157b1dd
 transitions: []
