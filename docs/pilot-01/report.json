@@ -1,0 +1,94 @@
+{
+  "source": {
+    "name": "filepress",
+    "trackingBytes": 42182,
+    "currentPhase": "4-feature-iteration",
+    "decisions": 19,
+    "sessions": 15,
+    "gotchas": 11,
+    "ideasAtForgetrail": {
+      "exists": true,
+      "items": 8
+    },
+    "ideasAtRoot": {
+      "exists": false,
+      "items": 0
+    },
+    "bugsAtRoot": {
+      "exists": false,
+      "items": 0
+    }
+  },
+  "migration": {
+    "previewMs": 134,
+    "previewRole": "full",
+    "previewPhase": "iterate",
+    "previewUnmapped": [
+      "phases.4-feature-iteration"
+    ],
+    "applyMs": 651,
+    "applyOk": true,
+    "applyMessage": "Applied. The tracking file is now a pointer.",
+    "checkOk": true,
+    "checkErrors": [],
+    "profilePhase": "iterate",
+    "profileStatus": "in_progress",
+    "projectStatus": "active",
+    "decisionRecords": 19,
+    "sessionRecords": 46,
+    "lessonRecords": 0,
+    "questionRecords": 0,
+    "orientMs": 188,
+    "orientBytes": 2354,
+    "orientWords": 200
+  },
+  "changes": {
+    "feature": {
+      "staged": "staged",
+      "applied": true,
+      "message": "Applied."
+    },
+    "rename": {
+      "staged": "staged",
+      "applied": true,
+      "message": "Applied.",
+      "idUnchanged": true,
+      "from": "Core/site split (filepress core engine + independent Site repos) is a first-clas"
+    },
+    "retire": {
+      "staged": "staged",
+      "applied": true,
+      "message": "Applied."
+    },
+    "private": {
+      "staged": "staged",
+      "applied": true,
+      "edit": true,
+      "publicBytesUnchanged": true,
+      "publicOmitsSecret": true
+    },
+    "interrupt": {
+      "staged": "staged",
+      "stopped": "applying",
+      "pending": [
+        "applying pilot-interrupt"
+      ],
+      "rolledBack": true,
+      "fileRemains": false
+    },
+    "refactor": {
+      "sourceBindingsImported": 0,
+      "note": "Imported decisions have no source locators, so a file-path refactor has nothing to repair."
+    }
+  },
+  "fresh": {
+    "pointerStatus": "pointer",
+    "pointerRecord": "appledger/",
+    "pointerHasDecisions": false,
+    "siteExists": true,
+    "checkOk": true,
+    "orientMs": 120,
+    "orientBytes": 4107,
+    "orientWords": 320
+  }
+}

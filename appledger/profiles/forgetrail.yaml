@@ -79,4 +79,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-81e8dc40-5d05-494f-97e2-74eb4e6b6aaa
+  - id: crit-6dc590b3-3135-419e-a92e-772ab46dd07e
+    text: A fresh session can read the pointer, profile, and handoff, and a copied existing tracking file can be migrated and changed without a second writable log.
+    status: met
+    evidence_refs:
+    - evidence-28d35056-332a-476d-9d57-c30a158a8529
 transitions: []
