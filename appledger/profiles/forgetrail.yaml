@@ -44,4 +44,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-caea53ce-e9fe-4aaf-a405-24e3554b9c48
+  - id: crit-3efcc402-756f-40c6-899a-0935deaa2e40
+    text: A SkillFacts keyword guess stays a draft, and a network-using bundled script is marked for review without rewriting approved fields.
+    status: met
+    evidence_refs:
+    - evidence-5acf881c-0fff-489c-b245-28ce4907f1aa
 transitions: []

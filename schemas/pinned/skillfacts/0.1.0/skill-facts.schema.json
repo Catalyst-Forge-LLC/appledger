@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://skillfacts.dev/schema/skill-facts.schema.json",
+  "title": "SkillFacts frontmatter",
+  "type": "object",
+  "required": [
+    "skill_facts_version",
+    "name",
+    "developer",
+    "version",
+    "status",
+    "license",
+    "kind",
+    "purpose",
+    "provenance",
+    "instructions_reach",
+    "tools_referenced",
+    "bundled_artifacts",
+    "egress",
+    "generated"
+  ],
+  "properties": {
+    "skill_facts_version": {
+      "type": "string",
+      "description": "Spec version this file conforms to, e.g. 0.1.0"
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "developer": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["active", "deprecated", "preview", "archived"]
+    },
+    "license": { "type": "string", "minLength": 1 },
+    "kind": {
+      "type": "string",
+      "enum": ["cursor-skill", "claude-skill", "agents-skill", "other"]
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1,
+      "description": "One-line objective description of what the skill teaches"
+    },
+    "homepage": { "type": "string", "format": "uri" },
+    "repository": { "type": "string", "format": "uri" },
+    "provenance": {
+      "type": "object",
+      "required": ["source", "publisher"],
+      "properties": {
+        "source": { "type": "string", "minLength": 1 },
+        "publisher": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "instructions_reach": {
+      "type": "object",
+      "required": ["shell", "network", "filesystem"],
+      "properties": {
+        "shell": {
+          "type": "string",
+          "enum": ["none", "implied", "explicit", "undisclosed"]
+        },
+        "network": {
+          "type": "string",
+          "enum": ["none", "implied", "explicit", "undisclosed"]
+        },
+        "filesystem": {
+          "type": "string",
+          "enum": ["none", "read", "read-write", "implied", "undisclosed"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "tools_referenced": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "bundled_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "kind"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "kind": {
+            "type": "string",
+            "enum": ["script", "template", "binary", "other"]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "egress": {
+      "type": "object",
+      "required": ["telemetry", "destinations"],
+      "properties": {
+        "telemetry": {
+          "type": "string",
+          "enum": ["none", "anonymous", "identified", "undisclosed"]
+        },
+        "destinations": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "additionalProperties": false
+    },
+    "generated": {
+      "type": "object",
+      "required": ["date", "generator"],
+      "properties": {
+        "date": { "type": "string" },
+        "generator": { "type": "string", "minLength": 1 },
+        "inputs_fingerprint": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{16}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "reviewed": {
+      "type": "object",
+      "description": "Optional human review stamp. Presence is not certification. A package digest stays a later proposal until canonicalization is defined.",
+      "required": ["date", "by", "status"],
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "by": { "type": "string", "minLength": 1 },
+        "status": {
+          "type": "string",
+          "enum": ["publisher-authored", "independently-reviewed", "stale"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "credits": {
+      "type": "object",
+      "properties": {
+        "generated_with": { "type": "string" },
+        "built_by": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

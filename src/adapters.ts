@@ -5,6 +5,7 @@ import { inputSetFingerprint, sha256Hex } from "./digest.js";
 import { isInside, isUnsafeRelative } from "./sources.js";
 import { parseYaml } from "./yaml.js";
 import { runPinnedOperation } from "./refresh.js";
+import { runSkillFactsOperation } from "./skillfacts.js";
 
 export const FAMILIES = ["appfacts", "featurefacts", "toolfacts", "agentfacts", "skillfacts", "modelfacts"] as const;
 
@@ -60,11 +61,12 @@ export const ADAPTERS: AdapterDeclaration[] = FAMILIES.map((family) => ({
   id: `appledger.${family}`,
   version: "0.1.0",
   family,
-  schemaVersions: family === "featurefacts" ? ["0.2.0"] : family === "appfacts" ? ["0.1.0"] : [],
+  schemaVersions:
+    family === "featurefacts" ? ["0.2.0"] : family === "appfacts" || family === "skillfacts" ? ["0.1.0"] : [],
   subjectTypes: subjectTypes(family),
   inputTypes: ["binding"],
   deterministicOperations:
-    family === "featurefacts" || family === "appfacts"
+    family === "featurefacts" || family === "appfacts" || family === "skillfacts"
       ? ["discover", "validate", "extract", "checkFreshness", "propose"]
       : ["discover"],
   agentAssistedOperations: [],
@@ -100,6 +102,8 @@ export function runOperation(input: {
             apply: input.apply,
           }),
         );
+      } else if (family === "skillfacts" && isPinnedOperation(input.operation)) {
+        rows.push(...runSkillFactsOperation({ ledgerRoot, operation: input.operation, subjectId: input.subjectId }));
       } else {
         rows.push(
           result(adapterFor(family), input.operation, input.subjectId ?? "", "unsupported", null, [

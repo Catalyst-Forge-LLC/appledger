@@ -31,7 +31,7 @@ When the CLI is unavailable, maintain records by hand and name every check that 
 - not implemented: `appledger diff`
 - not implemented: `appledger migrate`
 
-`orient` in this repository is deterministic. Do not describe it as agent assistance. `render --write` must not replace a hand-written `README.md`. `subjects` inventories bindings and the application. `subjects --operation validate` checks pinned AppFacts 0.1.0 and FeatureFacts 0.2.0 schemas. `propose --apply` may update `cached_title` only, with basis `derived`. It does not copy recognition, lifecycle, availability, or maturity, and it does not guess a label or run a target server.
+`orient` in this repository is deterministic. Do not describe it as agent assistance. `render --write` must not replace a hand-written `README.md`. `subjects` inventories bindings and the application. `subjects --operation validate` checks pinned AppFacts 0.1.0, FeatureFacts 0.2.0, and SkillFacts 0.1.0 schemas. `propose --apply` may update FeatureFacts `cached_title` only, with basis `derived`. It does not copy recognition, lifecycle, availability, or maturity. SkillFacts propose does not rewrite a label. A keyword guess stays a draft. A bundled script is read, not executed. It does not guess a label or run a target server.
 
 ## Records
 

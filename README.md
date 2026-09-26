@@ -28,7 +28,7 @@ pnpm exec appledger check
 
 `appledger transaction resume` and `appledger transaction rollback` finish or undo an interrupted apply. They replace only journaled paths, and they leave a file alone when its bytes changed after the apply started. A second apply of bytes that are already on disk writes nothing.
 
-The curation skill is [`skills/appledger/SKILL.md`](skills/appledger/SKILL.md). Command status lives in [`spec/10-tooling-and-automation.md`](spec/10-tooling-and-automation.md). `appledger subjects` lists each subject and a disposition. `--operation validate` checks a bound AppFacts or FeatureFacts file against the pinned schema. `--operation propose --apply` may set `cached_title` with basis `derived` and does not copy recognition, lifecycle, or selection. It does not write any other label. The skill does not publish, deploy, or generate xFacts labels.
+The curation skill is [`skills/appledger/SKILL.md`](skills/appledger/SKILL.md). Command status lives in [`spec/10-tooling-and-automation.md`](spec/10-tooling-and-automation.md). `appledger subjects` lists each subject and a disposition. `--operation validate` checks a bound AppFacts, FeatureFacts, or SkillFacts file against its pinned schema. `--operation propose --apply` may set FeatureFacts `cached_title` with basis `derived` and does not copy recognition, lifecycle, or selection. SkillFacts propose does not rewrite the label. A keyword guess stays a draft, and a bundled script is read rather than executed. It does not write any other label. The skill does not publish, deploy, or generate xFacts labels.
 
 ## Site
 

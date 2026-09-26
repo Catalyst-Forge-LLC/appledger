@@ -132,6 +132,9 @@ describe("subject inventory", () => {
         expect(adapter.deterministicOperations).toContain("validate");
       } else if (adapter.family === "appfacts") {
         expect(adapter.schemaVersions).toEqual(["0.1.0"]);
+      } else if (adapter.family === "skillfacts") {
+        expect(adapter.schemaVersions).toEqual(["0.1.0"]);
+        expect(adapter.deterministicOperations).toContain("validate");
       } else {
         expect(adapter.schemaVersions).toEqual([]);
         expect(adapter.deterministicOperations).toEqual(["discover"]);
