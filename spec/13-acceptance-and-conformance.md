@@ -84,4 +84,4 @@ Give a fresh agent a repo and a task. It must correctly explain purpose, users, 
 
 Reports identify implementation version, supported format/profile/adapter versions, fixture results, unsupported areas, and test environment. Passing the generic envelope schema is insufficient for full record or curator conformance. Run native child validators as well as AppLedger checks. Publish limitations with any conformance claim.
 
-Tests should target the failure modes above. Avoid tests that only duplicate code branches without verifying meaningful behavior. Tests in this document are implementation acceptance requirements. They have not been executed against an AppLedger implementation because that implementation does not yet exist.
+Tests should target the failure modes above. Avoid tests that only duplicate code branches without verifying meaningful behavior. Tests in this document are implementation acceptance requirements. [`docs/rel-01.md`](../docs/rel-01.md) records which rows the current suite covers and which it does not. A passing suite is not a pass of every row.

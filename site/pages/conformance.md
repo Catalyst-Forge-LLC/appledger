@@ -4,7 +4,7 @@ description: What this repository implements, and the limits that stay explicit.
 order: 7
 ---
 
-The reference implementation is this repository's TypeScript checker. It is not published as a usable npm release. `appledger@0.0.0` is a name hold.
+The reference implementation is this repository's TypeScript checker. It is not published as a usable npm release. `appledger@0.0.0` is a name hold. The compatibility table and the row-by-row results are in [`docs/rel-01.md`](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/docs/rel-01.md). Rows that the suite does not cover are listed there as not tested. Fifty-two passing tests are not a pass of every conformance row.
 
 Implemented commands, from a checkout:
 
@@ -28,5 +28,6 @@ These are not claimed:
 - That orientation quotes every older session body
 - That a met acceptance criterion flips the work record to `done`
 - Certification by a standards body
+- A pass of every row in the conformance matrix. See the report linked above.
 
 FilePress, LocalSlip, and LocalHelm are how this repository previews its own site. Using AppLedger does not require them.

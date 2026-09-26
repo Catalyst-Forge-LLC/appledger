@@ -1,10 +1,10 @@
 ---
 title: Changelog
-description: Behavior implemented in the repository. Not a tagged release.
+description: Behavior implemented in the repository. The proposal tag is not an npm release.
 order: 8
 ---
 
-This page records behavior in the source tree. It is not a published release. The tagged proposal is still ahead of this page. The npm package remains the `0.0.0` name hold.
+This page records behavior in the source tree. The proposal marker is git tag `proposal-0.1.0` and [`docs/rel-01.md`](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/docs/rel-01.md). That tag is not the npm version. The npm package remains the `0.0.0` name hold. This page does not deploy the site.
 
 ## Format 0.1.0, repository source
 

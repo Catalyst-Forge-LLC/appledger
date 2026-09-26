@@ -94,4 +94,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-e983b379-43ed-42e1-a027-3c2108416994
+  - id: crit-5868a8b1-e909-422b-99f8-34b26881d9f7
+    text: The proposal report lists compatible versions and marks each conformance row tested, partial, or not tested, without publishing the package or the site.
+    status: met
+    evidence_refs:
+    - evidence-95f5b533-2b88-4253-8246-c95cfdd596fe
 transitions: []

@@ -1,6 +1,6 @@
 # AppLedger + ForgeTrail + xFacts specification
 
-Version: 0.1.0 proposal, 2026-09-25. Owner: Catalyst Forge. Domain: AppLedger.dev. Canonical copy in the `appledger` repository. This specification defines the proposed implementation. The format checker in this repository is the first code. ForgeTrail has not migrated yet, and AppLedger.dev is not deployed.
+Version: 0.1.0 proposal, 2026-09-25. Owner: Catalyst Forge. Domain: AppLedger.dev. Canonical copy in the `appledger` repository. This specification defines the proposed implementation. The format checker in this repository is the reference for the rows marked tested in [`docs/rel-01.md`](../docs/rel-01.md). ForgeTrail installs no longer write a writable `workflow_tracking.json`. AppLedger.dev is not deployed. npm `appledger` remains the `0.0.0` name hold.
 
 ## The move
 
@@ -57,4 +57,4 @@ MUST, MUST NOT, SHOULD, and MAY express requirements for the proposed implementa
 
 Existing child xFacts schemas govern existing labels. This proposal cannot silently change their fields. Within this pack, the standard, record contract, evidence contract, and publication contract are normative. Examples illustrate them. A conflict blocks implementation of that specific detail until corrected in a recorded decision.
 
-The requested deliverable is a specification pack. No repositories, packages, websites, or production data were modified or deployed.
+The requested deliverable was a specification pack. The checker, tests, and [`docs/rel-01.md`](../docs/rel-01.md) now exist. npm `appledger@0.0.0` is still only a name hold. AppLedger.dev is not deployed.

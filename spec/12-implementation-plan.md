@@ -25,7 +25,7 @@ Build the record contract first, then migrate ForgeTrail and integrate label mai
 | PUB-01 | Public projections and policy checks | XF-02 | Private mutation produces identical public output |
 | PILOT-01 | Existing app and fresh small project | FT-04, PUB-01 | Orientation, change, and migration findings |
 | DOC-01 | Domain site, suite docs, release notes | Pilot findings | Examples match shipped behavior |
-| REL-01 | Tagged proposal release and compatibility table | Core and shipped adapters | Conformance results and explicit limitations |
+| REL-01 | Tagged proposal release and compatibility table | Core and shipped adapters | Conformance results and explicit limitations. Report: `docs/rel-01.md`. Tag `proposal-0.1.0` is not an npm release. |
 
 ## Milestones
 
