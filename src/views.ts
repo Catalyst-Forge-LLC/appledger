@@ -90,7 +90,7 @@ function loadLedger(ledgerRoot: string): Loaded {
         status: stringValue(data.status),
         recordStatus: stringValue(value.record_status),
         value,
-        search: [value.title, data.purpose, data.objective, data.definition, data.role, data.choice, body]
+        search: [value.title, data.purpose, data.objective, data.definition, data.role, data.choice, data.problem, data.resolution, data.issue, body]
           .filter((item) => typeof item === "string")
           .join("\n")
           .toLowerCase(),
@@ -114,6 +114,14 @@ function orientationMarkdown(loaded: Loaded, task: string | undefined, budget: n
     "## Phase",
     "",
     phaseLine(loaded),
+    "",
+    "## Decisions",
+    "",
+    decisionBlock(loaded),
+    "",
+    "## Lessons",
+    "",
+    lessonBlock(loaded),
     "",
     "## Session",
     "",
@@ -207,10 +215,36 @@ function sessionBlock(loaded: Loaded): string {
     "",
     `Left off: ${stringValue(data.left_off) || "Not recorded."}`,
     "",
+    `Recorded: ${current.updatedAt || "Not recorded."}`,
+    "",
     next.length === 0 ? "Next: none recorded." : `Next:\n\n${next.map((item) => `- ${item}`).join("\n")}`,
     others.length === 0 ? "" : `\nOther sessions: ${others.join(", ")}.`,
   ]
     .filter((part) => part !== "")
+    .join("\n");
+}
+
+function decisionBlock(loaded: Loaded): string {
+  const decisions = loaded.records.filter((record) => record.kind === "decision" && record.recordStatus !== "retired");
+  if (decisions.length === 0) return "No decision records.";
+  return decisions
+    .map((record) => {
+      const choice = stringValue(mapping(record.value.data).choice) || record.title;
+      return `- ${link(record)} — ${choice}`;
+    })
+    .join("\n");
+}
+
+function lessonBlock(loaded: Loaded): string {
+  const lessons = loaded.records.filter((record) => record.kind === "lesson" && record.recordStatus !== "retired");
+  if (lessons.length === 0) return "No lesson records.";
+  return lessons
+    .map((record) => {
+      const data = mapping(record.value.data);
+      const problem = stringValue(data.problem) || record.title;
+      const resolution = stringValue(data.resolution) || "Not recorded.";
+      return `- ${link(record)} — ${problem} Resolution: ${resolution}`;
+    })
     .join("\n");
 }
 
@@ -270,7 +304,17 @@ function collectGaps(
 }
 
 function isRelated(record: Rec, tokens: string[]): boolean {
-  if (record.kind === "application" || record.kind === "session" || record.kind === "work" || record.kind === "change") return false;
+  if (
+    record.kind === "application" ||
+    record.kind === "session" ||
+    record.kind === "work" ||
+    record.kind === "change" ||
+    record.kind === "decision" ||
+    record.kind === "lesson" ||
+    record.kind === "question"
+  ) {
+    return false;
+  }
   if (tokens.length === 0) return true;
   return tokens.some((token) => record.search.includes(token));
 }

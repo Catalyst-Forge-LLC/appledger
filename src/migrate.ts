@@ -356,6 +356,7 @@ function renderLedger(
       ),
     });
   }
+  files.push(...gotchaRecords(value, appId));
   const unmapped = collectUnmapped(value);
   if (Object.keys(unmapped).length > 0) {
     const id = stableId("change", digest);
@@ -412,15 +413,73 @@ function workRecord(text: string, intake: "bug" | "idea", at: string): Planned {
   };
 }
 
-function listItems(home: string, name: string): string[] {
-  const path = resolve(home, name);
-  if (!isInside(resolve(home), path) || !existsSync(path)) return [];
-  return readFileSync(path, "utf8")
-    .split(/\r?\n/)
-    .flatMap((line) => {
-      const match = /^-\s+(.+)$/.exec(line.trim());
-      return match?.[1] ? [match[1].trim()] : [];
+function gotchaRecords(value: Record<string, unknown>, appId: string): Planned[] {
+  const files: Planned[] = [];
+  for (const [index, gotcha] of entries(value.gotchas).entries()) {
+    const problem = stringField(gotcha.issue) || stringField(gotcha.gotcha) || stringField(gotcha.text);
+    if (!problem) continue;
+    const resolution = stringField(gotcha.resolution) || stringField(gotcha.fix);
+    const dated = eventDate(gotcha.date ?? gotcha.timestamp);
+    if (resolution) {
+      const id = stableId("lesson", `${index}:${problem}`);
+      files.push({
+        path: `appledger/records/lesson/${id}.md`,
+        text: record(
+          {
+            id,
+            kind: "lesson",
+            title: problem.slice(0, 80),
+            at: dated.at,
+            data: {
+              context: "Imported from workflow tracking gotchas[].",
+              problem,
+              resolution,
+              limits: "Imported as a historical assertion. Verification was not recorded.",
+              generalization_status: "observed",
+            },
+          },
+          placeholderNote(dated.placeholder),
+        ),
+      });
+      continue;
+    }
+    const id = stableId("question", `${index}:${problem}`);
+    files.push({
+      path: `appledger/records/question/${id}.md`,
+      text: record(
+        {
+          id,
+          kind: "question",
+          title: problem.slice(0, 80),
+          at: dated.at,
+          data: {
+            issue: problem,
+            status: "open",
+            affected_ids: [appId],
+          },
+        },
+        "Imported from workflow tracking. No resolution was recorded.",
+      ),
     });
+  }
+  return files;
+}
+
+function listItems(home: string, name: string): string[] {
+  const seen = new Set<string>();
+  const items: string[] = [];
+  for (const relativePath of [name, join(".forgetrail", name)]) {
+    const path = resolve(home, relativePath);
+    if (!isInside(resolve(home), path) || !existsSync(path)) continue;
+    for (const line of readFileSync(path, "utf8").split(/\r?\n/)) {
+      const match = /^-\s+(.+)$/.exec(line.trim());
+      const item = match?.[1]?.trim();
+      if (!item || seen.has(item)) continue;
+      seen.add(item);
+      items.push(item);
+    }
+  }
+  return items;
 }
 
 type PhaseInstance = {

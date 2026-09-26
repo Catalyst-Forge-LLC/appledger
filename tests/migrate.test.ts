@@ -43,6 +43,10 @@ const live = {
     },
   },
   decisions: [{ date: "2020-01-03", decision: "Use local files" }],
+  gotchas: [
+    { date: "2020-01-04", issue: "Port already taken", resolution: "Use 8096" },
+    { gotcha: "Cause unknown" },
+  ],
   sessions: [],
 };
 
@@ -87,6 +91,7 @@ describe("tracking migration", () => {
     writeTracking(root, live);
     writeFileSync(join(root, "BUGS.md"), "- Login drops\n");
     writeFileSync(join(root, "IDEAS.md"), "- Add export\n");
+    writeFileSync(join(root, ".forgetrail", "IDEAS.md"), "- Parked idea\n- Add export\n");
     writeFileSync(join(root, "README.md"), "leave me\n");
     const original = readFileSync(join(root, ".forgetrail", "workflow_tracking.json"), "utf8");
     const applied = applyMigration(root);
@@ -116,6 +121,17 @@ describe("tracking migration", () => {
     expect(work).toContain("Login drops");
     expect(work).toContain("intake: idea");
     expect(work).toContain("Add export");
+    expect(work).toContain("Parked idea");
+    expect(readdirSync(join(root, "appledger", "records", "work"))).toHaveLength(3);
+    const lessons = readTree(join(root, "appledger", "records", "lesson"));
+    expect(lessons).toContain("Port already taken");
+    expect(lessons).toContain("Use 8096");
+    expect(lessons).toContain("2020-01-04T00:00:00Z");
+    expect(lessons).toContain("generalization_status: observed");
+    const questions = readTree(join(root, "appledger", "records", "question"));
+    expect(questions).toContain("Cause unknown");
+    expect(questions).toContain("status: open");
+    expect(questions).toContain("No resolution was recorded");
     const change = readTree(join(root, "appledger", "records", "change"));
     expect(change).toContain("customFlag");
     expect(readFileSync(join(root, "README.md"), "utf8")).toBe("leave me\n");

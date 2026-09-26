@@ -84,4 +84,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-28d35056-332a-476d-9d57-c30a158a8529
+  - id: crit-9766cf2f-e9b7-4d81-a659-1f094b31e09b
+    text: A resolved gotcha becomes a lesson, an unresolved gotcha becomes an open question, list files under .forgetrail/ are imported once, and orientation keeps decision choices and the latest session time.
+    status: met
+    evidence_refs:
+    - evidence-f3713d52-a24a-4b69-aa24-ceacb5912330
 transitions: []

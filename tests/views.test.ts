@@ -25,6 +25,9 @@ describe("orientation and views", () => {
 
     const wide = orientLedger({ root, task: "maintainer", budgetWords: 800 });
     expect(wide).toContain("records/stakeholder/stakeholder-maintainer.md");
+    expect(wide).toContain("Use local files for initial scope");
+    expect(wide).toContain("Recorded: 2026-09-25T19:00:00Z");
+    expect(wide).toContain("No lesson records.");
     expect(wide).not.toContain("concept-workshop");
     expect(wide).not.toContain("exceeds the word budget");
   });

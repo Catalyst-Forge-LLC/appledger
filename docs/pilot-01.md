@@ -58,4 +58,6 @@ The orientation is smaller and keeps the phase and the latest left-off sentence.
 
 ## Still open
 
-Gotcha import, `.forgetrail/IDEAS.md` import, and orientation coverage of decisions that fall outside the word budget. Work records that stay `in_progress` after their criteria are met. Site pages and publication stay closed until those findings are reflected.
+The counts above are the 2026-09-26T21:13:18Z run. After that run, the importer and orientation were changed and covered by `tests/migrate.test.ts` and `tests/views.test.ts`. This report was not re-run against FilePress.
+
+Work records that stay `in_progress` after their criteria are met. Site pages and publication stay closed until the pages match shipped behavior. A comments non-goal or a Pages project name that lived only in a phase note is still a session body, not a decision choice.
