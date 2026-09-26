@@ -1,6 +1,6 @@
 # appledger.dev
 
-FilePress site for [AppLedger](https://github.com/Catalyst-Forge-LLC/appledger). Not deployed.
+FilePress site for [AppLedger](https://github.com/Catalyst-Forge-LLC/appledger). Pages describe the format and the commands in this repository. Not deployed. `static/llms.txt` is an index to the specification, not a copy of it. The masthead is text because this site has no logo file.
 
 ```bash
 pnpm install

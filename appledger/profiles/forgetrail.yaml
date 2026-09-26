@@ -89,4 +89,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-f3713d52-a24a-4b69-aa24-ceacb5912330
+  - id: crit-0db693a1-51e6-4066-9f27-134784116371
+    text: The site pages describe the ledger, migration, and orientation, the site build succeeds, and neither the site nor the npm package is published.
+    status: met
+    evidence_refs:
+    - evidence-e983b379-43ed-42e1-a027-3c2108416994
 transitions: []

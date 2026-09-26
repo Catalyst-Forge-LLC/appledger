@@ -1,0 +1,14 @@
+# AppLedger
+
+> An open text record of what an application is for, how it fits together, what it does, and how it changes. The record can be incomplete. This file is an index. It is not the specification.
+
+The site is not deployed. The canonical specification is the repository, format 0.1.0.
+
+- [Specification](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/spec/README.md)
+- [Schemas](https://github.com/Catalyst-Forge-LLC/appledger/tree/main/schemas)
+- [Synthetic minimal ledger](https://github.com/Catalyst-Forge-LLC/appledger/tree/main/examples/minimal)
+- [Quickstart](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/site/pages/quickstart.md)
+- [Changelog](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/site/pages/changelog.md)
+- [ForgeTrail](https://github.com/Catalyst-Forge-LLC/forgetrail)
+
+Do not load the full specification into always-on agent context. Read the page that matches the task.

@@ -22,7 +22,7 @@ pnpm exec appledger check
 
 `appledger check` reads a ledger and prints findings. It does not modify files. Errors are schema, predicate, and path problems. Warnings mean a recorded source is missing, its digest no longer matches, a claim's git revision is not HEAD, or a transaction journal is still open. A missing file is not treated as proof that a feature is gone.
 
-`appledger orient` prints a short brief. Selection is deterministic and says so. A task limits the related records. Recorded gaps stay in the brief when the word budget is too small for them. It does not modify files.
+`appledger orient` prints a short brief. Selection is deterministic and says so. The brief includes the phase, each decision choice, each lesson, and the latest session time. A task limits only the related records. Recorded gaps stay in the brief when the word budget is too small for them. It does not modify files.
 
 `appledger render --view progress` and `--view history` print derived views. `--view public` prints only public records. An internal record, including its path or contact text, is omitted, and editing it does not change the public bytes. `--write` stores `views/<view>.md` and leaves the file untouched when the bytes are unchanged. These views do not replace `README.md`. The public view does not upload or deploy. `appledger migrate preview` reads a Lite or full `.forgetrail/workflow_tracking.json` and writes nothing. `migrate apply` imports it into `appledger/` and replaces that file with a pointer. `migrate rollback` restores only those paths and leaves a later edit in place. A shipped starter is not imported as project history. This command does not change the ForgeTrail installer, templates, or hooks.
 
@@ -32,7 +32,7 @@ The curation skill is [`skills/appledger/SKILL.md`](skills/appledger/SKILL.md). 
 
 ## Site
 
-`site/` is a FilePress stub. Preview with `pnpm site:dev`. LocalSlip lease name: `appledger-site` on port 46002. Do not deploy from this tree until the pages match shipped behavior.
+`site/` is a FilePress site that is not deployed. The pages describe the format, the commands in this repository, and the synthetic `examples/minimal` ledger. Preview with `pnpm site:dev`. LocalSlip lease name: `appledger-site` on port 46002. Do not deploy from this tree.
 
 ## Licenses
 

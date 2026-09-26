@@ -10,9 +10,14 @@ export default defineFilepressConfig({
   author: "Catalyst Forge LLC",
   tagline: "The application, written down.",
   lede: "Purpose, structure, evidence, and change.",
+  logo: null,
+  ogImage: null,
   homePage: "home",
   nav: [
     { label: "Home", href: "/" },
+    { label: "Quickstart", href: "/quickstart" },
+    { label: "Standard", href: "/standard" },
+    { label: "Changelog", href: "/changelog" },
     { label: "GitHub", href: github, icon: "github" },
   ],
   footerLinks: [
