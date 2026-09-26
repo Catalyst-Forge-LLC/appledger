@@ -69,4 +69,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-1635305a-1c72-4980-adf5-9dff9157b1dd
+  - id: crit-d3804d67-30a4-46bd-bb3f-2f6e11500dfb
+    text: Preview writes nothing. Apply keeps nonlinear phase status, retains unmapped fields, and replaces the file with a pointer. Rollback refuses a later edit.
+    status: met
+    evidence_refs:
+    - evidence-bca65b3f-1429-4c86-8fef-aa6dfd094a5a
 transitions: []

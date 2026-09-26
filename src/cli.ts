@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { checkLedger, resolveLedgerRoot } from "./check.js";
 import { listTransactions, resumeTransaction, rollbackTransaction } from "./transaction.js";
+import { applyMigration, previewMigration, rollbackMigration } from "./migrate.js";
 import { projectLedger, writePublicProjection } from "./project.js";
 import { orientLedger, renderView, writeView, type ViewName } from "./views.js";
 import { discoverSubjects, FAMILIES, runOperation, type Family, type Operation } from "./adapters.js";
@@ -20,6 +21,8 @@ if (!command || command === "--help" || command === "-h") {
   runRender(argv.slice(1));
 } else if (command === "subjects") {
   runSubjects(argv.slice(1));
+} else if (command === "migrate") {
+  runMigrate(argv.slice(1));
 } else {
   console.error(`appledger ${command} is not implemented.`);
   console.error("Implemented: check, orient, render, subjects, transaction");
@@ -86,6 +89,39 @@ function runTransaction(args: string[]): void {
     if (result.status === "conflict") process.exit(3);
     if (!result.ok) process.exit(1);
     process.exit(0);
+  } catch (err) {
+    console.error(err instanceof Error ? err.message : String(err));
+    process.exit(5);
+  }
+}
+
+function runMigrate(args: string[]): void {
+  const action = args[0];
+  if (action !== "preview" && action !== "apply" && action !== "rollback") {
+    console.error("Usage: appledger migrate preview|apply|rollback [--root DIR] [--id ID]");
+    process.exit(2);
+  }
+  const parsed = parseRoot(args.slice(1), new Set(["--root", "--id"]));
+  if (!parsed) return;
+  try {
+    if (action === "preview") {
+      const preview = previewMigration(parsed.root);
+      console.log(`${preview.role}: ${preview.message}`);
+      process.exit(preview.role === "unrecognized" ? 1 : 0);
+    }
+    if (action === "rollback") {
+      const id = flag(args, "--id");
+      if (!id) {
+        console.error("--id is required");
+        process.exit(2);
+      }
+      const result = rollbackMigration(parsed.root, id);
+      console.log(result.message);
+      process.exit(result.ok ? 0 : 1);
+    }
+    const result = applyMigration(parsed.root);
+    console.log(result.message);
+    process.exit(result.ok ? 0 : 1);
   } catch (err) {
     console.error(err instanceof Error ? err.message : String(err));
     process.exit(5);
@@ -293,6 +329,7 @@ appledger subjects [--root DIR] [--family NAME] [--subject ID] [--operation disc
 appledger transaction status [--root DIR]
 appledger transaction resume --id ID [--root DIR]
 appledger transaction rollback --id ID [--root DIR]
+appledger migrate preview|apply|rollback [--root DIR] [--id ID]
 
 check, orient, render, and subjects do not modify files unless render is given --write.
 subjects lists one row per subject. Validate and extract read pinned AppFacts and FeatureFacts schemas and do not write. Propose --apply updates a derived cached title only.

@@ -20,7 +20,7 @@ The status column is the command list for the standalone skill. Do not keep a se
 | `appledger init` | not implemented | Would create minimal files without overwriting existing records. |
 | `appledger reconcile` | not implemented | Would plan or apply semantic reconciliation and label updates. |
 | `appledger diff` | not implemented | Would explain ledger changes between two explicit revisions. |
-| `appledger migrate` | not implemented | Would preview or apply a ForgeTrail tracking migration. |
+| `appledger migrate` | implemented | Preview, apply, or roll back a Lite or full tracking file into the ledger. Apply replaces that file with a pointer. Rollback restores only those paths and refuses a later edit. |
 
 `orient` can use deterministic selection or agent assistance. It MUST disclose which. All commands support explicit root and bounded scope. Read-only commands do not start target servers or access the network implicitly.
 

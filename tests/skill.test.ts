@@ -19,7 +19,7 @@ describe("curation skill", () => {
       "not implemented appledger init",
       "not implemented appledger reconcile",
       "not implemented appledger diff",
-      "not implemented appledger migrate",
+      "implemented appledger migrate",
     ]);
     const listed = [...skill.matchAll(/^- (implemented|not implemented): `([^`]+)`$/gm)].map((match) => `${match[1]} ${match[2]}`);
     expect(listed).toEqual(catalog.map((entry) => `${entry.status} ${entry.command}`));
@@ -37,7 +37,7 @@ describe("curation skill", () => {
     expect(second).toBe(first);
     expect(first).toContain("Checks run:\n- appledger check\n- appledger orient");
     expect(first).toContain("- appledger reconcile (not implemented)");
-    expect(first).toContain("- appledger migrate (not implemented)");
+    expect(first).toContain("- appledger migrate (implemented)");
     expect(first).toContain("- appledger render (implemented)");
     expect(first).toContain("records/decision/decision-local-files.md");
     expect(first).toContain("A supported declaration is not observed implementation.");
