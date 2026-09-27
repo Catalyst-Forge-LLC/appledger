@@ -101,5 +101,5 @@ The human usefulness checks in `spec/13-acceptance-and-conformance.md` were not 
 - ToolFacts does not start a server. AgentFacts does not claim host enforcement. ModelFacts does not contact a provider.
 - Orientation includes decision choices, lessons, and the latest session time. A fact that lives only in an older session body is not copied into the decision list.
 - Work status can stay `in_progress` after an acceptance criterion is `met`.
-- ForgeTrail Lite still contains older sentences that name `workflow_tracking.json`. The top of that file says to write the ledger instead.
+- ForgeTrail Lite v2.2.0 and WORKFLOW tell an agent to write `appledger/`. The remaining `workflow_tracking.json` sentences say not to create that file, except the legacy `lite-1` example kept for migrate. This report's earlier suite run was not repeated for that text change.
 - The sites and the npm package were not published.

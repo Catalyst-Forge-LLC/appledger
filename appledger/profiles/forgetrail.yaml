@@ -99,4 +99,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-95f5b533-2b88-4253-8246-c95cfdd596fe
+  - id: crit-f5f148ba-0ed2-461b-88db-dc529b4b52aa
+    text: ForgeTrail Lite v2.2.0 and WORKFLOW tell the agent to write appledger/, record a disposition when a subject exists, and leave a missing family not_applicable, without generating a label.
+    status: met
+    evidence_refs:
+    - evidence-abec3537-0c8c-4c59-9ee4-c840604983a5
 transitions: []
