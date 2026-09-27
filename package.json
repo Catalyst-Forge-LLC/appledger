@@ -1,6 +1,6 @@
 {
   "name": "appledger",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "AppLedger: an open text record of what an application is for, how it fits together, what it does, and how it changes.",
   "license": "MIT",
   "type": "module",
@@ -16,6 +16,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "prepublishOnly": "pnpm run build",
     "test": "vitest run",
     "verify": "pnpm test && pnpm build",
     "check": "node dist/cli.js check",

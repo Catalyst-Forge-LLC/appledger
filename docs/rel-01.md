@@ -1,6 +1,6 @@
 # Proposal 0.1.0 compatibility and conformance
 
-This report is the REL-01 proposal marker. It is not an npm release. Package `appledger` stays at `0.0.0`, which is a name hold. AppLedger.dev is not deployed. The git tag `proposal-0.1.0` names the commit that contains this file. Pushing that tag, publishing the package, and deploying the site are separate acts and were not done here.
+This report is the REL-01 proposal marker. It is not itself an npm release. This tree's package version is `0.1.0`. npm still has the `0.0.0` name hold until you publish `0.1.0`. AppLedger.dev is not deployed. The git tag `proposal-0.1.0` names an older commit. Pushing that tag and deploying the site are separate from publishing `0.1.0`.
 
 `pnpm test` reported 52 passed on Node `v24.17.0`, pnpm `10.30.1`, vitest `3.2.7`. The run started at 19:19:07 local time (UTC-4) on 2026-09-26. Fifty-two passing tests are not a pass of every row below.
 
@@ -13,7 +13,7 @@ Format, profile, adapter, child-schema, and package versions are separate.
 | Format | `0.1.x` | A 0.1 reader accepts `0.1.1` and rejects `0.2.0`. Tested in `tests/check.test.ts`. |
 | Profile | `forgetrail` `0.1.0` | `schemas/profile-forgetrail.schema.json`. Phase ids are `plan`, `build`, `stabilize`, `iterate`, `refine`, `align`, `harden`. |
 | Adapter id | `appledger.<family>` `0.1.0` | Declared in `src/adapters.ts`. `render` and `projectPublic` are not subject operations. |
-| Package | `0.0.0` | Name hold. Not the version of this source. |
+| Package | `0.1.0` | This source. `0.0.0` on npm is the name hold until this version is published. |
 | AppFacts | `0.1.0` pinned at `029b75f0ef27b495108455e2785c61f844900a8e` | Copied under `schemas/pinned/`. Not a runtime dependency. |
 | FeatureFacts | `0.2.0` pinned at `85612cd0e8a8a63b00373d8c7f34ada502c591a6` | Same. |
 | SkillFacts | `0.1.0` pinned at `1487c5a04f9234f4ab5f4f817ca5b76fdff4ece4` | Same. |
@@ -23,7 +23,7 @@ Format, profile, adapter, child-schema, and package versions are separate.
 
 ForgeTrail commit `70642fc` stops new installs from copying `workflow_tracking.json`. ForgeTrail commit `a234992` updates the public docs to match. Those commits are in the ForgeTrail repository. This report did not re-run that repository's tests.
 
-There is no compatibility promise for a format minor other than `0.1.x`, for an unpinned child schema, or for a package version other than the name hold. A later stable 1.0 still requires a supported compatibility policy and an independent reader. This report is not that policy.
+There is no compatibility promise for a format minor other than `0.1.x`, for an unpinned child schema, or for a package version other than this `0.1.0`. A later stable 1.0 still requires a supported compatibility policy and an independent reader. This report is not that policy.
 
 ## Commands
 

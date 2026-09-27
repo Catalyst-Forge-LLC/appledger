@@ -1,6 +1,6 @@
 # AppLedger + ForgeTrail + xFacts specification
 
-Version: 0.1.0 proposal, 2026-09-25. Owner: Catalyst Forge. Domain: AppLedger.dev. Canonical copy in the `appledger` repository. This specification defines the proposed implementation. The format checker in this repository is the reference for the rows marked tested in [`docs/rel-01.md`](../docs/rel-01.md). ForgeTrail installs no longer write a writable `workflow_tracking.json`. AppLedger.dev is not deployed. npm `appledger` remains the `0.0.0` name hold.
+Version: 0.1.0 proposal, 2026-09-25. Owner: Catalyst Forge. Domain: AppLedger.dev. Canonical copy in the `appledger` repository. This specification defines the proposed implementation. The format checker in this repository is the reference for the rows marked tested in [`docs/rel-01.md`](../docs/rel-01.md). ForgeTrail installs no longer write a writable `workflow_tracking.json`. AppLedger.dev is not deployed. The npm package in this tree is `appledger@0.1.0`. `0.0.0` remains the name hold until that version is published.
 
 ## The move
 
@@ -43,7 +43,7 @@ AppLedger becomes the open, durable application record used natively by ForgeTra
 
 Do not use the dashed slug `app-ledger`. In this organization, dashes mark two-word xFacts repositories such as `feature-facts`. AppLedger is one coined name, same pattern as ForgeTrail and `forgetrail`. The domain, ledger directory, and CLI already have no dash.
 
-GitHub repository `Catalyst-Forge-LLC/appledger` exists. npm `appledger` is staked at `0.0.0` as a name hold. Do not publish a real release from that version. The user publishes.
+GitHub repository `Catalyst-Forge-LLC/appledger` exists. npm `appledger@0.0.0` is the name hold. This package is `0.1.0`. The user publishes. Do not publish `0.0.0` again.
 
 This repository is the canonical format specification (`spec/`, `schemas/`). ForgeTrail keeps the adoption work and should treat this tree as the format source.
 
@@ -57,4 +57,4 @@ MUST, MUST NOT, SHOULD, and MAY express requirements for the proposed implementa
 
 Existing child xFacts schemas govern existing labels. This proposal cannot silently change their fields. Within this pack, the standard, record contract, evidence contract, and publication contract are normative. Examples illustrate them. A conflict blocks implementation of that specific detail until corrected in a recorded decision.
 
-The requested deliverable was a specification pack. The checker, tests, and [`docs/rel-01.md`](../docs/rel-01.md) now exist. npm `appledger@0.0.0` is still only a name hold. AppLedger.dev is not deployed.
+The requested deliverable was a specification pack. The checker, tests, and [`docs/rel-01.md`](../docs/rel-01.md) now exist. This package is `0.1.0`. `appledger@0.0.0` remains the name hold until that version is published. AppLedger.dev is not deployed.

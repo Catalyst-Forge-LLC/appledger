@@ -8,7 +8,7 @@ This repository is the specification and the reference checker. It is also a For
 | --- | --- |
 | Brand | AppLedger |
 | Repository | https://github.com/Catalyst-Forge-LLC/appledger |
-| npm | `appledger` (the published `0.0.0` is a name hold, not this source) |
+| npm | `appledger@0.1.0` is this source. `0.0.0` remains the name hold until you publish `0.1.0`. |
 | Domain | https://appledger.dev (not deployed) |
 
 ## Check a ledger
