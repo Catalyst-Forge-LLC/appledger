@@ -18,7 +18,7 @@ describe("curation skill", () => {
       "implemented appledger subjects",
       "not implemented appledger init",
       "not implemented appledger reconcile",
-      "not implemented appledger diff",
+      "implemented appledger diff",
       "implemented appledger migrate",
     ]);
     const listed = [...skill.matchAll(/^- (implemented|not implemented): `([^`]+)`$/gm)].map((match) => `${match[1]} ${match[2]}`);

@@ -16,6 +16,7 @@ Implemented commands, from a checkout:
 | `subjects` | One disposition per subject for discover, validate, extract, checkFreshness, or propose. |
 | `transaction` | Status, resume, or rollback of an interrupted apply. |
 | `migrate` | Preview, apply, or roll back a tracking-file import. |
+| `diff` | Explain ledger changes between two explicit revisions. A generated view is not a semantic record change. Nothing is written. |
 
 There is no hosted editor, account, or database. A static viewer is not part of this site. Search does not require uploading a private ledger because this site does not accept ledgers.
 

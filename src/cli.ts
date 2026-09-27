@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { checkLedger, resolveLedgerRoot } from "./check.js";
 import { listTransactions, resumeTransaction, rollbackTransaction } from "./transaction.js";
+import { diffLedger, diffMarkdown } from "./diff.js";
 import { applyMigration, previewMigration, rollbackMigration } from "./migrate.js";
 import { projectLedger, writePublicProjection } from "./project.js";
 import { orientLedger, renderView, writeView, type ViewName } from "./views.js";
@@ -23,9 +24,11 @@ if (!command || command === "--help" || command === "-h") {
   runSubjects(argv.slice(1));
 } else if (command === "migrate") {
   runMigrate(argv.slice(1));
+} else if (command === "diff") {
+  runDiff(argv.slice(1));
 } else {
   console.error(`appledger ${command} is not implemented.`);
-  console.error("Implemented: check, orient, render, subjects, transaction");
+  console.error("Implemented: check, orient, render, subjects, transaction, migrate, diff");
   process.exit(4);
 }
 
@@ -89,6 +92,29 @@ function runTransaction(args: string[]): void {
     if (result.status === "conflict") process.exit(3);
     if (!result.ok) process.exit(1);
     process.exit(0);
+  } catch (err) {
+    console.error(err instanceof Error ? err.message : String(err));
+    process.exit(5);
+  }
+}
+
+function runDiff(args: string[]): void {
+  const parsed = parseRoot(args, new Set(["--root", "--from", "--to", "--format"]));
+  if (!parsed) return;
+  const from = flag(args, "--from");
+  const to = flag(args, "--to");
+  if (!from || !to) {
+    console.error("Usage: appledger diff --from REV --to REV [--root DIR] [--format text|json]");
+    process.exit(2);
+  }
+  const format = flag(args, "--format") ?? "text";
+  if (format !== "text" && format !== "json") {
+    console.error("--format must be text or json");
+    process.exit(2);
+  }
+  try {
+    const result = diffLedger({ root: parsed.root, from, to });
+    console.log(format === "json" ? JSON.stringify(result, null, 2) : diffMarkdown(result));
   } catch (err) {
     console.error(err instanceof Error ? err.message : String(err));
     process.exit(5);
@@ -330,6 +356,7 @@ appledger transaction status [--root DIR]
 appledger transaction resume --id ID [--root DIR]
 appledger transaction rollback --id ID [--root DIR]
 appledger migrate preview|apply|rollback [--root DIR] [--id ID]
+appledger diff --from REV --to REV [--root DIR] [--format text|json]
 
 check, orient, render, and subjects do not modify files unless render is given --write.
 subjects lists one row per subject. Validate and extract read pinned AppFacts and FeatureFacts schemas and do not write. Propose --apply updates a derived cached title only.

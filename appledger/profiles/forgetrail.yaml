@@ -104,4 +104,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-abec3537-0c8c-4c59-9ee4-c840604983a5
+  - id: crit-ac8b7ee4-9b48-46ff-ae40-094f0381dde8
+    text: appledger diff explains two explicit revisions, separates a semantic record change from formatting and a generated view, and does not write files.
+    status: met
+    evidence_refs:
+    - evidence-153cbc70-b2ad-491e-978e-be4dcac1e4e4
 transitions: []
