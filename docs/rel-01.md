@@ -31,12 +31,13 @@ From `spec/10-tooling-and-automation.md`, which `tests/skill.test.ts` checks aga
 
 | Command | Status |
 | --- | --- |
-| `check`, `orient`, `render`, `transaction`, `subjects`, `migrate`, `diff`, `init` | implemented in this repository |
-| `reconcile` | not implemented |
+| `check`, `orient`, `render`, `transaction`, `subjects`, `migrate`, `diff`, `init`, `reconcile` | implemented in this repository |
 
 `diff` was added after the 52-passed run recorded above. A later `pnpm test` reported 54 passed, including `tests/diff.test.ts`. The run started at 20:32:22 local time (UTC-4) on 2026-09-26, on Node v24.17.0, pnpm 10.30.1, and vitest 3.2.7. Fifty-four passing tests are not a pass of every row below.
 
 `init` was added after that 54-passed run. A later `pnpm test` reported 56 passed, including `tests/init.test.ts`. The run started at 20:55:45 local time (UTC-4) on 2026-09-26, on the same Node, pnpm, and vitest versions. Fifty-six passing tests are not a pass of every row below.
+
+`reconcile` was added after that 56-passed run. A later `pnpm test` reported 58 passed, including `tests/reconcile.test.ts`. The run started at 22:19:38 local time (UTC-4) on 2026-09-26, on the same Node, pnpm, and vitest versions. Fifty-eight passing tests are not a pass of every row below.
 
 ## Conformance rows
 
@@ -67,7 +68,7 @@ From `spec/10-tooling-and-automation.md`, which `tests/skill.test.ts` checks aga
 | E-08 | not tested | A glossary rename that keeps an alias has no test. |
 | E-09 | tested | An undated imported decision says the timestamp is a placeholder, not the event date. |
 | E-10 | not tested | Conflicting owner and code descriptions have no test. |
-| A-01 | partial | A second progress render and a second history render match. An already-applied transaction writes nothing. A full label reconcile run twice is not tested. `reconcile` is not implemented. |
+| A-01 | partial | A second progress render and a second history render match. An already-applied transaction writes nothing. `reconcile --apply` writes one receipt, and a second apply with the same inputs writes nothing. It does not rewrite a label. |
 | A-02 | tested | A concurrent edit is not overwritten. |
 | A-03 | tested | An apply that stops midway stays incomplete and can resume. |
 | A-04 | tested | `check` reports an interrupted transaction. |
@@ -100,7 +101,7 @@ The human usefulness checks in `spec/13-acceptance-and-conformance.md` were not 
 
 ## Explicit limitations
 
-- `reconcile` is not implemented. `init` creates a manifest, profile, application record, and session record, and it does not overwrite an existing ledger. `diff` explains two explicit revisions and does not write files.
+- `reconcile` records a disposition for each subject family. `--apply` writes one receipt, and a repeat with the same inputs writes nothing. It does not rewrite a label or mark work done. `init` creates a manifest, profile, application record, and session record, and it does not overwrite an existing ledger. `diff` explains two explicit revisions and does not write files.
 - `propose --apply` may set a FeatureFacts derived title only. It does not rewrite SkillFacts, ToolFacts, AgentFacts, or ModelFacts labels.
 - ToolFacts does not start a server. AgentFacts does not claim host enforcement. ModelFacts does not contact a provider.
 - Orientation includes decision choices, lessons, and the latest session time. A fact that lives only in an older session body is not copied into the decision list.

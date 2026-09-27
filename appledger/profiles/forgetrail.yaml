@@ -114,4 +114,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-fcae8660-a5d7-4f46-818f-75de722ca427
+  - id: crit-c4f9ffda-ab27-4b86-9938-133a183f180b
+    text: appledger reconcile records a disposition for each subject family, a second apply writes nothing, and a missing source does not create a label.
+    status: met
+    evidence_refs:
+    - evidence-601b965d-7062-482b-ab9e-2855dfc62a12
 transitions: []

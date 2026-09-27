@@ -3,6 +3,7 @@ import { checkLedger, resolveLedgerRoot } from "./check.js";
 import { listTransactions, resumeTransaction, rollbackTransaction } from "./transaction.js";
 import { diffLedger, diffMarkdown } from "./diff.js";
 import { initLedger } from "./init.js";
+import { reconcileLedger } from "./reconcile.js";
 import { applyMigration, previewMigration, rollbackMigration } from "./migrate.js";
 import { projectLedger, writePublicProjection } from "./project.js";
 import { orientLedger, renderView, writeView, type ViewName } from "./views.js";
@@ -29,9 +30,11 @@ if (!command || command === "--help" || command === "-h") {
   runDiff(argv.slice(1));
 } else if (command === "init") {
   runInit(argv.slice(1));
+} else if (command === "reconcile") {
+  runReconcile(argv.slice(1));
 } else {
   console.error(`appledger ${command} is not implemented.`);
-  console.error("Implemented: check, orient, render, subjects, transaction, migrate, diff, init");
+  console.error("Implemented: check, orient, render, subjects, transaction, migrate, diff, init, reconcile");
   process.exit(4);
 }
 
@@ -95,6 +98,43 @@ function runTransaction(args: string[]): void {
     if (result.status === "conflict") process.exit(3);
     if (!result.ok) process.exit(1);
     process.exit(0);
+  } catch (err) {
+    console.error(err instanceof Error ? err.message : String(err));
+    process.exit(5);
+  }
+}
+
+function runReconcile(args: string[]): void {
+  let root = process.cwd();
+  let apply = false;
+  for (let i = 0; i < args.length; i += 1) {
+    const arg = args[i];
+    if (arg === "--apply") {
+      apply = true;
+      continue;
+    }
+    const next = args[i + 1];
+    if (!next || next.startsWith("--")) {
+      console.error(`${arg} requires a value`);
+      process.exit(2);
+    }
+    if (arg === "--root") root = next;
+    else {
+      console.error(`Unknown argument ${arg}`);
+      process.exit(2);
+    }
+    i += 1;
+  }
+  const at = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
+  try {
+    const result = reconcileLedger({ root, apply, at });
+    console.log(result.message);
+    for (const row of result.dispositions) {
+      console.log(`${row.disposition} ${row.family}${row.subjectId ? ` ${row.subjectId}` : ""}: ${row.finding}`);
+    }
+    for (const path of result.wrote) console.log(path);
+    if (result.code === "conflict") process.exit(3);
+    if (!result.ok) process.exit(1);
   } catch (err) {
     console.error(err instanceof Error ? err.message : String(err));
     process.exit(5);
@@ -377,6 +417,7 @@ appledger transaction rollback --id ID [--root DIR]
 appledger migrate preview|apply|rollback [--root DIR] [--id ID]
 appledger diff --from REV --to REV [--root DIR] [--format text|json]
 appledger init [--root DIR] [--name TEXT]
+appledger reconcile [--root DIR] [--apply]
 
 check, orient, render, and subjects do not modify files unless render is given --write.
 subjects lists one row per subject. Validate and extract read pinned AppFacts and FeatureFacts schemas and do not write. Propose --apply updates a derived cached title only.

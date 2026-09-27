@@ -17,7 +17,7 @@ describe("curation skill", () => {
       "implemented appledger transaction",
       "implemented appledger subjects",
       "implemented appledger init",
-      "not implemented appledger reconcile",
+      "implemented appledger reconcile",
       "implemented appledger diff",
       "implemented appledger migrate",
     ]);
@@ -36,7 +36,7 @@ describe("curation skill", () => {
     const second = demonstrateFreshSession(minimal, "notes");
     expect(second).toBe(first);
     expect(first).toContain("Checks run:\n- appledger check\n- appledger orient");
-    expect(first).toContain("- appledger reconcile (not implemented)");
+    expect(first).toContain("- appledger reconcile (implemented)");
     expect(first).toContain("- appledger migrate (implemented)");
     expect(first).toContain("- appledger render (implemented)");
     expect(first).toContain("records/decision/decision-local-files.md");

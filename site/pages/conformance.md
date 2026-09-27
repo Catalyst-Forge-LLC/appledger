@@ -18,6 +18,7 @@ Implemented commands, from a checkout:
 | `migrate` | Preview, apply, or roll back a tracking-file import. |
 | `diff` | Explain ledger changes between two explicit revisions. A generated view is not a semantic record change. Nothing is written. |
 | `init` | Create a manifest, profile, application record, and session record. An existing ledger file is left in place. |
+| `reconcile` | Record a disposition for each subject family. `--apply` writes one receipt. A repeat writes nothing. No label is rewritten. |
 
 There is no hosted editor, account, or database. A static viewer is not part of this site. Search does not require uploading a private ledger because this site does not accept ledgers.
 

@@ -18,7 +18,7 @@ The status column is the command list for the standalone skill. Do not keep a se
 | `appledger transaction` | implemented | `status`, `resume`, and `rollback` for an interrupted apply. |
 | `appledger subjects` | implemented | Read-only inventory with one row per subject. A missing adapter is `unsupported`. A family with no subject is `not_applicable`. No label is written. |
 | `appledger init` | implemented | Creates a manifest, ForgeTrail profile, application record, and session record. An existing manifest, profile, or record is left in place. It does not infer a purpose or write a label. |
-| `appledger reconcile` | not implemented | Would plan or apply semantic reconciliation and label updates. |
+| `appledger reconcile` | implemented | Plans dispositions for each subject family. `--apply` writes one receipt. A repeat with the same inputs writes nothing. It does not rewrite a label or mark work done. |
 | `appledger diff` | implemented | Explains ledger changes between two explicit revisions. A semantic record change is separate from a formatting-only edit and from a generated view. It does not write files. |
 | `appledger migrate` | implemented | Preview, apply, or roll back a Lite or full tracking file into the ledger. Apply replaces that file with a pointer. Rollback restores only those paths and refuses a later edit. |
 

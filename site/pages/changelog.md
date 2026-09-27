@@ -15,6 +15,7 @@ This page records behavior in the source tree. The proposal marker is git tag `p
 - Subject commands for AppFacts, FeatureFacts, SkillFacts, ToolFacts, AgentFacts, and ModelFacts, with the limits on [xFacts](/xfacts).
 - `diff` explains two explicit revisions of the current ledger directory. A semantic record change is separate from a formatting-only edit and from a generated view. It does not write files.
 - `init` creates a manifest, a ForgeTrail profile, an application record, and a session record. It does not overwrite those files when they already exist, and it does not infer a purpose from the folder name.
+- `reconcile` records a disposition for each subject family. Without `--apply` it writes nothing. With `--apply` it writes one receipt, and a repeat with the same inputs writes nothing. It does not rewrite a label or mark work done.
 
 ForgeTrail's installer no longer copies `workflow_tracking.json`. That change is in the ForgeTrail repository. The public ForgeTrail site source describes it. The live forgetrail.dev pages are updated only when that site is redeployed, which this changelog does not do.
 

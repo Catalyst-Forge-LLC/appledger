@@ -30,6 +30,13 @@ pnpm exec appledger init --name "Workshop notes"
 
 A second run writes nothing. An existing manifest, profile, or record is left in place. Init does not infer a purpose from the folder name, and it does not create `workflow_tracking.json`.
 
+```bash
+pnpm exec appledger reconcile
+pnpm exec appledger reconcile --apply
+```
+
+The first command writes nothing. `--apply` writes one receipt. A second `--apply` with the same inputs writes nothing. Neither command rewrites a label.
+
 ## Existing tracking file
 
 If the project already has a writable `.forgetrail/workflow_tracking.json`:
