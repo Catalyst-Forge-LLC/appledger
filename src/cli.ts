@@ -2,6 +2,7 @@
 import { checkLedger, resolveLedgerRoot } from "./check.js";
 import { listTransactions, resumeTransaction, rollbackTransaction } from "./transaction.js";
 import { diffLedger, diffMarkdown } from "./diff.js";
+import { initLedger } from "./init.js";
 import { applyMigration, previewMigration, rollbackMigration } from "./migrate.js";
 import { projectLedger, writePublicProjection } from "./project.js";
 import { orientLedger, renderView, writeView, type ViewName } from "./views.js";
@@ -26,9 +27,11 @@ if (!command || command === "--help" || command === "-h") {
   runMigrate(argv.slice(1));
 } else if (command === "diff") {
   runDiff(argv.slice(1));
+} else if (command === "init") {
+  runInit(argv.slice(1));
 } else {
   console.error(`appledger ${command} is not implemented.`);
-  console.error("Implemented: check, orient, render, subjects, transaction, migrate, diff");
+  console.error("Implemented: check, orient, render, subjects, transaction, migrate, diff, init");
   process.exit(4);
 }
 
@@ -92,6 +95,22 @@ function runTransaction(args: string[]): void {
     if (result.status === "conflict") process.exit(3);
     if (!result.ok) process.exit(1);
     process.exit(0);
+  } catch (err) {
+    console.error(err instanceof Error ? err.message : String(err));
+    process.exit(5);
+  }
+}
+
+function runInit(args: string[]): void {
+  const parsed = parseRoot(args, new Set(["--root", "--name"]));
+  if (!parsed) return;
+  const name = flag(args, "--name");
+  const at = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
+  try {
+    const result = initLedger({ root: parsed.root, name, at });
+    console.log(result.message);
+    for (const path of result.wrote) console.log(path);
+    if (!result.ok) process.exit(1);
   } catch (err) {
     console.error(err instanceof Error ? err.message : String(err));
     process.exit(5);
@@ -357,6 +376,7 @@ appledger transaction resume --id ID [--root DIR]
 appledger transaction rollback --id ID [--root DIR]
 appledger migrate preview|apply|rollback [--root DIR] [--id ID]
 appledger diff --from REV --to REV [--root DIR] [--format text|json]
+appledger init [--root DIR] [--name TEXT]
 
 check, orient, render, and subjects do not modify files unless render is given --write.
 subjects lists one row per subject. Validate and extract read pinned AppFacts and FeatureFacts schemas and do not write. Propose --apply updates a derived cached title only.

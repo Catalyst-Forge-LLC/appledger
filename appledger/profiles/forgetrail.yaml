@@ -109,4 +109,9 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-153cbc70-b2ad-491e-978e-be4dcac1e4e4
+  - id: crit-7d778556-ccd1-42ae-be18-45185f7568ae
+    text: appledger init creates a manifest, profile, application record, and session record, and a second run does not overwrite them.
+    status: met
+    evidence_refs:
+    - evidence-fcae8660-a5d7-4f46-818f-75de722ca427
 transitions: []

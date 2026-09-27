@@ -31,10 +31,12 @@ From `spec/10-tooling-and-automation.md`, which `tests/skill.test.ts` checks aga
 
 | Command | Status |
 | --- | --- |
-| `check`, `orient`, `render`, `transaction`, `subjects`, `migrate`, `diff` | implemented in this repository |
-| `init`, `reconcile` | not implemented |
+| `check`, `orient`, `render`, `transaction`, `subjects`, `migrate`, `diff`, `init` | implemented in this repository |
+| `reconcile` | not implemented |
 
 `diff` was added after the 52-passed run recorded above. A later `pnpm test` reported 54 passed, including `tests/diff.test.ts`. The run started at 20:32:22 local time (UTC-4) on 2026-09-26, on Node v24.17.0, pnpm 10.30.1, and vitest 3.2.7. Fifty-four passing tests are not a pass of every row below.
+
+`init` was added after that 54-passed run. A later `pnpm test` reported 56 passed, including `tests/init.test.ts`. The run started at 20:55:45 local time (UTC-4) on 2026-09-26, on the same Node, pnpm, and vitest versions. Fifty-six passing tests are not a pass of every row below.
 
 ## Conformance rows
 
@@ -98,7 +100,7 @@ The human usefulness checks in `spec/13-acceptance-and-conformance.md` were not 
 
 ## Explicit limitations
 
-- `init` and `reconcile` are not implemented. `diff` explains two explicit revisions and does not write files.
+- `reconcile` is not implemented. `init` creates a manifest, profile, application record, and session record, and it does not overwrite an existing ledger. `diff` explains two explicit revisions and does not write files.
 - `propose --apply` may set a FeatureFacts derived title only. It does not rewrite SkillFacts, ToolFacts, AgentFacts, or ModelFacts labels.
 - ToolFacts does not start a server. AgentFacts does not claim host enforcement. ModelFacts does not contact a provider.
 - Orientation includes decision choices, lessons, and the latest session time. A fact that lives only in an older session body is not copied into the decision list.

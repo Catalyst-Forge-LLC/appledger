@@ -22,6 +22,14 @@ pnpm exec appledger orient --root examples/minimal/appledger
 
 A new ledger needs `manifest.yaml`, `profiles/forgetrail.yaml` when ForgeTrail is in use, an application record, and a session record. It does not need an empty copy of every record kind.
 
+An empty directory can be initialized without copying the synthetic example:
+
+```bash
+pnpm exec appledger init --name "Workshop notes"
+```
+
+A second run writes nothing. An existing manifest, profile, or record is left in place. Init does not infer a purpose from the folder name, and it does not create `workflow_tracking.json`.
+
 ## Existing tracking file
 
 If the project already has a writable `.forgetrail/workflow_tracking.json`:
