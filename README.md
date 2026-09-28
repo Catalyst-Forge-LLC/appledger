@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="site/static/logo.png" alt="AppLedger" width="180" />
+</p>
+
 # AppLedger
 
 Open text record of what an application is for, how it fits together, what it does, and how it changes.
