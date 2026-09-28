@@ -8,7 +8,12 @@ repositories:
   url: https://github.com/Catalyst-Forge-LLC/appledger.git
 record_roots:
 - records
-bindings: []
+bindings:
+- id: skillfacts-appledger-skill
+  family: skillfacts
+  subject_id: skill-appledger
+  repository_id: repo-appledger
+  path: skills/appledger/SKILL_FACTS.md
 profiles:
 - id: forgetrail
   version: 0.1.0

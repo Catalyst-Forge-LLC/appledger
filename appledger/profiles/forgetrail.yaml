@@ -2,12 +2,13 @@ profile: forgetrail
 profile_version: 0.1.0
 archetype: product
 project_status: active
-current_phase_instance: phase-625c6d87-193c-4c7e-9570-faf05d96aa58
+current_phase_instance: phase-dcdf6435-eb82-4595-a59e-1b16f365944a
 phase_instances:
 - id: phase-625c6d87-193c-4c7e-9570-faf05d96aa58
   phase: plan
-  status: in_progress
+  status: completed
   started_at: '2026-09-25T20:15:00Z'
+  completed_at: '2026-09-28T20:21:05Z'
   criteria:
   - id: crit-64a61051-9bb0-4324-bdfb-cd4666253695
     text: The format checker accepts the v0.1 fixtures and this product ledger.
@@ -119,4 +120,14 @@ phase_instances:
     status: met
     evidence_refs:
     - evidence-601b965d-7062-482b-ab9e-2855dfc62a12
-transitions: []
+- id: phase-dcdf6435-eb82-4595-a59e-1b16f365944a
+  phase: build
+  status: in_progress
+  started_at: '2026-09-28T20:21:05Z'
+  criteria: []
+transitions:
+- id: transition-dfd3c003-97d6-4629-bfe9-ea883b4c0c05
+  from_instance: phase-625c6d87-193c-4c7e-9570-faf05d96aa58
+  to_instance: phase-dcdf6435-eb82-4595-a59e-1b16f365944a
+  at: '2026-09-28T20:21:05Z'
+  authorized_by: stakeholder-e97fbc84-244c-4529-b436-bf4afa2bf7ed
