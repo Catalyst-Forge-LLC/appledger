@@ -30,8 +30,8 @@ pnpm dlx appledger check
 A second run writes nothing. An existing manifest, profile, or record is left in place. Init does not infer a purpose from the folder name, and it does not create `workflow_tracking.json`.
 
 ```bash
-pnpm exec appledger reconcile
-pnpm exec appledger reconcile --apply
+pnpm dlx appledger reconcile
+pnpm dlx appledger reconcile --apply
 ```
 
 The first command writes nothing. `--apply` writes one receipt. A second `--apply` with the same inputs writes nothing. Neither command rewrites a label.
@@ -46,15 +46,15 @@ pnpm dlx appledger bind --apply
 pnpm dlx appledger subjects --operation validate
 ```
 
-`bind` lists the labels that no binding names and writes nothing. `--apply` adds them to `manifest.yaml`. The label files are not changed. `validate` checks each bound label against the pinned AppFacts or FeatureFacts schema.
+`bind` lists the labels that no binding names and writes nothing. `--apply` adds them to `manifest.yaml`. The label files are not changed. `validate` checks each bound label against its pinned schema.
 
 ## Existing tracking file
 
 If the project already has a writable `.forgetrail/workflow_tracking.json`:
 
 ```bash
-pnpm exec appledger migrate preview
-pnpm exec appledger migrate apply
+pnpm dlx appledger migrate preview
+pnpm dlx appledger migrate apply
 ```
 
 Preview writes nothing. Apply imports the file into `appledger/` and replaces it with a pointer. A second apply is a no-op. Rollback restores only the paths that apply wrote, and it refuses if one of those files was edited later.

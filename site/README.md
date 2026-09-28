@@ -13,4 +13,4 @@ Docs source: `docs/*.md` + `_nav.json`. FilePress mounts `docs/dist` at `/docs` 
 
 LocalSlip lease: `appledger-site` on port **46002**. FilePress reads the lease. Do not pass `--port`.
 
-`pnpm ship` builds and deploys the `build` directory to the Cloudflare Pages project `appledger`. This pass does not deploy.
+`pnpm ship` builds and deploys the `build` directory to the Cloudflare Pages project `appledger`, which serves appledger.dev.

@@ -2,9 +2,9 @@
 title: Conformance
 ---
 
-The reference implementation is this repository's TypeScript checker, published as [`appledger` on npm](https://www.npmjs.com/package/appledger). The compatibility table and the row-by-row results are in [`docs/rel-01.md`](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/docs/rel-01.md). Rows that the suite does not cover are listed there as not tested. Fifty-two passing tests are not a pass of every conformance row.
+The reference implementation is this repository's TypeScript checker, published as [`appledger` on npm](https://www.npmjs.com/package/appledger). The compatibility table and the row-by-row results are in [`docs/rel-01.md`](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/docs/rel-01.md). Rows that the suite does not cover are listed there as not tested. Passing tests are not a pass of every conformance row.
 
-Implemented commands, from a checkout:
+Implemented commands. Run any of them with `pnpm dlx appledger <command>`:
 
 | Command | Effect |
 | --- | --- |
@@ -23,8 +23,6 @@ There is no hosted editor, account, or database. A static viewer is not part of 
 
 These are not claimed:
 
-- Deploying AppLedger.dev or forgetrail.dev from this documentation pass
-- An npm release of the checker
 - Automatic generation of all six xFacts families
 - Host enforcement of agent tool permissions
 - That orientation quotes every older session body

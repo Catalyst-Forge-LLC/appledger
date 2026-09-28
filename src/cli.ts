@@ -451,8 +451,8 @@ appledger init [--root DIR] [--name TEXT]
 appledger reconcile [--root DIR] [--apply]
 appledger bind [--root DIR] [--apply]
 
-check, orient, render, and subjects do not modify files unless render is given --write.
-subjects lists one row per subject. Validate and extract read pinned AppFacts and FeatureFacts schemas and do not write. Propose --apply updates a derived cached title only.
+check, orient, render, and subjects do not modify files, except render --write and subjects --operation propose --apply.
+subjects lists one row per subject. Validate and extract read the pinned schema for each family and do not write. Propose --apply updates a FeatureFacts derived cached title only.
 orient selects records deterministically and keeps recorded gaps even when the word budget is small.
 render --write updates views/<view>.md only when the bytes differ.
 bind lists APP_FACTS.md and .featurefacts/features.yaml at the repository root that are not bound. --apply adds them to manifest.yaml and never changes a label.`);
