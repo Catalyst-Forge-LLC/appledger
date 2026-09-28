@@ -21,7 +21,9 @@
     "verify": "pnpm test && pnpm build",
     "check": "node dist/cli.js check",
     "site:dev": "pnpm --dir site dev",
-    "site:build": "pnpm --dir site build"
+    "site:build": "pnpm --dir site build",
+    "site:deploy": "pnpm --dir site run ship",
+    "ship": "pnpm --dir site run ship"
   },
   "engines": {
     "node": ">=20"

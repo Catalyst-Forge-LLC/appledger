@@ -32,7 +32,7 @@ The curation skill is [`skills/appledger/SKILL.md`](skills/appledger/SKILL.md). 
 
 ## Site
 
-`site/` is a FilePress site that is not deployed. The pages describe the format, the commands in this repository, and the synthetic `examples/minimal` ledger. Preview with `pnpm site:dev`. LocalSlip lease name: `appledger-site` on port 46002. Do not deploy from this tree.
+`site/` is a FilePress site. The pages describe the format, the commands in this repository, and the synthetic `examples/minimal` ledger. Preview with `pnpm site:dev`. LocalSlip lease name: `appledger-site` on port 46002. `pnpm ship` builds the site and deploys the `build` directory to the Cloudflare Pages project `appledger`.
 
 ## Licenses
 

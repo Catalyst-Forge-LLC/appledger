@@ -7,10 +7,13 @@
     "dev": "localslip claim appledger-site --port 46002 && filepress dev --host 0.0.0.0",
     "build": "filepress build",
     "preview": "filepress preview",
-    "check": "filepress check"
+    "check": "filepress check",
+    "ship": "pnpm build && wrangler pages deploy build --project-name=appledger",
+    "deploy": "pnpm ship"
   },
   "devDependencies": {
-    "getfilepress": "^0.1.42"
+    "getfilepress": "^0.1.42",
+    "wrangler": "^4.120.1"
   },
   "pnpm": {
     "overrides": {
