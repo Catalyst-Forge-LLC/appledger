@@ -4,7 +4,7 @@ title: Introduction
 
 **AppLedger** is an open text record of what an application is for, how it fits together, what it does, and how it changes. The record can be incomplete, disputed, or stale. It is a maintained ledger, not a claim of complete memory.
 
-ForgeTrail is one way to keep that record during development. The xFacts labels stay the owners of their own declarations. AppLedger points at them. It does not replace their schemas.
+ForgeTrail keeps its project record in AppLedger. The phase, decisions, lessons, and session handoff live in `appledger/`. The old `.forgetrail/workflow_tracking.json` is now only a pointer. AppLedger does not require ForgeTrail, and other tools can maintain the same ledger. The xFacts labels keep their own schemas. AppLedger points at them.
 
 ## Where things live
 
