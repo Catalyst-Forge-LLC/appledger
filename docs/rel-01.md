@@ -2,6 +2,8 @@
 
 This report is the REL-01 proposal marker. It is not itself an npm release. This tree's package version is `0.1.0`. npm still has the `0.0.0` name hold until you publish `0.1.0`. AppLedger.dev is not deployed. The git tag `proposal-0.1.0` names an older commit. Pushing that tag and deploying the site are separate from publishing `0.1.0`.
 
+As of 2026-09-28, `appledger@0.1.1` is on npm and AppLedger.dev is deployed. The sentences above describe the tree when this report was written. The tag was still not pushed on that date.
+
 `pnpm test` reported 52 passed on Node `v24.17.0`, pnpm `10.30.1`, vitest `3.2.7`. The run started at 19:19:07 local time (UTC-4) on 2026-09-26. Fifty-two passing tests are not a pass of every row below.
 
 ## Compatibility

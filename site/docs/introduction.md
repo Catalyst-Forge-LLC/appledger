@@ -12,8 +12,8 @@ ForgeTrail is one way to keep that record during development. The xFacts labels 
 | --- | --- |
 | Normative specification | [`spec/`](https://github.com/Catalyst-Forge-LLC/appledger/tree/main/spec) in the repository |
 | Schemas | [`schemas/`](https://github.com/Catalyst-Forge-LLC/appledger/tree/main/schemas) |
-| This site | A reading path. It is not the specification, and it is not deployed |
-| Checker | This repository. `appledger@0.0.0` on npm is a name hold |
+| This site | A reading path. It is not the specification |
+| Checker | [`appledger` on npm](https://www.npmjs.com/package/appledger), built from this repository. `pnpm dlx appledger check` |
 
 Schema and behavior notes for the proposal live in [`docs/rel-01.md`](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/docs/rel-01.md). That report is not a site changelog.
 

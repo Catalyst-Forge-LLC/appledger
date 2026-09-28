@@ -19,15 +19,15 @@ function bind(root: string, yaml: string): void {
 }
 
 describe("subject inventory", () => {
-  it("records unsupported for the application and not_applicable when no other subject exists", () => {
+  it("records not_applicable for an application with no label and when no other subject exists", () => {
     const root = copyMinimal();
     const manifest = join(root, "appledger", "manifest.yaml");
     const before = statSync(manifest).mtimeMs;
     const rows = discoverSubjects({ root });
     expect(statSync(manifest).mtimeMs).toBe(before);
     expect(rows.map((row) => `${row.disposition} ${row.family} ${row.subjectId}`)).toEqual([
-      "unsupported appfacts app-workshop-demo",
-      "unsupported featurefacts app-workshop-demo",
+      "not_applicable appfacts app-workshop-demo",
+      "not_applicable featurefacts app-workshop-demo",
       "not_applicable toolfacts ",
       "not_applicable agentfacts ",
       "not_applicable skillfacts ",
@@ -106,7 +106,7 @@ describe("subject inventory", () => {
     );
     const discovered = discoverSubjects({ root, family: "featurefacts", subjectId: "app-workshop-demo" });
     expect(discovered).toHaveLength(1);
-    expect(discovered[0]?.disposition).toBe("unsupported");
+    expect(discovered[0]?.disposition).toBe("unchanged");
     expect(discovered[0]?.inputFingerprint).toMatch(/^[0-9a-f]{64}$/);
     expect(discovered[0]?.changedFields).toEqual([]);
     expect(discovered[0]?.findings.join(" ")).toContain("neither confirmed nor denied");

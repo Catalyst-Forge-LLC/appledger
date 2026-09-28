@@ -9,6 +9,7 @@ import { runSkillFactsOperation } from "./skillfacts.js";
 import { runToolFactsOperation } from "./toolfacts.js";
 import { runAgentFactsOperation } from "./agentfacts.js";
 import { runModelFactsOperation } from "./modelfacts.js";
+import { SUBJECT_LABEL_PATHS, homeRepository, labelFileExists, unboundApplication } from "./labels.js";
 
 export const FAMILIES = ["appfacts", "featurefacts", "toolfacts", "agentfacts", "skillfacts", "modelfacts"] as const;
 
@@ -137,8 +138,8 @@ export function runOperation(input: {
   for (const bindings of groups.values()) {
     rows.push(bindingRow(bindings, repos));
   }
-  addApplicationSubjects(rows, manifest, input.family, input.subjectId);
-  addAbsentFamilies(rows, input.family, input.subjectId);
+  addApplicationSubjects(rows, manifest, home, input.family, input.subjectId);
+  addAbsentFamilies(rows, home, manifest, input.family, input.subjectId);
   rows.sort((left, right) => {
     const family = FAMILIES.indexOf(left.family) - FAMILIES.indexOf(right.family);
     if (family !== 0) return family;
@@ -186,10 +187,10 @@ function bindingRow(bindings: Binding[], repos: Map<string, string>): AdapterRes
   }
   if (!failed && files.length > 0) {
     findings.push(
-      `Discover does not interpret ${first.family}. Native ids were neither confirmed nor denied. No label was written.`,
+      `The bound source is present. Discover does not interpret ${first.family}. Native ids were neither confirmed nor denied. Run \`appledger subjects --operation validate\` to check it against the pinned schema. No label was written.`,
     );
   }
-  let disposition: Disposition = "unsupported";
+  let disposition: Disposition = "unchanged";
   if (failed) disposition = "failed";
   else if (files.length === 0) disposition = "needs_review";
   const schemaVersion = bindings.find((binding) => binding.schemaVersion)?.schemaVersion ?? null;
@@ -199,6 +200,7 @@ function bindingRow(bindings: Binding[], repos: Map<string, string>): AdapterRes
 function addApplicationSubjects(
   rows: AdapterResult[],
   manifest: Record<string, unknown>,
+  home: string,
   family: Family | undefined,
   subjectId: string | undefined,
 ): void {
@@ -208,15 +210,18 @@ function addApplicationSubjects(
   for (const applicable of ["appfacts", "featurefacts"] as const) {
     if (family && family !== applicable) continue;
     if (rows.some((row) => row.family === applicable && row.subjectId === applicationId)) continue;
-    rows.push(
-      result(adapterFor(applicable), "discover", applicationId, "unsupported", null, [
-        "The application is a subject and no register is bound. No label was written.",
-      ]),
-    );
+    const unbound = unboundApplication(applicable, home, manifest);
+    rows.push(result(adapterFor(applicable), "discover", applicationId, unbound.disposition, null, [unbound.finding]));
   }
 }
 
-function addAbsentFamilies(rows: AdapterResult[], family: Family | undefined, subjectId: string | undefined): void {
+function addAbsentFamilies(
+  rows: AdapterResult[],
+  home: string,
+  manifest: Record<string, unknown>,
+  family: Family | undefined,
+  subjectId: string | undefined,
+): void {
   if (subjectId) {
     if (rows.length > 0) return;
     const chosen = family ?? "appfacts";
@@ -227,14 +232,16 @@ function addAbsentFamilies(rows: AdapterResult[], family: Family | undefined, su
     );
     return;
   }
+  const repo = homeRepository(home, manifest);
   for (const item of FAMILIES) {
     if (family && family !== item) continue;
     if (rows.some((row) => row.family === item)) continue;
-    rows.push(
-      result(adapterFor(item), "discover", "", "not_applicable", null, [
-        "No subject of this family was declared. This is not a missing label.",
-      ]),
-    );
+    const findings = ["No subject of this family was declared. This is not a missing label."];
+    const path = item in SUBJECT_LABEL_PATHS ? SUBJECT_LABEL_PATHS[item as keyof typeof SUBJECT_LABEL_PATHS] : null;
+    if (repo && path && labelFileExists(repo.abs, path)) {
+      findings.push(`${path} exists at the repository root. Declare its subject and a binding to maintain it.`);
+    }
+    rows.push(result(adapterFor(item), "discover", "", "not_applicable", null, findings));
   }
 }
 

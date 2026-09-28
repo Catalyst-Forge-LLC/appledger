@@ -4,6 +4,7 @@ import { stringify } from "yaml";
 import { discoverSubjects, ADAPTERS, type AdapterResult } from "./adapters.js";
 import { resolveLedgerRoot } from "./check.js";
 import { inputSetFingerprint, sha256Hex } from "./digest.js";
+import { APPLICATION_LABEL_PATHS, SUBJECT_LABEL_PATHS, homeRepository } from "./labels.js";
 import { isUnsafeRelative } from "./sources.js";
 import { applyTransaction, reconciliationKey, stageTransaction } from "./transaction.js";
 import { parseYaml, splitFrontMatter } from "./yaml.js";
@@ -159,6 +160,12 @@ function inputEntries(
       `appledger/records/application/${applicationId}.md`,
       join(ledgerRoot, "records", "application", `${applicationId}.md`),
     );
+  }
+  const repo = homeRepository(home, manifest);
+  if (repo) {
+    for (const path of [...Object.values(APPLICATION_LABEL_PATHS), "FEATURE_FACTS.md", ...Object.values(SUBJECT_LABEL_PATHS)]) {
+      add(path, resolve(repo.abs, ...path.split("/")));
+    }
   }
   if (!Array.isArray(manifest.bindings) || !Array.isArray(manifest.repositories)) return entries;
   const repos = new Map<string, string>();

@@ -16,6 +16,7 @@ describe("curation skill", () => {
       "implemented appledger render",
       "implemented appledger transaction",
       "implemented appledger subjects",
+      "implemented appledger bind",
       "implemented appledger init",
       "implemented appledger reconcile",
       "implemented appledger diff",

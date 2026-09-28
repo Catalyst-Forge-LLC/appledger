@@ -73,7 +73,7 @@ export function checkSources(
         "unsupported",
         "warning",
         "manifest.yaml",
-        `Binding ${binding.id} file was read. Check does not interpret ${binding.family}. Native ids were neither confirmed nor denied. ${NOT_ABSENT}`,
+        `Binding ${binding.id} file was read. Check does not interpret ${binding.family}. Native ids were neither confirmed nor denied. ${NOT_ABSENT} Run \`appledger subjects --operation validate --family ${binding.family}\` to check it against the pinned schema.`,
       ),
     );
   }

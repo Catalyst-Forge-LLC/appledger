@@ -19,8 +19,8 @@ describe("reconcile", () => {
     expect(plan.message).toContain("Plan only");
     expect(plan.message).toContain("No label was written");
     expect(plan.dispositions.map((row) => `${row.family} ${row.disposition}`)).toEqual([
-      "appfacts unsupported",
-      "featurefacts unsupported",
+      "appfacts not_applicable",
+      "featurefacts not_applicable",
       "toolfacts not_applicable",
       "agentfacts not_applicable",
       "skillfacts not_applicable",

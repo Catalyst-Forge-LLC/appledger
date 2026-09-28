@@ -2,7 +2,7 @@
 title: Conformance
 ---
 
-The reference implementation is this repository's TypeScript checker. It is not published as a usable npm release. `appledger@0.0.0` is a name hold. The compatibility table and the row-by-row results are in [`docs/rel-01.md`](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/docs/rel-01.md). Rows that the suite does not cover are listed there as not tested. Fifty-two passing tests are not a pass of every conformance row.
+The reference implementation is this repository's TypeScript checker, published as [`appledger` on npm](https://www.npmjs.com/package/appledger). The compatibility table and the row-by-row results are in [`docs/rel-01.md`](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/docs/rel-01.md). Rows that the suite does not cover are listed there as not tested. Fifty-two passing tests are not a pass of every conformance row.
 
 Implemented commands, from a checkout:
 
@@ -16,6 +16,7 @@ Implemented commands, from a checkout:
 | `migrate` | Preview, apply, or roll back a tracking-file import. |
 | `diff` | Explain ledger changes between two explicit revisions. A generated view is not a semantic record change. Nothing is written. |
 | `init` | Create a manifest, profile, application record, and session record. An existing ledger file is left in place. |
+| `bind` | List an `APP_FACTS.md` or FeatureFacts register at the repository root that no binding names. `--apply` adds the bindings. No label is changed. |
 | `reconcile` | Record a disposition for each subject family. `--apply` writes one receipt. A repeat writes nothing. No label is rewritten. |
 
 There is no hosted editor, account, or database. A static viewer is not part of this site. Search does not require uploading a private ledger because this site does not accept ledgers.

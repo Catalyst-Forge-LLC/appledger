@@ -4,6 +4,7 @@ import { listTransactions, resumeTransaction, rollbackTransaction } from "./tran
 import { diffLedger, diffMarkdown } from "./diff.js";
 import { initLedger } from "./init.js";
 import { reconcileLedger } from "./reconcile.js";
+import { bindLabels } from "./bind.js";
 import { applyMigration, previewMigration, rollbackMigration } from "./migrate.js";
 import { projectLedger, writePublicProjection } from "./project.js";
 import { orientLedger, renderView, writeView, type ViewName } from "./views.js";
@@ -32,9 +33,11 @@ if (!command || command === "--help" || command === "-h") {
   runInit(argv.slice(1));
 } else if (command === "reconcile") {
   runReconcile(argv.slice(1));
+} else if (command === "bind") {
+  runBind(argv.slice(1));
 } else {
   console.error(`appledger ${command} is not implemented.`);
-  console.error("Implemented: check, orient, render, subjects, transaction, migrate, diff, init, reconcile");
+  console.error("Implemented: check, orient, render, subjects, transaction, migrate, diff, init, reconcile, bind");
   process.exit(4);
 }
 
@@ -131,6 +134,28 @@ function runReconcile(args: string[]): void {
     console.log(result.message);
     for (const row of result.dispositions) {
       console.log(`${row.disposition} ${row.family}${row.subjectId ? ` ${row.subjectId}` : ""}: ${row.finding}`);
+    }
+    for (const path of result.wrote) console.log(path);
+    if (result.code === "conflict") process.exit(3);
+    if (!result.ok) process.exit(1);
+  } catch (err) {
+    console.error(err instanceof Error ? err.message : String(err));
+    process.exit(5);
+  }
+}
+
+function runBind(args: string[]): void {
+  const apply = args.includes("--apply");
+  const parsed = parseRoot(
+    args.filter((arg) => arg !== "--apply"),
+    new Set(["--root"]),
+  );
+  if (!parsed) return;
+  try {
+    const result = bindLabels({ root: parsed.root, apply });
+    console.log(result.message);
+    for (const item of result.bindings) {
+      console.log(`${item.family} ${item.subject_id}: ${item.repository_id}/${item.path} as ${item.id}`);
     }
     for (const path of result.wrote) console.log(path);
     if (result.code === "conflict") process.exit(3);
@@ -418,10 +443,12 @@ appledger migrate preview|apply|rollback [--root DIR] [--id ID]
 appledger diff --from REV --to REV [--root DIR] [--format text|json]
 appledger init [--root DIR] [--name TEXT]
 appledger reconcile [--root DIR] [--apply]
+appledger bind [--root DIR] [--apply]
 
 check, orient, render, and subjects do not modify files unless render is given --write.
 subjects lists one row per subject. Validate and extract read pinned AppFacts and FeatureFacts schemas and do not write. Propose --apply updates a derived cached title only.
 orient selects records deterministically and keeps recorded gaps even when the word budget is small.
-render --write updates views/<view>.md only when the bytes differ.`);
+render --write updates views/<view>.md only when the bytes differ.
+bind lists APP_FACTS.md and .featurefacts/features.yaml at the repository root that are not bound. --apply adds them to manifest.yaml and never changes a label.`);
   process.exit(code);
 }

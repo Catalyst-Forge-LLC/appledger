@@ -4,6 +4,7 @@ import { applyTransaction, stageTransaction } from "./transaction.js";
 import { inputSetFingerprint, sha256Hex } from "./digest.js";
 import { isInside, isUnsafeRelative } from "./sources.js";
 import { pinnedErrors, pinnedValidators } from "./pinned.js";
+import { unboundApplication } from "./labels.js";
 import { parseYaml, splitFrontMatter } from "./yaml.js";
 import type { AdapterResult, Family, Operation } from "./adapters.js";
 
@@ -25,10 +26,9 @@ export function runPinnedOperation(input: {
     : bindings;
   if (wanted.length === 0) {
     if (!input.subjectId || input.subjectId === applicationId) {
+      const unbound = unboundApplication(input.family, home, manifest);
       return [
-        row(input.family, input.operation, input.subjectId || applicationId, "unsupported", null, [
-          "The application is a subject and no register is bound. No label was written.",
-        ]),
+        row(input.family, input.operation, input.subjectId || applicationId, unbound.disposition, null, [unbound.finding]),
       ];
     }
     return [
