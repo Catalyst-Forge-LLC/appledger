@@ -255,7 +255,7 @@ function renderPage(item, bodyHtml, toc, prev, next) {
 <body>
 	<header class="docs-top">
 		<button type="button" class="docs-menu-btn" data-docs-menu aria-label="Toggle docs menu">Menu</button>
-		<a class="docs-brand" href="/docs/">AppLedger <span>docs</span></a>
+		<a class="docs-brand" href="/docs/"><img class="docs-logo" src="/logo.png" alt="" />AppLedger <span>docs</span></a>
 		<nav class="docs-top-links">
 			<a href="/">Home</a>
 			<a href="https://github.com/Catalyst-Forge-LLC/appledger">GitHub</a>

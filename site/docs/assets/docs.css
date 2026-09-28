@@ -78,10 +78,19 @@ a:hover {
 }
 
 .docs-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.55rem;
 	font-weight: 700;
 	color: var(--docs-ink);
 	text-decoration: none;
 	letter-spacing: -0.02em;
+}
+
+.docs-logo {
+	height: 2.75rem;
+	width: auto;
+	display: block;
 }
 
 .docs-brand span {
@@ -356,6 +365,16 @@ a:hover {
 }
 
 @media (max-width: 760px) {
+	.docs-logo {
+		height: 2.25rem;
+	}
+
+	.docs-top {
+		gap: 0.65rem;
+		padding-left: 0.75rem;
+		padding-right: 0.75rem;
+	}
+
 	.docs-menu-btn {
 		display: inline-flex;
 	}
