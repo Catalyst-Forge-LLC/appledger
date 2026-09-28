@@ -1,0 +1,30 @@
+{
+	"sections": [
+		{
+			"title": "Getting started",
+			"items": [
+				{ "id": "introduction", "title": "Introduction" },
+				{ "id": "quickstart", "title": "Quickstart" }
+			]
+		},
+		{
+			"title": "The record",
+			"items": [
+				{ "id": "standard", "title": "Standard" },
+				{ "id": "examples", "title": "Examples" },
+				{ "id": "reference", "title": "Reference" }
+			]
+		},
+		{
+			"title": "Neighbors",
+			"items": [
+				{ "id": "forgetrail", "title": "ForgeTrail" },
+				{ "id": "xfacts", "title": "xFacts" }
+			]
+		},
+		{
+			"title": "Limits",
+			"items": [{ "id": "conformance", "title": "Conformance" }]
+		}
+	]
+}

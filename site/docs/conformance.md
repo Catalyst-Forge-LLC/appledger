@@ -1,7 +1,5 @@
 ---
 title: Conformance
-description: What this repository implements, and the limits that stay explicit.
-order: 7
 ---
 
 The reference implementation is this repository's TypeScript checker. It is not published as a usable npm release. `appledger@0.0.0` is a name hold. The compatibility table and the row-by-row results are in [`docs/rel-01.md`](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/docs/rel-01.md). Rows that the suite does not cover are listed there as not tested. Fifty-two passing tests are not a pass of every conformance row.
@@ -11,7 +9,7 @@ Implemented commands, from a checkout:
 | Command | Effect |
 | --- | --- |
 | `check` | Report schema, predicate, and path findings. Warnings do not fail the run. |
-| `orient` | Print the resume brief. Decision choices and the latest session time are included. |
+| `orient` | Print the resume brief. Decision choices and the latest session time are included. A task filter applies to related records. Gaps stay when the word budget is exceeded. |
 | `render` | Print orientation, progress, history, or the public view. `--write` updates a view file only when the bytes differ. |
 | `subjects` | One disposition per subject for discover, validate, extract, checkFreshness, or propose. |
 | `transaction` | Status, resume, or rollback of an interrupted apply. |

@@ -1,7 +1,5 @@
 ---
 title: Examples
-description: The synthetic minimal ledger, and what a recorded change looks like.
-order: 3
 ---
 
 Examples here are synthetic unless a page says they came from a reviewed project.

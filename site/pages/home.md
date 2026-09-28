@@ -1,10 +1,17 @@
 ---
-title: The application, written down
+title: The application record
 description: AppLedger is an open text record of what an application is for, how it fits together, what it does, and how it changes.
 order: 0
 ---
 
 AppLedger keeps purpose, structure, decisions, and evidence in files a person or an agent can read. The record can be incomplete, disputed, or stale. It is a maintained ledger, not a claim of complete memory.
+
+<div class="cta-row">
+  <a class="cta cta-primary" href="/docs">Read the docs</a>
+  <a class="cta cta-secondary" href="https://github.com/Catalyst-Forge-LLC/appledger">View on GitHub</a>
+</div>
+
+<p class="kicker">Text files · format 0.1.0 · open specification</p>
 
 ForgeTrail is one way to maintain that record during development. The xFacts labels stay the owners of their own declarations. AppLedger points at them. It does not replace their schemas.
 
@@ -18,18 +25,12 @@ The [minimal ledger](https://github.com/Catalyst-Forge-LLC/appledger/tree/main/e
 
 The rationale is that the synthetic brief calls for a small offline tool. The rejected alternative is a hosted database. The record is labeled as a scenario, not as observed implementation.
 
-## Read next
+## In the docs
 
-- [Quickstart](/quickstart) for the smallest folder and an existing tracking file
-- [Standard](/standard) for the specification
-- [Examples](/examples) for the synthetic ledger and what a change looks like
-- [ForgeTrail](/forgetrail) for the phase profile and migration
-- [xFacts](/xfacts) for what each adapter does and does not do
-- [Reference](/reference) for record kinds
-- [Conformance](/conformance) for honest limits
-- [Changelog](/changelog) for what this repository implements
-
-<div class="cta-row">
-  <a class="cta cta-primary" href="https://github.com/Catalyst-Forge-LLC/appledger">View on GitHub</a>
-  <a class="cta cta-secondary" href="https://forgetrail.dev">ForgeTrail</a>
-</div>
+- [Quickstart](/docs/quickstart) for the smallest folder and an existing tracking file
+- [Standard](/docs/standard) for the specification
+- [Examples](/docs/examples) for the synthetic ledger and what a change looks like
+- [ForgeTrail](/docs/forgetrail) for the phase profile and migration
+- [xFacts](/docs/xfacts) for what each adapter does and does not do
+- [Reference](/docs/reference) for record kinds
+- [Conformance](/docs/conformance) for honest limits

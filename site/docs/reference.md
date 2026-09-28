@@ -1,7 +1,5 @@
 ---
 title: Reference
-description: Record kinds in AppLedger format 0.1.0.
-order: 6
 ---
 
 Each record is Markdown with YAML front matter. The envelope carries `format_version`, `id`, `kind`, `title`, `record_status`, timestamps, `recorded_by`, `visibility`, `relations`, and `claims`. The body is Markdown. Dates are strings. The normative fields are in [`schemas/record-kinds.schema.json`](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/schemas/record-kinds.schema.json).

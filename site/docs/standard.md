@@ -1,7 +1,5 @@
 ---
 title: Standard
-description: Where the AppLedger specification lives, and what is normative.
-order: 2
 ---
 
 The normative text is [`spec/`](https://github.com/Catalyst-Forge-LLC/appledger/tree/main/spec) in the repository, format 0.1.0. Schemas are beside it in [`schemas/`](https://github.com/Catalyst-Forge-LLC/appledger/tree/main/schemas).

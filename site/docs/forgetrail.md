@@ -1,7 +1,5 @@
 ---
 title: ForgeTrail
-description: How ForgeTrail keeps phase state in AppLedger, and how an old tracking file is migrated.
-order: 4
 ---
 
 ForgeTrail's phase profile is `appledger/profiles/forgetrail.yaml`. Phases are `plan`, `build`, `stabilize`, `iterate`, `refine`, `align`, and `harden`. Lite phases 1–7 and the older full phase ids map onto those names. A Lite status of `pending` becomes `not_started`. A later current phase does not mark earlier phases completed.

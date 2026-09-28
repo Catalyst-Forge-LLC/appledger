@@ -1,7 +1,5 @@
 ---
 title: xFacts
-description: What the AppLedger adapters implement for each label family, and what they refuse to do.
-order: 5
 ---
 
 xFacts labels keep their own schemas, validators, and publication rules. AppLedger does not become a dependency of a labeled application. A family with no subject is `not_applicable`, which is a recorded outcome, not a missing label.

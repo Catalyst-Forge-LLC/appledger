@@ -1,7 +1,5 @@
 ---
 title: Quickstart
-description: The smallest AppLedger folder, and how an existing ForgeTrail tracking file is imported.
-order: 1
 ---
 
 Commands on this page are implemented in the [appledger repository](https://github.com/Catalyst-Forge-LLC/appledger). They are not a published npm release. `appledger@0.0.0` on npm is a name hold.

@@ -7,8 +7,8 @@ The site is not deployed. The canonical specification is the repository, format 
 - [Specification](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/spec/README.md)
 - [Schemas](https://github.com/Catalyst-Forge-LLC/appledger/tree/main/schemas)
 - [Synthetic minimal ledger](https://github.com/Catalyst-Forge-LLC/appledger/tree/main/examples/minimal)
-- [Quickstart](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/site/pages/quickstart.md)
-- [Changelog](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/site/pages/changelog.md)
+- [Quickstart](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/site/docs/quickstart.md)
+- [Conformance](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/site/docs/conformance.md)
 - [ForgeTrail](https://github.com/Catalyst-Forge-LLC/forgetrail)
 
 Do not load the full specification into always-on agent context. Read the page that matches the task.
