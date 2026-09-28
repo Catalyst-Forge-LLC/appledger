@@ -42,7 +42,10 @@ const live = {
       iterations: [{ name: "search" }],
     },
   },
-  decisions: [{ date: "2020-01-03", decision: "Use local files" }],
+  decisions: [
+    { date: "2020-01-03", decision: "Use local files" },
+    { date: "2020-01-03T16:30:00", decision: "Keep the clock time" },
+  ],
   gotchas: [
     { date: "2020-01-04", issue: "Port already taken", resolution: "Use 8096" },
     { gotcha: "Cause unknown" },
@@ -115,7 +118,9 @@ describe("tracking migration", () => {
     expect(sessions).not.toContain("2026-09-26");
     const decision = readTree(join(root, "appledger", "records", "decision"));
     expect(decision).toContain("2020-01-03T00:00:00Z");
+    expect(decision).toContain("2020-01-03T16:30:00Z");
     expect(decision).toContain("Use local files");
+    expect(decision).toContain("Keep the clock time");
     const work = readTree(join(root, "appledger", "records", "work"));
     expect(work).toContain("intake: bug");
     expect(work).toContain("Login drops");

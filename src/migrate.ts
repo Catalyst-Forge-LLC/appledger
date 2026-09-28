@@ -625,8 +625,10 @@ function firstDate(value: Record<string, unknown>): { at: string; placeholder: b
 
 function eventDate(value: unknown): { at: string; placeholder: boolean } {
   if (typeof value !== "string" || !value.trim()) return { at: PLACEHOLDER, placeholder: true };
-  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return { at: `${value}T00:00:00Z`, placeholder: false };
-  if (/^\d{4}-\d{2}-\d{2}T/.test(value)) return { at: value, placeholder: false };
+  const text = value.trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return { at: `${text}T00:00:00Z`, placeholder: false };
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?$/.test(text)) return { at: `${text}Z`, placeholder: false };
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(text)) return { at: text, placeholder: false };
   return { at: PLACEHOLDER, placeholder: true };
 }
 
