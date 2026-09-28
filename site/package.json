@@ -10,7 +10,7 @@
     "check": "filepress check"
   },
   "devDependencies": {
-    "getfilepress": "^0.1.40"
+    "getfilepress": "^0.1.42"
   },
   "pnpm": {
     "overrides": {
