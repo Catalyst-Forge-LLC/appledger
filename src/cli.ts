@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { readFileSync } from "node:fs";
 import { checkLedger, resolveLedgerRoot } from "./check.js";
 import { listTransactions, resumeTransaction, rollbackTransaction } from "./transaction.js";
 import { diffLedger, diffMarkdown } from "./diff.js";
@@ -15,6 +16,10 @@ const command = argv[0];
 
 if (!command || command === "--help" || command === "-h") {
   usage(command ? 0 : 2);
+} else if (command === "--version" || command === "-v") {
+  const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")) as { version: string };
+  console.log(pkg.version);
+  process.exit(0);
 } else if (command === "check") {
   runCheck(argv.slice(1));
 } else if (command === "transaction") {
@@ -432,7 +437,8 @@ function flag(args: string[], name: string): string | undefined {
 }
 
 function usage(code: number): never {
-  console.log(`appledger check [--root DIR] [--format text|json]
+  console.log(`appledger --version
+appledger check [--root DIR] [--format text|json]
 appledger orient [--root DIR] [--task TEXT] [--budget N]
 appledger render --view orientation|progress|history|public [--root DIR] [--task TEXT] [--budget N] [--write]
 appledger subjects [--root DIR] [--family NAME] [--subject ID] [--operation discover|validate|extract|checkFreshness|propose] [--apply] [--format text|json]

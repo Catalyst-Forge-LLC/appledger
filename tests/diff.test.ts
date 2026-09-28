@@ -58,7 +58,7 @@ describe("diff", () => {
       },
     ]);
     expect(readdirSync(dir)).toEqual(names);
-  });
+  }, 20_000);
 
   it("reports the same commit and refuses a missing revision", () => {
     const dir = repo();

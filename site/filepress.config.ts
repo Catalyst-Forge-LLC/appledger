@@ -23,6 +23,7 @@ export default defineFilepressConfig({
     { label: "Docs", href: "/docs" },
     { label: "GitHub", href: github, icon: "github" },
     { label: "ForgeTrail", href: "https://forgetrail.dev" },
+    { label: "xFacts", href: "https://xfacts.dev" },
     { label: "Catalyst Forge", href: "https://catalystforge.com" },
   ],
   paths: [{ url: "/docs", dir: "docs/dist" }],

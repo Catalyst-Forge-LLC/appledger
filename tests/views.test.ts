@@ -1,4 +1,4 @@
-import { cpSync, mkdtempSync, readFileSync, statSync, utimesSync } from "node:fs";
+import { cpSync, mkdtempSync, readFileSync, statSync, utimesSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -30,6 +30,32 @@ describe("orientation and views", () => {
     expect(wide).toContain("No lesson records.");
     expect(wide).not.toContain("concept-workshop");
     expect(wide).not.toContain("exceeds the word budget");
+  });
+
+  it("counts the work list against the budget and summarizes the rest", () => {
+    const root = copyMinimal();
+    const workDir = join(root, "appledger", "records", "work");
+    const template = readFileSync(join(workDir, "work-note-flow.md"), "utf8");
+    for (let n = 1; n <= 40; n += 1) {
+      const id = `work-extra-${String(n).padStart(2, "0")}`;
+      const text = template
+        .replace("id: work-note-flow", `id: ${id}`)
+        .replace("title: Implement note reading flow", `title: Extra work ${n}`)
+        .replace("status: proposed", "status: in_progress")
+        .replace("status: pending", "status: met");
+      writeFileSync(join(workDir, `${id}.md`), text);
+    }
+    const wide = orientLedger({ root, budgetWords: 5000 });
+    expect(wide.match(/^- in_progress — /gm)).toHaveLength(40);
+    expect(wide).not.toContain("more in progress");
+
+    const tight = orientLedger({ root, budgetWords: 250 });
+    const shown = tight.match(/^- in_progress — /gm)?.length ?? 0;
+    expect(shown).toBeLessThan(40);
+    expect(tight).toContain(`- ${40 - shown} more in progress, blocked, or ready.`);
+    expect(tight).toContain("## Work in progress\n\n- ");
+    expect(tight).toContain("Owner approves the brief");
+    expect(tight.split(/\s+/).filter(Boolean).length).toBeLessThanOrEqual(250);
   });
 
   it("renders progress and history twice as the same bytes", () => {

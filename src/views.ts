@@ -104,7 +104,7 @@ function loadLedger(ledgerRoot: string): Loaded {
 }
 
 function orientationMarkdown(loaded: Loaded, task: string | undefined, budget: number): string {
-  const head = [
+  const fixed = [
     disclosure("Orientation"),
     "",
     "## Application",
@@ -129,9 +129,9 @@ function orientationMarkdown(loaded: Loaded, task: string | undefined, budget: n
     "",
     "## Work in progress",
     "",
-    workBlock(loaded),
   ].join("\n");
   const gaps = ["## Gaps", "", gapBlock(loaded)].join("\n");
+  const head = `${fixed}\n${workBlock(loaded, (block) => words(`${fixed}\n${block}\n\n${gaps}`) <= budget)}`;
   const tokens = taskTokens(task);
   const related = loaded.records.filter((record) => record.recordStatus !== "retired" && isRelated(record, tokens));
   const lines: string[] = [];
@@ -248,12 +248,21 @@ function lessonBlock(loaded: Loaded): string {
     .join("\n");
 }
 
-function workBlock(loaded: Loaded): string {
+function workBlock(loaded: Loaded, fits?: (block: string) => boolean): string {
   const current = loaded.records.filter(
     (record) => record.kind === "work" && (record.status === "in_progress" || record.status === "blocked" || record.status === "ready"),
   );
   if (current.length === 0) return "No work is in progress, blocked, or ready.";
-  return current.map((record) => `- ${record.status} — ${link(record)}`).join("\n");
+  const lines = current.map((record) => `- ${record.status} — ${link(record)}`);
+  if (!fits) return lines.join("\n");
+  const block = (count: number) => {
+    const rest = lines.length - count;
+    const more = rest === 0 ? [] : [`- ${rest} more in progress, blocked, or ready. \`appledger render --view progress\` lists them.`];
+    return [...lines.slice(0, count), ...more].join("\n");
+  };
+  let count = 0;
+  while (count < lines.length && fits(block(count + 1))) count += 1;
+  return block(count);
 }
 
 function gapBlock(loaded: Loaded): string {

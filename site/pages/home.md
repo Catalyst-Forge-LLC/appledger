@@ -13,7 +13,11 @@ AppLedger keeps purpose, structure, decisions, and evidence in files a person or
 
 <p class="kicker">Text files · format 0.1.0 · open specification</p>
 
-ForgeTrail is one way to maintain that record during development. The xFacts labels stay the owners of their own declarations. AppLedger points at them. It does not replace their schemas.
+## One system, three parts
+
+[ForgeTrail](https://forgetrail.dev) guides the work through phases with approval gates. [AppLedger](https://appledger.dev) keeps the record of that work in `appledger/`. [xFacts](https://xfacts.dev) labels describe what was built. Each works on its own.
+
+ForgeTrail is one way to maintain the record during development. The xFacts labels stay the owners of their own declarations. AppLedger points at them. It does not replace their schemas.
 
 The normative specification is the [`spec/`](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/spec/README.md) directory in the repository. The checker is [`appledger` on npm](https://www.npmjs.com/package/appledger). Start a ledger in an app folder with `pnpm dlx appledger init --name "Your app name"`, then `pnpm dlx appledger check`.
 
