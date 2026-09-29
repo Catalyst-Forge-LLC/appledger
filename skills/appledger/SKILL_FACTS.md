@@ -2,7 +2,7 @@
 skill_facts_version: "0.1.0"
 name: AppLedger
 developer: Catalyst Forge
-version: "0.1.6"
+version: "0.1.7"
 status: active
 license: MIT
 kind: agents-skill
@@ -44,7 +44,7 @@ credits:
 | | |
 |---|---|
 | **Developer** | Catalyst Forge |
-| **Version** | 0.1.6 |
+| **Version** | 0.1.7 |
 | **Status** | active |
 | **License** | MIT |
 | **Kind** | agents-skill |
