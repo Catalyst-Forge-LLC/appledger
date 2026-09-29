@@ -14,6 +14,16 @@ bindings:
   subject_id: skill-appledger
   repository_id: repo-appledger
   path: skills/appledger/SKILL_FACTS.md
+- id: appfacts-application
+  family: appfacts
+  subject_id: app-0d73a633-0c61-4cae-b285-1855b7f8dded
+  repository_id: repo-appledger
+  path: APP_FACTS.md
+- id: featurefacts-application
+  family: featurefacts
+  subject_id: app-0d73a633-0c61-4cae-b285-1855b7f8dded
+  repository_id: repo-appledger
+  path: .featurefacts/features.yaml
 profiles:
 - id: forgetrail
   version: 0.1.0

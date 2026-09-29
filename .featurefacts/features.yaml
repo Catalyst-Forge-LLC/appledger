@@ -1,0 +1,609 @@
+schemaVersion: "0.2.0"
+scan_id: scan-hand-20260929
+product:
+  name: AppLedger
+  type: spec / tooling
+  status: active
+  license: MIT
+features:
+  - id: check
+    name: Check a ledger
+    description: Read a ledger and report schema, predicate, and path findings. The command does not modify files.
+    type: feature
+    recognition: confirmed
+    lifecycle: implemented
+    availability:
+      state: unrestricted
+      conditions: []
+      reason: The command is part of the appledger CLI. No plan or role gate is declared.
+    maturity: stable
+    audiences:
+      state: known
+      values: [developer, agent]
+      reason: The CLI and the curation skill are for maintainers and coding agents.
+    discovery:
+      state: unassessed
+      surfaces: []
+      adapter_ids: []
+      reason: This register does not record which public surfaces name the command.
+    intent: public-discovery
+    publication:
+      scope: public
+      reason: The command is in the public CLI and the specification status table.
+    entry_points: []
+    implements: []
+    dependencies: []
+    docs:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: Doc coverage was not assessed for this feature.
+    tests:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: A test file was not linked as evidence for this feature.
+    observation:
+      state: current
+      last_seen_scan_id: scan-hand-20260929
+      reason: The command is listed as implemented in spec/10-tooling-and-automation.md.
+    evidence:
+      - id: ev-check
+        kind: declared
+        state: current
+        assertion:
+          field: lifecycle
+          value: implemented
+          claim: spec/10-tooling-and-automation.md lists this command as implemented.
+        declaration:
+          actor: maintainer
+          source: spec/10-tooling-and-automation.md
+          recorded_at: 2026-09-29T17:30:00Z
+    editorial:
+      locked: []
+      aliases: []
+      notes: Hand-authored from the command status table. Not a scan.
+    uncertainty_reasons: {}
+  - id: orient
+    name: Orient on a ledger
+    description: Print a deterministic resume brief for a task. The command does not modify files.
+    type: feature
+    recognition: confirmed
+    lifecycle: implemented
+    availability:
+      state: unrestricted
+      conditions: []
+      reason: The command is part of the appledger CLI. No plan or role gate is declared.
+    maturity: stable
+    audiences:
+      state: known
+      values: [developer, agent]
+      reason: The CLI and the curation skill are for maintainers and coding agents.
+    discovery:
+      state: unassessed
+      surfaces: []
+      adapter_ids: []
+      reason: This register does not record which public surfaces name the command.
+    intent: public-discovery
+    publication:
+      scope: public
+      reason: The command is in the public CLI and the specification status table.
+    entry_points: []
+    implements: []
+    dependencies: []
+    docs:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: Doc coverage was not assessed for this feature.
+    tests:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: A test file was not linked as evidence for this feature.
+    observation:
+      state: current
+      last_seen_scan_id: scan-hand-20260929
+      reason: The command is listed as implemented in spec/10-tooling-and-automation.md.
+    evidence:
+      - id: ev-orient
+        kind: declared
+        state: current
+        assertion:
+          field: lifecycle
+          value: implemented
+          claim: spec/10-tooling-and-automation.md lists this command as implemented.
+        declaration:
+          actor: maintainer
+          source: spec/10-tooling-and-automation.md
+          recorded_at: 2026-09-29T17:30:00Z
+    editorial:
+      locked: []
+      aliases: []
+      notes: Hand-authored from the command status table. Not a scan.
+    uncertainty_reasons: {}
+  - id: render
+    name: Render a ledger view
+    description: Print a derived orientation, progress, history, or public view. --write updates a view file only when the bytes differ.
+    type: feature
+    recognition: confirmed
+    lifecycle: implemented
+    availability:
+      state: unrestricted
+      conditions: []
+      reason: The command is part of the appledger CLI. No plan or role gate is declared.
+    maturity: stable
+    audiences:
+      state: known
+      values: [developer, agent]
+      reason: The CLI and the curation skill are for maintainers and coding agents.
+    discovery:
+      state: unassessed
+      surfaces: []
+      adapter_ids: []
+      reason: This register does not record which public surfaces name the command.
+    intent: public-discovery
+    publication:
+      scope: public
+      reason: The command is in the public CLI and the specification status table.
+    entry_points: []
+    implements: []
+    dependencies: []
+    docs:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: Doc coverage was not assessed for this feature.
+    tests:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: A test file was not linked as evidence for this feature.
+    observation:
+      state: current
+      last_seen_scan_id: scan-hand-20260929
+      reason: The command is listed as implemented in spec/10-tooling-and-automation.md.
+    evidence:
+      - id: ev-render
+        kind: declared
+        state: current
+        assertion:
+          field: lifecycle
+          value: implemented
+          claim: spec/10-tooling-and-automation.md lists this command as implemented.
+        declaration:
+          actor: maintainer
+          source: spec/10-tooling-and-automation.md
+          recorded_at: 2026-09-29T17:30:00Z
+    editorial:
+      locked: []
+      aliases: []
+      notes: Hand-authored from the command status table. Not a scan.
+    uncertainty_reasons: {}
+  - id: transaction
+    name: Recover an interrupted apply
+    description: Report, resume, or roll back an interrupted apply. Rollback replaces only journaled paths.
+    type: feature
+    recognition: confirmed
+    lifecycle: implemented
+    availability:
+      state: unrestricted
+      conditions: []
+      reason: The command is part of the appledger CLI. No plan or role gate is declared.
+    maturity: stable
+    audiences:
+      state: known
+      values: [developer, agent]
+      reason: The CLI and the curation skill are for maintainers and coding agents.
+    discovery:
+      state: unassessed
+      surfaces: []
+      adapter_ids: []
+      reason: This register does not record which public surfaces name the command.
+    intent: public-discovery
+    publication:
+      scope: public
+      reason: The command is in the public CLI and the specification status table.
+    entry_points: []
+    implements: []
+    dependencies: []
+    docs:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: Doc coverage was not assessed for this feature.
+    tests:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: A test file was not linked as evidence for this feature.
+    observation:
+      state: current
+      last_seen_scan_id: scan-hand-20260929
+      reason: The command is listed as implemented in spec/10-tooling-and-automation.md.
+    evidence:
+      - id: ev-transaction
+        kind: declared
+        state: current
+        assertion:
+          field: lifecycle
+          value: implemented
+          claim: spec/10-tooling-and-automation.md lists this command as implemented.
+        declaration:
+          actor: maintainer
+          source: spec/10-tooling-and-automation.md
+          recorded_at: 2026-09-29T17:30:00Z
+    editorial:
+      locked: []
+      aliases: []
+      notes: Hand-authored from the command status table. Not a scan.
+    uncertainty_reasons: {}
+  - id: subjects
+    name: Inventory subjects
+    description: Print one disposition per subject. Validate reads the pinned schema for a bound label and does not write it.
+    type: feature
+    recognition: confirmed
+    lifecycle: implemented
+    availability:
+      state: unrestricted
+      conditions: []
+      reason: The command is part of the appledger CLI. No plan or role gate is declared.
+    maturity: stable
+    audiences:
+      state: known
+      values: [developer, agent]
+      reason: The CLI and the curation skill are for maintainers and coding agents.
+    discovery:
+      state: unassessed
+      surfaces: []
+      adapter_ids: []
+      reason: This register does not record which public surfaces name the command.
+    intent: public-discovery
+    publication:
+      scope: public
+      reason: The command is in the public CLI and the specification status table.
+    entry_points: []
+    implements: []
+    dependencies: []
+    docs:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: Doc coverage was not assessed for this feature.
+    tests:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: A test file was not linked as evidence for this feature.
+    observation:
+      state: current
+      last_seen_scan_id: scan-hand-20260929
+      reason: The command is listed as implemented in spec/10-tooling-and-automation.md.
+    evidence:
+      - id: ev-subjects
+        kind: declared
+        state: current
+        assertion:
+          field: lifecycle
+          value: implemented
+          claim: spec/10-tooling-and-automation.md lists this command as implemented.
+        declaration:
+          actor: maintainer
+          source: spec/10-tooling-and-automation.md
+          recorded_at: 2026-09-29T17:30:00Z
+    editorial:
+      locked: []
+      aliases: []
+      notes: Hand-authored from the command status table. Not a scan.
+    uncertainty_reasons: {}
+  - id: bind
+    name: Bind application labels
+    description: List an AppFacts or FeatureFacts file at the repository root that no binding names. --apply adds the bindings and does not change the label.
+    type: feature
+    recognition: confirmed
+    lifecycle: implemented
+    availability:
+      state: unrestricted
+      conditions: []
+      reason: The command is part of the appledger CLI. No plan or role gate is declared.
+    maturity: stable
+    audiences:
+      state: known
+      values: [developer, agent]
+      reason: The CLI and the curation skill are for maintainers and coding agents.
+    discovery:
+      state: unassessed
+      surfaces: []
+      adapter_ids: []
+      reason: This register does not record which public surfaces name the command.
+    intent: public-discovery
+    publication:
+      scope: public
+      reason: The command is in the public CLI and the specification status table.
+    entry_points: []
+    implements: []
+    dependencies: []
+    docs:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: Doc coverage was not assessed for this feature.
+    tests:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: A test file was not linked as evidence for this feature.
+    observation:
+      state: current
+      last_seen_scan_id: scan-hand-20260929
+      reason: The command is listed as implemented in spec/10-tooling-and-automation.md.
+    evidence:
+      - id: ev-bind
+        kind: declared
+        state: current
+        assertion:
+          field: lifecycle
+          value: implemented
+          claim: spec/10-tooling-and-automation.md lists this command as implemented.
+        declaration:
+          actor: maintainer
+          source: spec/10-tooling-and-automation.md
+          recorded_at: 2026-09-29T17:30:00Z
+    editorial:
+      locked: []
+      aliases: []
+      notes: Hand-authored from the command status table. Not a scan.
+    uncertainty_reasons: {}
+  - id: init
+    name: Start a ledger
+    description: Create a manifest, profile, application record, and session record. A second run writes nothing. Init does not infer a purpose or write a label.
+    type: feature
+    recognition: confirmed
+    lifecycle: implemented
+    availability:
+      state: unrestricted
+      conditions: []
+      reason: The command is part of the appledger CLI. No plan or role gate is declared.
+    maturity: stable
+    audiences:
+      state: known
+      values: [developer, agent]
+      reason: The CLI and the curation skill are for maintainers and coding agents.
+    discovery:
+      state: unassessed
+      surfaces: []
+      adapter_ids: []
+      reason: This register does not record which public surfaces name the command.
+    intent: public-discovery
+    publication:
+      scope: public
+      reason: The command is in the public CLI and the specification status table.
+    entry_points: []
+    implements: []
+    dependencies: []
+    docs:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: Doc coverage was not assessed for this feature.
+    tests:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: A test file was not linked as evidence for this feature.
+    observation:
+      state: current
+      last_seen_scan_id: scan-hand-20260929
+      reason: The command is listed as implemented in spec/10-tooling-and-automation.md.
+    evidence:
+      - id: ev-init
+        kind: declared
+        state: current
+        assertion:
+          field: lifecycle
+          value: implemented
+          claim: spec/10-tooling-and-automation.md lists this command as implemented.
+        declaration:
+          actor: maintainer
+          source: spec/10-tooling-and-automation.md
+          recorded_at: 2026-09-29T17:30:00Z
+    editorial:
+      locked: []
+      aliases: []
+      notes: Hand-authored from the command status table. Not a scan.
+    uncertainty_reasons: {}
+  - id: reconcile
+    name: Record subject dispositions
+    description: Plan a disposition for each subject family. --apply writes one receipt. A repeat with the same inputs writes nothing.
+    type: feature
+    recognition: confirmed
+    lifecycle: implemented
+    availability:
+      state: unrestricted
+      conditions: []
+      reason: The command is part of the appledger CLI. No plan or role gate is declared.
+    maturity: stable
+    audiences:
+      state: known
+      values: [developer, agent]
+      reason: The CLI and the curation skill are for maintainers and coding agents.
+    discovery:
+      state: unassessed
+      surfaces: []
+      adapter_ids: []
+      reason: This register does not record which public surfaces name the command.
+    intent: public-discovery
+    publication:
+      scope: public
+      reason: The command is in the public CLI and the specification status table.
+    entry_points: []
+    implements: []
+    dependencies: []
+    docs:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: Doc coverage was not assessed for this feature.
+    tests:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: A test file was not linked as evidence for this feature.
+    observation:
+      state: current
+      last_seen_scan_id: scan-hand-20260929
+      reason: The command is listed as implemented in spec/10-tooling-and-automation.md.
+    evidence:
+      - id: ev-reconcile
+        kind: declared
+        state: current
+        assertion:
+          field: lifecycle
+          value: implemented
+          claim: spec/10-tooling-and-automation.md lists this command as implemented.
+        declaration:
+          actor: maintainer
+          source: spec/10-tooling-and-automation.md
+          recorded_at: 2026-09-29T17:30:00Z
+    editorial:
+      locked: []
+      aliases: []
+      notes: Hand-authored from the command status table. Not a scan.
+    uncertainty_reasons: {}
+  - id: diff
+    name: Explain ledger changes
+    description: Explain changes in the current ledger directory between two explicit revisions. A generated view is not a semantic record change. Nothing is written.
+    type: feature
+    recognition: confirmed
+    lifecycle: implemented
+    availability:
+      state: unrestricted
+      conditions: []
+      reason: The command is part of the appledger CLI. No plan or role gate is declared.
+    maturity: stable
+    audiences:
+      state: known
+      values: [developer, agent]
+      reason: The CLI and the curation skill are for maintainers and coding agents.
+    discovery:
+      state: unassessed
+      surfaces: []
+      adapter_ids: []
+      reason: This register does not record which public surfaces name the command.
+    intent: public-discovery
+    publication:
+      scope: public
+      reason: The command is in the public CLI and the specification status table.
+    entry_points: []
+    implements: []
+    dependencies: []
+    docs:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: Doc coverage was not assessed for this feature.
+    tests:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: A test file was not linked as evidence for this feature.
+    observation:
+      state: current
+      last_seen_scan_id: scan-hand-20260929
+      reason: The command is listed as implemented in spec/10-tooling-and-automation.md.
+    evidence:
+      - id: ev-diff
+        kind: declared
+        state: current
+        assertion:
+          field: lifecycle
+          value: implemented
+          claim: spec/10-tooling-and-automation.md lists this command as implemented.
+        declaration:
+          actor: maintainer
+          source: spec/10-tooling-and-automation.md
+          recorded_at: 2026-09-29T17:30:00Z
+    editorial:
+      locked: []
+      aliases: []
+      notes: Hand-authored from the command status table. Not a scan.
+    uncertainty_reasons: {}
+  - id: migrate
+    name: Import a prior project record
+    description: Preview, apply, or roll back an import into the ledger. Preview writes nothing.
+    type: feature
+    recognition: confirmed
+    lifecycle: implemented
+    availability:
+      state: unrestricted
+      conditions: []
+      reason: The command is part of the appledger CLI. No plan or role gate is declared.
+    maturity: stable
+    audiences:
+      state: known
+      values: [developer, agent]
+      reason: The CLI and the curation skill are for maintainers and coding agents.
+    discovery:
+      state: unassessed
+      surfaces: []
+      adapter_ids: []
+      reason: This register does not record which public surfaces name the command.
+    intent: public-discovery
+    publication:
+      scope: public
+      reason: The command is in the public CLI and the specification status table.
+    entry_points: []
+    implements: []
+    dependencies: []
+    docs:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: Doc coverage was not assessed for this feature.
+    tests:
+      state: unassessed
+      result: unknown
+      adapter_ids: []
+      links: []
+      reason: A test file was not linked as evidence for this feature.
+    observation:
+      state: current
+      last_seen_scan_id: scan-hand-20260929
+      reason: The command is listed as implemented in spec/10-tooling-and-automation.md.
+    evidence:
+      - id: ev-migrate
+        kind: declared
+        state: current
+        assertion:
+          field: lifecycle
+          value: implemented
+          claim: spec/10-tooling-and-automation.md lists this command as implemented.
+        declaration:
+          actor: maintainer
+          source: spec/10-tooling-and-automation.md
+          recorded_at: 2026-09-29T17:30:00Z
+    editorial:
+      locked: []
+      aliases: []
+      notes: Hand-authored from the command status table. Not a scan.
+    uncertainty_reasons: {}
+redirects: []
