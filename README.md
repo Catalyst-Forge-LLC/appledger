@@ -15,7 +15,24 @@ This repository is the specification and the reference checker. It is also a For
 | npm | [`appledger`](https://www.npmjs.com/package/appledger). `pnpm dlx appledger init`, or `pnpm add -g appledger` |
 | Domain | https://appledger.dev |
 
-## Check a ledger
+## Start a ledger
+
+From the app folder:
+
+```bash
+pnpm dlx appledger init --name "Workshop notes"
+pnpm dlx appledger check
+```
+
+`init` creates `appledger/manifest.yaml`, `profiles/forgetrail.yaml`, an application record, and a session record. A second run writes nothing. An existing manifest, profile, or record is left in place. Init does not infer a purpose from the folder name, and it does not write a label.
+
+`check` prints `ok` and the ledger path when it finds no errors. It does not modify files. Errors are schema, predicate, and path problems. Warnings mean a recorded source is missing, its digest no longer matches, a claim's git revision is not HEAD, or a transaction journal is still open. A missing file is not treated as proof that a feature is gone.
+
+The other commands, and what they refuse to do, are on the [conformance page](site/docs/conformance.md) ([appledger.dev/docs/conformance](https://appledger.dev/docs/conformance)).
+
+## Work on this repository
+
+These commands run in a checkout of this repository.
 
 ```bash
 pnpm install
@@ -24,19 +41,11 @@ pnpm exec appledger check --root examples/minimal/appledger
 pnpm exec appledger check
 ```
 
-`appledger check` reads a ledger and prints findings. It does not modify files. Errors are schema, predicate, and path problems. Warnings mean a recorded source is missing, its digest no longer matches, a claim's git revision is not HEAD, or a transaction journal is still open. A missing file is not treated as proof that a feature is gone.
-
-`appledger orient` prints a short brief. Selection is deterministic and says so. The brief includes the phase, each decision choice, each lesson, and the latest session time. A task limits only the related records. Recorded gaps stay in the brief when the word budget is too small for them. It does not modify files.
-
-`appledger render --view progress` and `--view history` print derived views. `--view public` prints only public records. An internal record, including its path or contact text, is omitted, and editing it does not change the public bytes. `--write` stores `views/<view>.md` and leaves the file untouched when the bytes are unchanged. These views do not replace `README.md`. The public view does not upload or deploy. `appledger migrate preview` reads a Lite or full `.forgetrail/workflow_tracking.json` and writes nothing. `migrate apply` imports it into `appledger/` and replaces that file with a pointer. `migrate rollback` restores only those paths and leaves a later edit in place. A shipped starter is not imported as project history. This command does not change the ForgeTrail installer, templates, or hooks. `appledger diff --from REV --to REV` explains changes in the current ledger directory between those commits. A formatting-only edit and a generated view are not reported as semantic record changes. The command does not write files. `appledger init` creates `appledger/manifest.yaml`, `profiles/forgetrail.yaml`, an application record, and a session record. A second run writes nothing. An existing manifest, profile, or record is left in place. Init does not infer a purpose from the folder name and does not write a label. `appledger bind` lists an `APP_FACTS.md` or `.featurefacts/features.yaml` at the repository root that no binding names. `bind --apply` adds those bindings to the manifest and does not change the label. `appledger reconcile` prints a disposition for each subject family and writes nothing. `reconcile --apply` writes one receipt. A second apply with the same inputs writes nothing. It does not rewrite a label or mark work done.
-
-`appledger transaction resume` and `appledger transaction rollback` finish or undo an interrupted apply. They replace only journaled paths, and they leave a file alone when its bytes changed after the apply started. A second apply of bytes that are already on disk writes nothing.
-
-The curation skill is [`skills/appledger/SKILL.md`](skills/appledger/SKILL.md). Command status lives in [`spec/10-tooling-and-automation.md`](spec/10-tooling-and-automation.md). `appledger subjects` lists each subject and a disposition. `--operation validate` checks a bound AppFacts, FeatureFacts, SkillFacts, ToolFacts, AgentFacts, or ModelFacts file against its pinned schema. `--operation propose --apply` may set FeatureFacts `cached_title` with basis `derived` and does not copy recognition, lifecycle, or selection. SkillFacts propose does not rewrite the label. A keyword guess stays a draft, and a bundled script is read rather than executed. ToolFacts propose compares a recorded tools/list, does not start an MCP server, and does not rewrite the label. AgentFacts propose checks configuration scope against toolsets and does not claim host enforcement. ModelFacts propose reads offline metadata, does not contact a provider, and does not copy one variant's context window or benchmarks onto another. It does not write any other label. The skill does not publish, deploy, or generate xFacts labels.
+The curation skill is [`skills/appledger/SKILL.md`](skills/appledger/SKILL.md). Command status lives in [`spec/10-tooling-and-automation.md`](spec/10-tooling-and-automation.md).
 
 ## Site
 
-`site/` is a FilePress site. The pages describe the format, the commands in this repository, and the synthetic `examples/minimal` ledger. Preview with `pnpm site:dev`. LocalSlip lease name: `appledger-site` on port 46002. `pnpm ship` builds the site and deploys the `build` directory to the Cloudflare Pages project `appledger`.
+The public site is [appledger.dev](https://appledger.dev). The docs are [appledger.dev/docs](https://appledger.dev/docs). `site/` holds those pages, including the synthetic `examples/minimal` ledger.
 
 ## Licenses
 
@@ -44,4 +53,4 @@ Specification and schemas are CC0. The checker is MIT. See `LICENSE` and `schema
 
 ## ForgeTrail
 
-`.forgetrail/workflow_tracking.json` is a pointer. Decisions and phase state live in the ledger. Do not add a second decision log there.
+`.forgetrail/workflow_tracking.json` is a pointer. Decisions and phase state live in the ledger. Do not add a second decision log there. Phases and migrate steps are on the [ForgeTrail docs page](site/docs/forgetrail.md) ([appledger.dev/docs/forgetrail](https://appledger.dev/docs/forgetrail)).

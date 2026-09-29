@@ -2,32 +2,29 @@
 title: Quickstart
 ---
 
-Commands on this page are in the [`appledger` npm package](https://www.npmjs.com/package/appledger). Run them with `pnpm dlx appledger <command>`, or install once with `pnpm add -g appledger`. The examples below use a checkout of the [appledger repository](https://github.com/Catalyst-Forge-LLC/appledger) so that `examples/minimal` is on disk.
+Commands on this page are in the [`appledger` npm package](https://www.npmjs.com/package/appledger). Run them with `pnpm dlx appledger <command>`, or install once with `pnpm add -g appledger`.
 
 ## Smallest folder
 
-Copy [`examples/minimal`](https://github.com/Catalyst-Forge-LLC/appledger/tree/main/examples/minimal). It is a synthetic ledger: a manifest, a ForgeTrail profile, and one record each for the application, a goal, a stakeholder, a use case, a concept, a decision, work, a session, a change, and evidence.
+From an empty app folder:
 
-From a checkout:
+```bash
+pnpm dlx appledger init --name "Workshop notes"
+pnpm dlx appledger check
+pnpm dlx appledger orient
+```
+
+`check` prints `ok` and the ledger path when it finds no errors. It does not modify files. `orient` prints the phase, each decision choice, each lesson, and the latest session time. It does not modify files.
+
+A new ledger needs `manifest.yaml`, `profiles/forgetrail.yaml` when ForgeTrail is in use, an application record, and a session record. It does not need an empty copy of every record kind. A second run of `init` writes nothing. An existing manifest, profile, or record is left in place. Init does not infer a purpose from the folder name, and it does not create `workflow_tracking.json`.
+
+To read the synthetic example instead, use a checkout of the [appledger repository](https://github.com/Catalyst-Forge-LLC/appledger). [`examples/minimal`](https://github.com/Catalyst-Forge-LLC/appledger/tree/main/examples/minimal) is a synthetic ledger: a manifest, a ForgeTrail profile, and one record each for the application, a goal, a stakeholder, a use case, a concept, a decision, work, a session, a change, and evidence.
 
 ```bash
 pnpm install
 pnpm exec appledger check --root examples/minimal/appledger
 pnpm exec appledger orient --root examples/minimal/appledger
 ```
-
-`check` reads the ledger and does not modify files. `orient` prints the phase, each decision choice, each lesson, and the latest session time. It does not modify files.
-
-A new ledger needs `manifest.yaml`, `profiles/forgetrail.yaml` when ForgeTrail is in use, an application record, and a session record. It does not need an empty copy of every record kind.
-
-An empty directory can be initialized without copying the synthetic example:
-
-```bash
-pnpm dlx appledger init --name "Workshop notes"
-pnpm dlx appledger check
-```
-
-A second run writes nothing. An existing manifest, profile, or record is left in place. Init does not infer a purpose from the folder name, and it does not create `workflow_tracking.json`.
 
 ```bash
 pnpm dlx appledger reconcile
