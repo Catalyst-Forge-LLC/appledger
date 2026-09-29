@@ -17,3 +17,5 @@ xFacts labels keep their own schemas, validators, and publication rules. AppLedg
 Discover lists declared subjects and does not write a label. A missing source is reported as unavailable. It is not treated as proof that the subject is gone. Network and runtime are not required for these operations.
 
 Using an agent to build an application does not make that application an agent configuration. Calling a hosted model does not make the application's architecture the model's architecture.
+
+An evidence record may cite a public [Efficacy](https://efficacy.dev) chain by URL and hash. The chain stays in `.efficacy/`. A citation does not make the verdict true, and a missing chain is not a failed check. [ForgeTrail](https://forgetrail.dev) may offer that chain when a tool is handed off. It does not require one.
