@@ -1,5 +1,5 @@
 {
   "record": "appledger/",
   "status": "pointer",
-  "note": "Decisions, sessions, and phase status live in appledger/. Do not write them here. This pointer exists until ForgeTrail stops emitting workflow_tracking.json."
+  "note": "Decisions, sessions, and phase status live in appledger/."
 }

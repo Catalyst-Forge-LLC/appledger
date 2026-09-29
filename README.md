@@ -53,4 +53,4 @@ Specification and schemas are CC0. The checker is MIT. See `LICENSE` and `schema
 
 ## ForgeTrail
 
-`.forgetrail/workflow_tracking.json` is a pointer. Decisions and phase state live in the ledger. Do not add a second decision log there. Phases and migrate steps are on the [ForgeTrail docs page](site/docs/forgetrail.md) ([appledger.dev/docs/forgetrail](https://appledger.dev/docs/forgetrail)).
+Decisions and phase state live in the ledger. Phases are on the [ForgeTrail docs page](site/docs/forgetrail.md) ([appledger.dev/docs/forgetrail](https://appledger.dev/docs/forgetrail)).

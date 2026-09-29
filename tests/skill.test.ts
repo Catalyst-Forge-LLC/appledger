@@ -26,7 +26,7 @@ describe("curation skill", () => {
     expect(listed).toEqual(catalog.map((entry) => `${entry.status} ${entry.command}`));
     expect(skill).toContain("spec/10-tooling-and-automation.md");
     expect(skill).toContain("A supported declaration is not observed implementation.");
-    expect(skill).toContain("workflow_tracking.json");
+    expect(skill).not.toContain("workflow_tracking.json");
     expect(skill).toContain("not independent human review");
     expect(stub).toContain("skills/appledger/SKILL.md");
     expect(stub).not.toContain("not implemented:");

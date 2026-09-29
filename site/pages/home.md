@@ -17,7 +17,7 @@ AppLedger keeps purpose, structure, decisions, and evidence in files a person or
 
 [ForgeTrail](https://forgetrail.dev) guides the work through phases with approval gates, and keeps that record in [AppLedger](https://appledger.dev), in `appledger/`. [xFacts](https://xfacts.dev) labels describe what was built and keep their own schemas. AppLedger and those labels can be used without ForgeTrail.
 
-How ForgeTrail replaced its old tracking file is on [ForgeTrail](/docs/forgetrail).
+Phases, decisions, and the session handoff are on [ForgeTrail](/docs/forgetrail).
 
 The normative specification is the [`spec/`](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/spec/README.md) directory in the repository. The checker is [`appledger` on npm](https://www.npmjs.com/package/appledger). Start a ledger in an app folder with `pnpm dlx appledger init --name "Your app name"`, then `pnpm dlx appledger check`.
 
@@ -31,10 +31,10 @@ The rationale is that the synthetic brief calls for a small offline tool. The re
 
 ## In the docs
 
-- [Quickstart](/docs/quickstart) for the smallest folder and an existing tracking file
+- [Quickstart](/docs/quickstart) for the smallest folder
 - [Standard](/docs/standard) for the specification
 - [Examples](/docs/examples) for the synthetic ledger and what a change looks like
-- [ForgeTrail](/docs/forgetrail) for the phase profile and migration
+- [ForgeTrail](/docs/forgetrail) for the phase profile
 - [xFacts](/docs/xfacts) for what each adapter does and does not do
 - [Reference](/docs/reference) for record kinds
 - [Conformance](/docs/conformance) for honest limits

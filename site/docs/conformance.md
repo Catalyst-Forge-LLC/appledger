@@ -4,7 +4,7 @@ title: Conformance
 
 The reference implementation is this repository's TypeScript checker, published as [`appledger` on npm](https://www.npmjs.com/package/appledger). The compatibility table and the row-by-row results are in [`docs/rel-01.md`](https://github.com/Catalyst-Forge-LLC/appledger/blob/main/docs/rel-01.md). Rows that the suite does not cover are listed there as not tested. Passing tests are not a pass of every conformance row.
 
-Implemented commands. Run any of them with `pnpm dlx appledger <command>`:
+Commands for a ledger. Run any of them with `pnpm dlx appledger <command>`:
 
 | Command | Effect |
 | --- | --- |
@@ -13,7 +13,6 @@ Implemented commands. Run any of them with `pnpm dlx appledger <command>`:
 | `render` | Print orientation, progress, history, or the public view. `--write` updates a view file only when the bytes differ. |
 | `subjects` | One disposition per subject for discover, validate, extract, checkFreshness, or propose. |
 | `transaction` | Status, resume, or rollback of an interrupted apply. |
-| `migrate` | Preview, apply, or roll back a tracking-file import. |
 | `diff` | Explain ledger changes between two explicit revisions. A generated view is not a semantic record change. Nothing is written. |
 | `init` | Create a manifest, profile, application record, and session record. An existing ledger file is left in place. |
 | `bind` | List an `APP_FACTS.md` or FeatureFacts register at the repository root that no binding names. `--apply` adds the bindings. No label is changed. |
