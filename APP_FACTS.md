@@ -14,8 +14,10 @@ stack:
 key_dependencies:
   - name: ajv
     purpose: Validate ledger records and pinned label schemas
+    registry: npm
   - name: yaml
     purpose: Read and write ledger YAML
+    registry: npm
 build:
   package_manager: pnpm
   test: vitest
@@ -46,8 +48,8 @@ Open text record of what an application is for, how it fits together, what it do
 
 ### Key dependencies
 
-- `ajv` — validate ledger records and pinned label schemas
-- `yaml` — read and write ledger YAML
+- `ajv` (npm) — validate ledger records and pinned label schemas
+- `yaml` (npm) — read and write ledger YAML
 
 ### Build
 
