@@ -1,6 +1,6 @@
 ---
 skill_facts_version: "0.1.0"
-name: appledger
+name: AppLedger
 developer: Catalyst Forge
 version: "0.1.6"
 status: active
@@ -39,7 +39,7 @@ credits:
   built_by: "Catalyst Forge - https://www.catalystforge.com/"
 ---
 
-# Skill Facts - appledger
+# Skill Facts - AppLedger
 
 | | |
 |---|---|
