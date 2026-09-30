@@ -24,7 +24,10 @@
 		},
 		{
 			"title": "Limits",
-			"items": [{ "id": "conformance", "title": "Conformance" }]
+			"items": [
+				{ "id": "conformance", "title": "Conformance" },
+				{ "id": "migration-retirement", "title": "Migration retirement" }
+			]
 		}
 	]
 }
