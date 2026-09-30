@@ -153,7 +153,10 @@ status: active
 license: MIT
 stack:
   language: TypeScript
-key_dependencies: []
+key_dependencies:
+  - name: yaml
+    purpose: Read YAML
+    registry: npm
 build:
   package_manager: pnpm
 generated:
@@ -177,6 +180,9 @@ generated:
     expect(validated[0]?.schemaVersion).toBe("0.1.0");
     expect(validated[0]?.findings.join(" ")).toContain("Workshop Demo");
     expect(readFileSync(label, "utf8")).toBe(text);
+    writeFileSync(label, text.replace("registry: npm", "registry: npm\n    unexpected_field: true"));
+    expect(runOperation({ root, operation: "validate", family: "appfacts", subjectId: "app-workshop-demo" })[0]?.disposition).toBe("failed");
+    writeFileSync(label, text);
     expect(runOperation({ root, operation: "propose", family: "appfacts", subjectId: "app-workshop-demo", apply: true })[0]?.disposition).toBe(
       "unchanged",
     );

@@ -5,7 +5,7 @@ These files are copies so AppLedger can validate without depending on the child 
 | Family | Version | Files | Source commit |
 | --- | --- | --- | --- |
 | featurefacts | 0.2.0 | `featurefacts/0.2.0/registry.schema.json`, `feature-record.schema.json`, `common.schema.json` | `85612cd0e8a8a63b00373d8c7f34ada502c591a6` |
-| appfacts | 0.1.0 | `appfacts/0.1.0/app-facts.schema.json` | `029b75f0ef27b495108455e2785c61f844900a8e` |
+| appfacts | 0.1.0 | `appfacts/0.1.0/app-facts.schema.json` | `aa51fb0a278cb67b599aef1e5d1bb18a422cad40` |
 | skillfacts | 0.1.0 | `skillfacts/0.1.0/skill-facts.schema.json` | `1487c5a04f9234f4ab5f4f817ca5b76fdff4ece4` |
 | toolfacts | 0.1.0 | `toolfacts/0.1.0/tool-facts.schema.json` | `23fe664bce0fcc7537dfbbe26913cb75249a01ba` |
 | agentfacts | 0.1.0 | `agentfacts/0.1.0/agent-facts.schema.json` | `d71c9883e3fa2d104c5d7f06d92ee86c56f9089c` |
