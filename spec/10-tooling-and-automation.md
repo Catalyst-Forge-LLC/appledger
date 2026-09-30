@@ -4,7 +4,7 @@
 
 Use TypeScript/Node for portable CLI and shared libraries. Schema and text readers have no model dependency. Agent-assisted semantic curation runs in the invoking agent environment. Store no API keys in the ledger. A standalone skill can explain and manually maintain the format when executable tools are unavailable, but must state which checks were not run.
 
-Proposed modules: format reader/writer, record/reference validator, dependency index, transaction manager, migration engine, ForgeTrail profile, xFacts adapter interface, individual adapters, and view renderers. Keep one shared source of curation rules for the standalone skill and ForgeTrail integration.
+Proposed modules: format reader/writer, record/reference validator, dependency index, transaction manager, ForgeTrail profile, xFacts adapter interface, individual adapters, and view renderers. Keep one shared source of curation rules for the standalone skill and ForgeTrail integration.
 
 ## CLI
 
@@ -21,7 +21,6 @@ The status column is the command list for the standalone skill. Do not keep a se
 | `appledger init` | implemented | Creates a manifest, ForgeTrail profile, application record, and session record. An existing manifest, profile, or record is left in place. It does not infer a purpose or write a label. |
 | `appledger reconcile` | implemented | Plans dispositions for each subject family. `--apply` writes one receipt. A repeat with the same inputs writes nothing. It does not rewrite a label or mark work done. |
 | `appledger diff` | implemented | Explains ledger changes between two explicit revisions. A semantic record change is separate from a formatting-only edit and from a generated view. It does not write files. |
-| `appledger migrate` | implemented | Preview, apply, or roll back a Lite or full tracking file into the ledger. Apply replaces that file with a pointer. Rollback restores only those paths and refuses a later edit. |
 
 `orient` can use deterministic selection or agent assistance. It MUST disclose which. All commands support explicit root and bounded scope. Read-only commands do not start target servers or access the network implicitly.
 

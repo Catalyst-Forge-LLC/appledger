@@ -30,6 +30,8 @@ pnpm dlx appledger check
 
 The other commands, and what they refuse to do, are on the [conformance page](site/docs/conformance.md) ([appledger.dev/docs/conformance](https://appledger.dev/docs/conformance)).
 
+Legacy tracking migration has been retired after the shelf cutover. [Historical recovery](docs/migration-retirement.md) is retained in Git history.
+
 ## Work on this repository
 
 These commands run in a checkout of this repository.

@@ -16,10 +16,10 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "node scripts/build.mjs",
     "prepublishOnly": "pnpm run build",
     "test": "vitest run",
-    "verify": "pnpm test && pnpm build",
+    "verify": "pnpm build && pnpm test",
     "check": "node dist/cli.js check",
     "site:dev": "pnpm --dir site dev",
     "site:build": "pnpm --dir site build",

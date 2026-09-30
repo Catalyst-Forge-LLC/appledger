@@ -1,5 +1,7 @@
 # Implementation plan and work packages
 
+This is the original implementation sequence. The shelf cutover is complete, and the FT-03 migration engine and PILOT-01 migration runner have been retired from current code. Use [the retirement record](../docs/migration-retirement.md) for current scope and historical recovery. The work-package IDs and original completion evidence below remain historical planning context.
+
 ## Sequence
 
 Build the record contract first, then migrate ForgeTrail and integrate label maintenance. Use pilots before declaring a stable public standard. Complete all six adapter dispositions even when some operations remain explicitly unsupported. Do not advertise automatic six-family generation until implemented and tested.

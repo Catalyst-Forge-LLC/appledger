@@ -48,7 +48,9 @@
 | A-09 | Generated output changes | No recursive discovery loop |
 | A-10 | Multiple model/skill/tool subjects | Separate bindings and scoped updates |
 
-## Integration and migration
+## Integration and retired migration
+
+I-01, I-02, and I-12 describe the historical migration at commit `fb7939c0f4d811930adb9cfd4bfd0c6766638a44`; they are not current migration support requirements. The current retirement regression confirms the package exposes no migration entry point. Recovery scope is in [the retirement record](../docs/migration-retirement.md).
 
 | ID | Scenario | Required outcome |
 | --- | --- | --- |

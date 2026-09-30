@@ -6,7 +6,6 @@ import { diffLedger, diffMarkdown } from "./diff.js";
 import { initLedger } from "./init.js";
 import { reconcileLedger } from "./reconcile.js";
 import { bindLabels } from "./bind.js";
-import { applyMigration, previewMigration, rollbackMigration } from "./migrate.js";
 import { projectLedger, writePublicProjection } from "./project.js";
 import { orientLedger, renderView, writeView, type ViewName } from "./views.js";
 import { discoverSubjects, FAMILIES, runOperation, type Family, type Operation } from "./adapters.js";
@@ -30,8 +29,6 @@ if (!command || command === "--help" || command === "-h") {
   runRender(argv.slice(1));
 } else if (command === "subjects") {
   runSubjects(argv.slice(1));
-} else if (command === "migrate") {
-  runMigrate(argv.slice(1));
 } else if (command === "diff") {
   runDiff(argv.slice(1));
 } else if (command === "init") {
@@ -42,7 +39,7 @@ if (!command || command === "--help" || command === "-h") {
   runBind(argv.slice(1));
 } else {
   console.error(`appledger ${command} is not implemented.`);
-  console.error("Implemented: check, orient, render, subjects, transaction, migrate, diff, init, reconcile, bind");
+  console.error("Implemented: check, orient, render, subjects, transaction, diff, init, reconcile, bind");
   process.exit(4);
 }
 
@@ -204,39 +201,6 @@ function runDiff(args: string[]): void {
   try {
     const result = diffLedger({ root: parsed.root, from, to });
     console.log(format === "json" ? JSON.stringify(result, null, 2) : diffMarkdown(result));
-  } catch (err) {
-    console.error(err instanceof Error ? err.message : String(err));
-    process.exit(5);
-  }
-}
-
-function runMigrate(args: string[]): void {
-  const action = args[0];
-  if (action !== "preview" && action !== "apply" && action !== "rollback") {
-    console.error("Usage: appledger migrate preview|apply|rollback [--root DIR] [--id ID]");
-    process.exit(2);
-  }
-  const parsed = parseRoot(args.slice(1), new Set(["--root", "--id"]));
-  if (!parsed) return;
-  try {
-    if (action === "preview") {
-      const preview = previewMigration(parsed.root);
-      console.log(`${preview.role}: ${preview.message}`);
-      process.exit(preview.role === "unrecognized" ? 1 : 0);
-    }
-    if (action === "rollback") {
-      const id = flag(args, "--id");
-      if (!id) {
-        console.error("--id is required");
-        process.exit(2);
-      }
-      const result = rollbackMigration(parsed.root, id);
-      console.log(result.message);
-      process.exit(result.ok ? 0 : 1);
-    }
-    const result = applyMigration(parsed.root);
-    console.log(result.message);
-    process.exit(result.ok ? 0 : 1);
   } catch (err) {
     console.error(err instanceof Error ? err.message : String(err));
     process.exit(5);
@@ -445,7 +409,6 @@ appledger subjects [--root DIR] [--family NAME] [--subject ID] [--operation disc
 appledger transaction status [--root DIR]
 appledger transaction resume --id ID [--root DIR]
 appledger transaction rollback --id ID [--root DIR]
-appledger migrate preview|apply|rollback [--root DIR] [--id ID]
 appledger diff --from REV --to REV [--root DIR] [--format text|json]
 appledger init [--root DIR] [--name TEXT]
 appledger reconcile [--root DIR] [--apply]

@@ -26,7 +26,6 @@ tools_referenced:
   - appledger init
   - appledger reconcile
   - appledger diff
-  - appledger migrate
 bundled_artifacts: []
 egress:
   telemetry: none
@@ -81,7 +80,6 @@ Curate an AppLedger text ledger: check, orient, and hand off records in appledge
 - appledger init
 - appledger reconcile
 - appledger diff
-- appledger migrate
 
 ## Egress
 

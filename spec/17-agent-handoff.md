@@ -1,5 +1,7 @@
 # Implementation handoff
 
+This is the original bootstrap handoff. The repository and shelf cutover now exist; do not restart that implementation or recreate its migration engine. Legacy migration is retired. Current recovery scope is in [the retirement record](../docs/migration-retirement.md).
+
 Read README, overall move, standard, ForgeTrail changes, and xFacts integration first. Then inspect the actual checked-out repositories and applicable AGENTS instructions. This pack is a specification, not a replacement for repository-specific build instructions.
 
 ## First deliverable

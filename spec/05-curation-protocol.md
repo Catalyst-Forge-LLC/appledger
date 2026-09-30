@@ -45,7 +45,7 @@ Unexpected interruption can leave a pending transaction or stale handoff. The ne
 
 ## Available operations
 
-`initialize`, `orient`, `reconcile`, `check`, `explain-change`, and `migrate` are conceptual operations. The CLI status for each command is the table in `spec/10-tooling-and-automation.md`. The standalone skill is `skills/appledger/SKILL.md`. It follows that table instead of copying it.
+`initialize`, `orient`, `reconcile`, `check`, and `explain-change` are conceptual operations. The CLI status for each command is the table in `spec/10-tooling-and-automation.md`. Legacy migration is retired; historical recovery is described in `spec/09-migration.md`. The standalone skill is `skills/appledger/SKILL.md`. It follows that table instead of copying it.
 
 Orient accepts a task or audience and a size budget. It returns a factual brief, source links, relevant decisions, and known gaps. It must not hide material uncertainty to sound complete. Explain-change takes two explicit revisions or a bounded record set and distinguishes semantic changes from regenerated formatting.
 
