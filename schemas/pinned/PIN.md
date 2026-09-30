@@ -12,3 +12,5 @@ These files are copies so AppLedger can validate without depending on the child 
 | modelfacts | 0.1.0 | `modelfacts/0.1.0/model-facts.schema.json` | `10cace218a461f0739655d09e26798ef3af14047` |
 
 FeatureFacts source paths: `schemas/registry.schema.json`, `schemas/feature-record.schema.json`, `schemas/common.schema.json`. AppFacts source path: `site/schema/app-facts.schema.json`. SkillFacts source path: `site/schema/skill-facts.schema.json`. ToolFacts source path: `site/schema/tool-facts.schema.json`. AgentFacts source path: `site/schema/agent-facts.schema.json`. ModelFacts source path: `site/schema/model-facts.schema.json`.
+
+AppFacts SHA-256: `b220ac67b80c991962dea591237b516759dd05d88e66c72d60d897bdfc5fe078`. The pinned file matches the source path at the AppFacts revision above byte for byte; this digest identifies the schema copy, not a validation result for a label.
