@@ -4,12 +4,11 @@ const github = "https://github.com/Catalyst-Forge-LLC/appledger";
 
 export default defineFilepressConfig({
   title: "AppLedger",
-  description:
-    "An open text record of what an application is for, how it fits together, what it does, and how it changes.",
+  description: "When a new agent session loses the reasons behind your code, AppLedger gives it a record to read. Keep purpose, decisions, structure, and evidence in portable files beside the application.",
   url: "https://appledger.dev",
   author: "Catalyst Forge LLC",
   tagline: "The application, written down.",
-  lede: "Purpose · structure · evidence",
+  lede: "Text record and CLI for application context",
   logo: "/logo.png",
   ogImage: "/logo.png",
   homePage: "home",

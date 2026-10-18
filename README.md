@@ -4,7 +4,7 @@
 
 # AppLedger
 
-Open text record of what an application is for, how it fits together, what it does, and how it changes.
+Keep the decisions your next session will need. AppLedger is an open text record of an application’s purpose, structure, decisions, and evidence, with a CLI for checking and orienting from those files.
 
 This repository is the specification and the reference checker. It is also a ForgeTrail project, so the project record is the ledger in [`appledger/`](appledger/README.md). The normative format is [`spec/`](spec/README.md). Those are different things.
 

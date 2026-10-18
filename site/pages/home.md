@@ -1,17 +1,10 @@
 ---
-title: The application record
-description: AppLedger is an open text record of what an application is for, how it fits together, what it does, and how it changes.
+title: "Keep the decisions your next session will need."
+description: "When a new agent session loses the reasons behind your code, AppLedger gives it a record to read. Keep purpose, decisions, structure, and evidence in portable files beside the application."
 order: 0
 ---
 
-AppLedger keeps purpose, structure, decisions, and evidence in files a person or an agent can read. The record can be incomplete, disputed, or stale. It is a maintained ledger, not a claim of complete memory.
-
-<div class="cta-row">
-  <a class="cta cta-primary" href="/docs">Read the docs</a>
-  <a class="cta cta-secondary" href="https://github.com/Catalyst-Forge-LLC/appledger">View on GitHub</a>
-</div>
-
-<p class="kicker">Text files · format 0.1.0 · open specification</p>
+<section class="value-hero" aria-label="AppLedger overview"><div class="value-intro"><p class="value-kind">Text record and CLI for application context</p><h1>Keep the decisions your next session will need.</h1><p class="value-lede">When a new agent session loses the reasons behind your code, AppLedger gives it a record to read. Keep purpose, decisions, structure, and evidence in portable files beside the application.</p><div class="cta-row"><a class="cta cta-primary" href="/docs/quickstart">Create a first ledger</a><a class="cta cta-secondary" href="#a-small-example">See a small example</a></div><p class="value-limit">The ledger needs curation. Records can be incomplete, disputed, or stale.</p></div><figure class="value-proof"><figcaption>Illustrative example</figcaption><p><strong>Starting point</strong><br>A fresh session asks why the app has no database.</p><div class="value-result"><p><strong>What you get</strong><br>Decision: use local files for the initial scope. Rationale: a small offline tool. Rejected alternative: a hosted database.</p></div><p>The next session can read the reason before reopening the decision.</p><p class="value-note">Synthetic example from the minimal ledger.</p></figure></section>
 
 ## One system, three parts
 
