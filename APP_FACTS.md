@@ -1,7 +1,7 @@
 ---
 app_facts_version: 0.1.0
 name: AppLedger
-version: 0.2.2
+version: 0.2.3
 type: spec / tooling
 status: active
 license: MIT
