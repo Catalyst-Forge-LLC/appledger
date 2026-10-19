@@ -542,3 +542,6 @@ main.wrap > .home-with-rail:has(.value-hero) { display: block !important; }
 .home-page:has(.value-hero) :is(a, button):focus-visible { outline: 3px solid var(--accent-strong, #295d72); outline-offset: 4px; }
 @media (max-width: 760px) { .home-page .value-hero { grid-template-columns: minmax(0, 1fr); gap: 2rem; } .home-page .value-hero h1 { font-size: clamp(2rem, 8vw, 3rem); max-width: 20ch; } .home-page .value-hero .value-lede { font-size: 1.0625rem; } .home-page .value-proof { max-width: none; } }
 @media (prefers-reduced-motion: reduce) { html:has(.value-hero) { scroll-behavior: auto; } }
+
+/* Keep the decision excerpt legible on the dark code surface. */
+.home-page .prose pre code span { color: inherit; }

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="site/static/logo.png" alt="AppLedger" width="180" />
+  <img src="https://appledger.dev/logo.png" alt="AppLedger" width="180" />
 </p>
 
 # AppLedger
@@ -14,6 +14,27 @@ This repository is the specification and the reference checker. It is also a For
 | Repository | https://github.com/Catalyst-Forge-LLC/appledger |
 | npm | [`appledger`](https://www.npmjs.com/package/appledger). `pnpm dlx appledger init`, or `pnpm add -g appledger` |
 | Domain | https://appledger.dev |
+
+## Read the reason before reopening the decision
+
+A fresh session asks why the app has no database. The [synthetic minimal ledger](https://github.com/Catalyst-Forge-LLC/appledger/tree/main/examples/minimal) has a decision record with these fields (excerpt, not a complete record):
+
+```yaml
+id: decision-local-files
+kind: decision
+title: Keep notes in local files
+data:
+  status: accepted
+  choice: Use local files for initial scope
+  rationale: The synthetic brief calls for a small offline tool
+  alternatives:
+    - Hosted database
+  authority: Synthetic scenario owner
+```
+
+In your app folder, `pnpm dlx appledger orient` prints an orientation from the ledger. A later agent can then read the linked decision and say: “Local files were chosen for the small offline scope. Before proposing a database, check whether that scope has changed.” That response is illustrative, not a generated guarantee.
+
+The record preserves the choice and its reason across sessions. It declares the owner's intent; it does not prove how storage was implemented. `init` does not create this decision for you: you or your agent curate it.
 
 ## Start a ledger
 
